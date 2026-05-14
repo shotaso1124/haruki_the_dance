@@ -8,15 +8,15 @@
 
 backend:
   name: github
-  repo: PLACEHOLDER_USER/PLACEHOLDER_REPO       # 例: shotaso1124/ai-sns-school-lp
+  repo: shotaso1124/haruki_the_dance       # 例: shotaso1124/ai-sns-school-lp
   branch: main
   # OAuth プロキシ (Cloudflare Worker) — DEPLOY.md Step 4 参照
-  base_url: https://PLACEHOLDER_WORKER.workers.dev
+  base_url: https://ai-sns-school-cms-oauth.shotso1124.workers.dev
   auth_endpoint: /auth
 
 # 編集中のライブプレビュー (任意機能)
-site_url: https://PLACEHOLDER_PAGES.pages.dev
-display_url: https://PLACEHOLDER_PAGES.pages.dev
+site_url: https://aischool.shotso1124.workers.dev
+display_url: https://aischool.shotso1124.workers.dev
 
 # 画像アップロード先 (リポジトリ直下の assets/ ディレクトリ)
 media_folder: "assets"
