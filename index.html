@@ -6,7 +6,7 @@
   <title>業務は10割AI、クリエイティブの3割で生きる｜AIスクール無料説明会</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;700;900&family=Caveat:wght@400;700&family=Yuji+Mai&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -14,604 +14,1012 @@
       padding: 0;
     }
 
+    :root {
+      --ink: #1a1a1a;
+      --ink-soft: #333;
+      --ink-mute: #555;
+      --brush-blue: #6FBCD8;
+      --brush-teal: #9FD9B5;
+      --deep-blue: #2B5F8D;
+      --pale-mint: #DFF3EE;
+      --pale-blue: #E8F4F9;
+      --yellow-marker: #FFE000;
+      --line-green: #06C755;
+      --cta-purple-1: #5DD5D8;
+      --cta-purple-2: #6B5BC9;
+      --cta-green-1: #4CAF50;
+      --cta-green-2: #2E7D32;
+      --red-accent: #E63946;
+    }
+
     body {
-      font-family: 'Noto Sans JP', sans-serif;
-      background: #f0f0f0;
-      color: #111;
+      font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+      background: #efefef;
+      color: var(--ink);
       display: flex;
       justify-content: center;
+      letter-spacing: 0.03em;
     }
 
     .page-wrapper {
       width: 100%;
       max-width: 480px;
       background: #fff;
+      overflow: hidden;
     }
 
-    /* ① ヒーロー */
+    /* ===== Reusable brush stroke SVG-as-background ===== */
+    .brush-stroke-bg {
+      position: relative;
+      display: inline-block;
+      padding: 6px 18px 8px;
+    }
+    .brush-stroke-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%236FBCD8' stop-opacity='0.85'/><stop offset='55%25' stop-color='%2386CFB6' stop-opacity='0.8'/><stop offset='100%25' stop-color='%239FD9B5' stop-opacity='0.85'/></linearGradient></defs><path d='M10,42 C70,18 140,52 210,30 C280,12 340,46 392,28 L392,52 C340,72 280,40 210,58 C140,76 70,40 10,62 Z' fill='url(%23g)'/></svg>") no-repeat center/100% 100%;
+      z-index: 0;
+    }
+    .brush-stroke-bg > * { position: relative; z-index: 1; }
+
+    /* ===== Hero ===== */
     .hero {
       background: #fff;
-      padding: 32px 20px;
+      padding: 36px 22px 28px;
       text-align: center;
     }
 
+    .hero-sub-wrap {
+      display: inline-block;
+      padding: 10px 22px 14px;
+      margin-bottom: 22px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' preserveAspectRatio='none'><defs><linearGradient id='gh' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%236FBCD8' stop-opacity='0.9'/><stop offset='55%25' stop-color='%2386CFB6' stop-opacity='0.85'/><stop offset='100%25' stop-color='%239FD9B5' stop-opacity='0.9'/></linearGradient></defs><path d='M6,50 C70,20 150,58 220,32 C290,10 350,48 396,30 L396,56 C350,76 290,42 220,62 C150,80 70,42 6,68 Z' fill='url(%23gh)'/></svg>") no-repeat center/100% 100%;
+    }
+
     .hero-sub {
-      font-size: 14px;
-      color: #333;
-      margin-bottom: 12px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.12em;
+    }
+
+    .hero-bubble {
+      display: inline-block;
+      position: relative;
+      padding: 18px 28px 16px;
+      margin: 6px auto 18px;
+      border: 2px dashed var(--ink);
+      border-radius: 22px;
+      background: #fff;
+      font-family: 'Noto Serif JP', serif;
+    }
+
+    .hero-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -16px;
+      left: 32%;
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-top: 18px dashed var(--ink);
+      border-top-style: solid;
+      filter: drop-shadow(0 2px 0 #fff);
+    }
+
+    .hero-bubble-quote {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .hero-bubble-amount {
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: var(--ink);
     }
 
     .hero-title-wrap {
+      position: relative;
+      display: inline-block;
+      margin: 24px auto 14px;
+      font-family: 'Noto Serif JP', serif;
       font-size: 28px;
       font-weight: 900;
-      line-height: 1.5;
-      margin-bottom: 8px;
+      line-height: 1.4;
+      letter-spacing: 0.03em;
+      color: var(--deep-blue);
+      padding: 0 6px 14px;
     }
 
     .hero-title-wrap .kakko {
-      font-size: 28px;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .hero-title-wrap::after {
+      content: "";
+      position: absolute;
+      left: 4%;
+      right: 4%;
+      bottom: -2px;
+      height: 18px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M5,18 Q60,2 120,16 T240,18 T370,14' stroke='%23FFD600' stroke-width='10' stroke-linecap='round' fill='none' opacity='0.85'/></svg>") no-repeat center/100% 100%;
+      z-index: -1;
     }
 
     .hero-headline {
-      font-size: 40px;
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 42px;
       font-weight: 900;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.18em;
       line-height: 1.2;
-      margin-bottom: 12px;
+      margin: 18px auto 6px;
+      padding-bottom: 14px;
+    }
+
+    .hero-headline::after {
+      content: "";
+      position: absolute;
+      left: -4%;
+      right: -4%;
+      bottom: 0;
+      height: 14px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M4,18 C70,4 140,22 210,12 C280,2 340,20 394,10' stroke='%23B0B0B0' stroke-width='10' stroke-linecap='round' fill='none' opacity='0.6'/></svg>") no-repeat center/100% 100%;
     }
 
     .hero-subtitle {
       display: inline-block;
+      font-family: 'Noto Serif JP', serif;
       font-size: 22px;
-      font-weight: 700;
-      border: 2px solid #111;
-      padding: 4px 16px;
-      margin-bottom: 20px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      padding: 4px 18px 6px;
+      margin: 12px 0 20px;
+      color: var(--ink);
     }
 
-    .hero-desc1 {
-      font-size: 15px;
-      line-height: 1.7;
-      margin-bottom: 8px;
+    .hero-desc1, .hero-desc2 {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--ink-soft);
     }
+    .hero-desc1 { margin-bottom: 6px; }
+    .hero-desc2 { font-weight: 700; margin-top: 4px; }
 
     .arrow-down {
       width: 0;
       height: 0;
       border-left: 40px solid transparent;
       border-right: 40px solid transparent;
-      border-top: 50px solid #E63946;
-      margin: 16px auto;
+      border-top: 50px solid var(--red-accent);
+      margin: 18px auto;
     }
 
-    .hero-desc2 {
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    /* 動画プレビューエリア */
+    /* ===== Video preview ===== */
     .video-preview-section {
       background: #fff;
-      padding: 0 20px 32px;
+      padding: 0 22px 36px;
       text-align: center;
     }
 
     .video-preview-area {
       display: flex;
-      align-items: center;
-      gap: 12px;
+      align-items: flex-end;
+      gap: 14px;
       margin-bottom: 16px;
     }
 
     .instructor-avatar-small {
-      width: 60px;
-      height: 60px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
-      background: #00BCD4;
+      background: linear-gradient(135deg, #6FBCD8, #2B5F8D);
       flex-shrink: 0;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 2px 8px rgba(43,95,141,0.25);
     }
 
     .instructor-avatar-small svg {
-      width: 40px;
-      height: 40px;
+      width: 48px;
+      height: 48px;
       fill: #fff;
     }
 
     .video-player-mock {
       flex: 1;
       background: #111;
-      border-radius: 8px;
+      border-radius: 10px;
       aspect-ratio: 16/9;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
     }
 
     .video-player-mock::after {
       content: '▶';
-      color: rgba(255,255,255,0.7);
-      font-size: 24px;
+      color: rgba(255,255,255,0.85);
+      font-size: 28px;
     }
 
     .instructor-info-small {
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 11px;
-      color: #555;
+      color: var(--ink-mute);
       text-align: left;
+      margin-top: 6px;
+      line-height: 1.5;
     }
 
-    /* ② 動画内容リスト */
+    /* ===== Contents ===== */
     .contents-section {
       background: #fff;
-      padding: 24px 20px 32px;
+      padding: 38px 22px 36px;
     }
 
-    .contents-headline {
-      font-size: 22px;
+    .contents-section h2 {
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
       font-weight: 900;
-      color: #E63946;
-      margin-bottom: 16px;
+      color: var(--ink);
+      margin: 0 auto 28px;
+      padding: 8px 4px 22px;
+      letter-spacing: 0.06em;
+    }
+
+    .contents-section h2::before {
+      content: "contents";
+      position: absolute;
+      top: -10px;
+      right: -54px;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      transform: rotate(-6deg);
+      letter-spacing: 0.02em;
+    }
+
+    .contents-section h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+      height: 22px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 40' preserveAspectRatio='none'><path d='M5,22 C80,4 160,32 220,16 C290,0 340,28 394,12 L394,32 C340,46 290,22 220,38 C160,54 80,30 5,40 Z' fill='%236FBCD8' opacity='0.7'/></svg>") no-repeat center/100% 100%;
+    }
+
+    .contents-wrap {
       text-align: center;
     }
 
     .contents-list {
       list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 18px;
     }
 
     .contents-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 14px 0;
-      border-bottom: 1px solid #eee;
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      align-items: stretch;
+      gap: 0;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      min-height: 70px;
     }
 
-    .contents-list li:first-child {
-      border-top: 1px solid #eee;
-    }
+    .contents-list li:nth-child(1) .content-num { background: linear-gradient(135deg, #98E0CB, #6FC8AF); }
+    .contents-list li:nth-child(1) .content-text-wrap { background: linear-gradient(90deg, #D8F2EA, #C9E9DF); }
+    .contents-list li:nth-child(2) .content-num { background: linear-gradient(135deg, #87C3DD, #5DA3C2); }
+    .contents-list li:nth-child(2) .content-text-wrap { background: linear-gradient(90deg, #D6EAF5, #C5DDED); }
+    .contents-list li:nth-child(3) .content-num { background: linear-gradient(135deg, #5DA3C2, #3F7DA0); }
+    .contents-list li:nth-child(3) .content-text-wrap { background: linear-gradient(90deg, #C5DDED, #B0CEE3); }
+    .contents-list li:nth-child(4) .content-num { background: linear-gradient(135deg, #2B5F8D, #1D4567); }
+    .contents-list li:nth-child(4) .content-text-wrap { background: linear-gradient(90deg, #B0CEE3, #9FC1DC); }
 
     .content-num {
-      font-size: 22px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
       font-weight: 900;
-      color: #00BCD4;
-      line-height: 1;
-      min-width: 28px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.02em;
+      position: relative;
+    }
+
+    .content-num::after {
+      content: "";
+      position: absolute;
+      right: -14px;
+      top: 0;
+      bottom: 0;
+      width: 16px;
+      background: inherit;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    .content-text-wrap {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px 12px 22px;
     }
 
     .content-text {
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 14px;
       font-weight: 700;
-      line-height: 1.5;
-      flex: 1;
+      line-height: 1.55;
+      color: var(--ink);
     }
 
-    /* ③ 講師紹介 */
+    /* ===== Instructor ===== */
     .instructor-section {
-      background: #f0eeeb;
-      padding: 32px 20px;
+      background: var(--pale-mint);
+      padding: 38px 22px 40px;
       text-align: center;
       background-image:
-        radial-gradient(ellipse at 20% 20%, rgba(200,200,200,0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(220,220,220,0.2) 0%, transparent 50%);
+        radial-gradient(ellipse at 15% 10%, rgba(159,217,181,0.5) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 90%, rgba(111,188,216,0.35) 0%, transparent 55%);
+    }
+
+    .instructor-section h2 {
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+      padding: 4px 14px 16px;
+    }
+
+    .instructor-section h2::before {
+      content: "Profile";
+      position: absolute;
+      top: -8px;
+      right: -52px;
+      font-family: 'Caveat', cursive;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      transform: rotate(-6deg);
+    }
+
+    .instructor-section h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 14px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M5,16 C60,4 140,24 200,12 C260,2 340,22 394,8' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' fill='none' opacity='0.7'/><path d='M5,22 C70,12 130,28 210,18 C290,8 350,24 392,16' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' fill='none' opacity='0.5'/></svg>") no-repeat center/100% 100%;
     }
 
     .instructor-avatar {
-      width: 80px;
-      height: 80px;
+      width: 96px;
+      height: 96px;
       border-radius: 50%;
-      background: #00BCD4;
-      margin: 0 auto 12px;
+      background: linear-gradient(135deg, #6FBCD8, #2B5F8D);
+      margin: 0 auto 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      box-shadow: 0 4px 14px rgba(43,95,141,0.3);
     }
 
     .instructor-avatar svg {
-      width: 56px;
-      height: 56px;
+      width: 64px;
+      height: 64px;
       fill: #fff;
     }
 
     .instructor-name {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 4px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
     }
 
     .instructor-title {
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 13px;
-      color: #333;
-      margin-bottom: 4px;
+      color: var(--ink-soft);
+      margin-bottom: 2px;
+      font-weight: 700;
     }
 
     .instructor-title-en {
-      font-size: 12px;
-      color: #00BCD4;
-      margin-bottom: 20px;
+      font-family: 'Caveat', cursive;
+      font-size: 16px;
+      color: var(--deep-blue);
+      margin-bottom: 24px;
     }
 
     .instructor-stats {
       list-style: none;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.6);
+      border: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.85);
       overflow: hidden;
+      box-shadow: 0 4px 16px rgba(43,95,141,0.1);
     }
 
     .instructor-stats li {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
-      font-size: 13px;
-      border-bottom: 1px solid #e0e0e0;
+      gap: 12px;
+      padding: 14px 18px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(43,95,141,0.1);
       text-align: left;
     }
 
-    .instructor-stats li:last-child {
-      border-bottom: none;
-    }
+    .instructor-stats li:last-child { border-bottom: none; }
 
     .check-icon {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: #00BCD4;
+      background: var(--deep-blue);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       color: #fff;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 900;
     }
 
-    /* ④ こんな方へ */
+    /* ===== Recommended ===== */
     .recommended-section {
       background: #fff;
-      padding: 32px 20px;
+      padding: 38px 22px 40px;
+    }
+
+    .recommended-header {
+      background: linear-gradient(180deg, #DFF3EE, #D2EBE5);
+      padding: 20px 18px 24px;
+      margin: -38px -22px 28px;
+      text-align: center;
+      position: relative;
     }
 
     .recommended-title {
-      font-size: 22px;
-      font-weight: 900;
-      border-bottom: 2px solid #00BCD4;
-      padding-bottom: 8px;
-      margin-bottom: 4px;
+      position: relative;
       display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      padding: 0 6px 12px;
+      margin-bottom: 0;
+    }
+
+    .recommended-title::after {
+      content: "";
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      bottom: 0;
+      height: 14px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M5,18 C70,6 130,24 200,14 C270,4 340,22 394,12' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' fill='none' opacity='0.8'/><path d='M10,24 C70,14 140,28 210,20 C280,12 350,26 392,18' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' fill='none' opacity='0.55'/></svg>") no-repeat center/100% 100%;
     }
 
     .recommended-subtitle-en {
-      font-size: 11px;
-      color: #00BCD4;
-      margin-bottom: 20px;
-      display: block;
+      font-family: 'Caveat', cursive;
+      font-size: 18px;
+      color: var(--ink);
+      margin-left: 12px;
+      display: inline-block;
+      transform: rotate(-4deg);
     }
 
     .check-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .check-list li {
-      background: #F5F5F5;
-      border-radius: 8px;
-      padding: 14px 16px;
+      background: #F2F4F6;
+      border-radius: 28px;
+      padding: 16px 22px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 14px;
       font-weight: 700;
+      color: var(--ink);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
-    /* ⑤ メインCTA */
+    /* ===== CTA section ===== */
     .cta-section {
       text-align: center;
     }
 
     .cta-arrow-area {
       background: #fff;
-      padding: 16px 0 0;
+      padding: 24px 0 12px;
     }
 
     .badge-area {
-      background: #B2EBF2;
-      padding: 20px 20px;
+      background: var(--pale-mint);
+      padding: 22px 20px;
+      position: relative;
+    }
+
+    .badge-area::before {
+      content: "プレミアム動画詳細";
+      display: block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+      color: var(--ink);
     }
 
     .badge-boxes {
       display: flex;
-      gap: 12px;
+      gap: 16px;
       justify-content: center;
+      align-items: center;
     }
 
     .badge-box {
-      background: #fff;
-      border-radius: 50px;
-      padding: 12px 20px;
+      background: transparent;
+      border-radius: 0;
+      padding: 6px 14px;
       flex: 1;
       text-align: center;
+      position: relative;
     }
 
     .badge-label {
-      font-size: 10px;
-      color: #555;
-      margin-bottom: 2px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 11px;
+      color: var(--ink-soft);
+      margin-bottom: 4px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
     }
 
     .badge-value-wrap {
-      font-size: 28px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 32px;
       font-weight: 900;
-      color: #111;
+      color: var(--ink);
       line-height: 1;
+      letter-spacing: 0.02em;
     }
 
     .badge-paren {
-      font-size: 20px;
-      font-weight: 900;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink-soft);
     }
 
     .badge-unit {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-left: 2px;
     }
 
     .cta-green-block {
-      background: linear-gradient(135deg, #4CAF50, #2E7D32);
-      padding: 24px 20px 32px;
+      background: linear-gradient(135deg, #5DD5D8 0%, #6B5BC9 100%);
+      padding: 28px 22px 36px;
+      position: relative;
+    }
+
+    .cta-green-block::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 8%;
+      right: 8%;
+      height: 60px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' preserveAspectRatio='none'><path d='M10,40 C80,18 160,52 230,28 C300,8 360,42 394,30 L394,52 C360,68 300,38 230,58 C160,78 80,42 10,62 Z' fill='%23B6E3EA' opacity='0.7'/></svg>") no-repeat center/100% 100%;
+      pointer-events: none;
     }
 
     .cta-now-badge {
+      position: relative;
       display: inline-block;
-      background: #FFD600;
-      color: #111;
-      font-size: 12px;
+      background: #fff;
+      color: var(--red-accent);
+      font-family: 'Noto Serif JP', serif;
+      font-size: 13px;
       font-weight: 900;
-      border-radius: 4px;
-      padding: 4px 12px;
+      border-radius: 24px;
+      padding: 6px 16px;
       margin-bottom: 8px;
+      letter-spacing: 0.06em;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .cta-now-badge::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 24px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 10px solid #fff;
     }
 
     .cta-button-main {
-      font-size: 28px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 38px;
       font-weight: 900;
       color: #fff;
-      margin-bottom: 12px;
-      line-height: 1.2;
+      margin: 8px 0 14px;
+      line-height: 1.1;
+      letter-spacing: 0.12em;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 1;
     }
 
     .cta-members {
       display: inline-block;
-      background: #555;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
-      border-radius: 20px;
-      padding: 4px 16px;
-      margin-bottom: 16px;
+      background: var(--yellow-marker);
+      color: var(--ink);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      border-radius: 24px;
+      padding: 6px 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
     a.cta-button {
       display: block;
-      background: #fff;
-      color: #2E7D32;
+      background: linear-gradient(135deg, #06C755 0%, #2E7D32 100%);
+      color: #fff;
       font-family: 'Noto Sans JP', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 900;
       text-decoration: none;
-      padding: 16px 24px;
-      border-radius: 50px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      padding: 20px 24px;
+      border-radius: 60px;
+      box-shadow: 0 6px 20px rgba(6,199,85,0.4), inset 0 2px 0 rgba(255,255,255,0.25);
       text-align: center;
+      letter-spacing: 0.04em;
+      position: relative;
+      transition: transform 0.15s ease;
     }
 
-    /* ⑥ お客様の声 */
+    a.cta-button:hover { transform: translateY(-1px); }
+
+    /* ===== Testimonials ===== */
     .testimonials-section {
-      background: #F5F5F5;
-      padding: 32px 20px;
+      background: var(--pale-mint);
+      padding: 40px 22px 36px;
     }
 
     .testimonials-section h2 {
-      font-size: 18px;
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
       font-weight: 900;
-      margin-bottom: 20px;
+      letter-spacing: 0.08em;
+      margin: 0 auto 30px;
+      padding: 4px 4px 18px;
+      width: 100%;
       text-align: center;
+    }
+
+    .testimonials-section h2::before {
+      content: "Voice";
+      position: absolute;
+      top: -6px;
+      right: 14%;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      transform: rotate(-6deg);
+    }
+
+    .testimonials-section h2::after {
+      content: "";
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      bottom: 0;
+      height: 18px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M5,18 C70,4 140,26 210,14 C280,2 340,24 394,12 L394,30 C340,40 280,22 210,32 C140,42 70,22 5,38 Z' fill='%236FBCD8' opacity='0.7'/></svg>") no-repeat center/100% 100%;
     }
 
     .testimonial-card {
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      padding: 16px;
-      margin-bottom: 16px;
+      border-radius: 14px;
+      border: 2px solid var(--deep-blue);
+      box-shadow: 0 4px 16px rgba(43,95,141,0.12);
+      padding: 18px;
+      margin-bottom: 18px;
     }
 
     .testimonial-header {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e0e7ed;
     }
 
     .testimonial-name {
-      font-size: 20px;
-      font-weight: 700;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 24px;
+      font-weight: 900;
       display: inline;
+      letter-spacing: 0.04em;
     }
 
     .testimonial-age {
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 13px;
-      color: #555;
-      margin-left: 4px;
+      color: var(--ink-mute);
+      margin-left: 6px;
+      font-weight: 700;
     }
 
     .testimonial-caption {
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 12px;
-      color: #777;
-      margin-top: 2px;
+      color: var(--ink-mute);
+      margin-top: 4px;
+      font-weight: 700;
     }
 
     .testimonial-body {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       align-items: flex-start;
     }
 
-    .testimonial-chat {
-      flex: 1;
-    }
+    .testimonial-chat { flex: 1; }
 
     .chat-bubble {
       background: #DCF8C6;
       border-radius: 12px;
       border-bottom-left-radius: 0;
-      padding: 10px 12px;
-      font-size: 12px;
-      line-height: 1.6;
-      color: #111;
-      margin-bottom: 8px;
+      padding: 12px 14px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: var(--ink);
+      margin-bottom: 10px;
+      font-weight: 400;
     }
 
     .testimonial-amount {
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 13px;
       font-weight: 700;
-      color: #111;
+      color: var(--ink);
       text-align: right;
       margin-top: 4px;
     }
 
     .testimonial-more {
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 12px;
-      color: #00BCD4;
+      color: var(--deep-blue);
       text-decoration: underline;
       display: block;
       text-align: right;
-      margin-top: 4px;
+      margin-top: 6px;
+      font-weight: 700;
     }
 
     .result-box {
-      background: #FFF9C4;
-      border-radius: 8px;
-      padding: 12px 10px;
+      background: var(--yellow-marker);
+      border-radius: 4px;
+      padding: 14px 8px;
       text-align: center;
-      min-width: 90px;
+      min-width: 96px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 2px;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%);
     }
 
     .result-period {
-      font-size: 12px;
-      font-weight: 700;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 14px;
+      font-weight: 900;
     }
 
     .result-amount {
+      font-family: 'Noto Serif JP', serif;
       font-size: 48px;
       font-weight: 900;
-      color: #E63946;
+      color: var(--ink);
       line-height: 1;
+      letter-spacing: 0.02em;
     }
 
     .result-unit {
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 12px;
       font-weight: 700;
-      color: #111;
+      color: var(--ink);
     }
 
     .result-label {
-      font-size: 13px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 16px;
       font-weight: 900;
-      color: #111;
+      color: var(--ink);
+      letter-spacing: 0.08em;
+      margin-top: 4px;
     }
 
-    /* ⑦ FAQ */
+    /* ===== FAQ ===== */
     .faq-section {
       background: #fff;
-      padding: 32px 20px;
+      padding: 40px 22px 36px;
     }
 
     .faq-section h2 {
-      font-size: 20px;
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 24px;
       font-weight: 900;
-      margin-bottom: 24px;
+      letter-spacing: 0.1em;
+      margin: 0 auto 30px;
+      padding: 4px 4px 18px;
+      width: 100%;
       text-align: center;
+    }
+
+    .faq-section h2::before {
+      content: "Q & A";
+      position: absolute;
+      top: -6px;
+      right: 18%;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      transform: rotate(-6deg);
+    }
+
+    .faq-section h2::after {
+      content: "";
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      bottom: 0;
+      height: 14px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M5,18 C70,4 140,26 210,14 C280,2 340,24 394,12' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' fill='none' opacity='0.7'/></svg>") no-repeat center/100% 100%;
     }
 
     .faq-item {
       padding: 20px 0;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px dashed #ccd6dd;
     }
 
-    .faq-item:first-of-type {
-      padding-top: 0;
-    }
+    .faq-item:first-of-type { padding-top: 0; }
 
     .faq-q {
       display: flex;
       align-items: flex-start;
-      gap: 8px;
-      margin-bottom: 12px;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
     .faq-q-label {
-      font-size: 24px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
       font-weight: 900;
-      color: #1565C0;
+      color: var(--deep-blue);
       line-height: 1;
       flex-shrink: 0;
     }
 
     .faq-q-text {
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 15px;
       font-weight: 700;
       line-height: 1.6;
-      padding-top: 2px;
+      padding-top: 4px;
     }
 
     .faq-a {
       display: flex;
       align-items: flex-start;
-      gap: 8px;
+      gap: 10px;
     }
 
     .faq-a-label {
-      font-size: 24px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
       font-weight: 900;
-      color: #1565C0;
+      color: var(--red-accent);
       line-height: 1;
       flex-shrink: 0;
     }
 
     .faq-a-text {
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 14px;
-      line-height: 1.7;
-      color: #333;
-      padding-top: 2px;
+      line-height: 1.75;
+      color: var(--ink-soft);
+      padding-top: 4px;
     }
 
-    /* ⑧ フッターCTA */
+    /* ===== Footer CTA ===== */
     .footer-cta-section {
-      background: linear-gradient(135deg, #00C853, #1B5E20);
-      padding: 32px 20px;
+      background: linear-gradient(135deg, #5DD5D8 0%, #6B5BC9 100%);
+      padding: 38px 22px 44px;
       text-align: center;
+      position: relative;
+    }
+
+    .footer-cta-section::before {
+      content: "";
+      position: absolute;
+      top: 80px;
+      left: 8%;
+      right: 8%;
+      height: 70px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' preserveAspectRatio='none'><path d='M10,40 C80,18 160,52 230,28 C300,8 360,42 394,30 L394,52 C360,68 300,38 230,58 C160,78 80,42 10,62 Z' fill='%23B6E3EA' opacity='0.7'/></svg>") no-repeat center/100% 100%;
+      pointer-events: none;
     }
 
     .footer-cta-section .badge-area {
-      background: rgba(255,255,255,0.15);
-      border-radius: 12px;
-      margin-bottom: 16px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      padding-top: 30px;
     }
 
-    .footer-cta-section .badge-box {
-      background: rgba(255,255,255,0.9);
+    .footer-cta-section .badge-area::before {
+      color: var(--ink);
     }
+
+    .footer-cta-section .badge-box { background: transparent; }
   </style>
 </head>
 <body>
@@ -619,10 +1027,19 @@
 
     <!-- ① ヒーロー -->
     <section class="hero">
-      <p class="hero-sub" data-key="hero_sub">AIを使って、3ヶ月で業務工数を半分にした</p>
+      <div class="hero-sub-wrap">
+        <p class="hero-sub" data-key="hero_sub">AIを使って、3ヶ月で業務工数を半分にした</p>
+      </div>
+
+      <div class="hero-bubble">
+        <p class="hero-bubble-quote">"AIで生産性を上げ"</p>
+        <p class="hero-bubble-amount">業務時間を月60h削った</p>
+      </div>
+
       <h1 class="hero-title-wrap">
-        <span class="kakko">「</span><span style="background: linear-gradient(transparent 55%, #FFE000 55%); padding: 0 2px;" data-key="hero_title">業務は10割AI、クリエイティブの3割で生きる</span><span class="kakko">」</span>
+        <span class="kakko">「</span><span data-key="hero_title">業務は10割AI、クリエイティブの3割で生きる</span><span class="kakko">」</span>
       </h1>
+
       <p class="hero-headline" data-key="hero_headline">完　全　公　開</p>
       <p class="hero-subtitle" data-key="hero_subtitle">無料説明会</p>
       <p class="hero-desc1" data-key="hero_desc1">"多くの人が見落としている" AIを使った能力上昇の実態</p>
@@ -647,29 +1064,40 @@
 
     <!-- ② 動画内容リスト -->
     <section class="contents-section">
-      <h2 class="contents-headline" data-key="contents_headline">説明会で完全公開。</h2>
+      <div class="contents-wrap">
+        <h2 data-key="contents_headline">説明会で完全公開。</h2>
+      </div>
       <ul class="contents-list">
         <li>
           <span class="content-num">01</span>
-          <span class="content-text" data-key="content_item_01">AIを使っても稼げない人の共通点</span>
+          <div class="content-text-wrap">
+            <span class="content-text" data-key="content_item_01">AIを使っても稼げない人の共通点</span>
+          </div>
         </li>
         <li>
           <span class="content-num">02</span>
-          <span class="content-text" data-key="content_item_02">業務AI化で評価が上がる人・上がらない人の差</span>
+          <div class="content-text-wrap">
+            <span class="content-text" data-key="content_item_02">業務AI化で評価が上がる人・上がらない人の差</span>
+          </div>
         </li>
         <li>
           <span class="content-num">03</span>
-          <span class="content-text" data-key="content_item_03">クリエイティブ7-3：SNSで実アセットを作る具体的手順</span>
+          <div class="content-text-wrap">
+            <span class="content-text" data-key="content_item_03">クリエイティブ7-3：SNSで実アセットを作る具体的手順</span>
+          </div>
         </li>
         <li>
           <span class="content-num">04</span>
-          <span class="content-text" data-key="content_item_04">能力上昇7-3：給与・単価を上げるロードマップ</span>
+          <div class="content-text-wrap">
+            <span class="content-text" data-key="content_item_04">能力上昇7-3：給与・単価を上げるロードマップ</span>
+          </div>
         </li>
       </ul>
     </section>
 
     <!-- ③ 講師紹介 -->
     <section class="instructor-section">
+      <h2>講師紹介</h2>
       <div class="instructor-avatar">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
@@ -704,8 +1132,10 @@
 
     <!-- ④ こんな方へ -->
     <section class="recommended-section">
-      <h2 class="recommended-title" data-key="recommended_title">こんな方へ</h2>
-      <span class="recommended-subtitle-en">— Recommended for</span>
+      <div class="recommended-header">
+        <h2 class="recommended-title" data-key="recommended_title">こんな方へ</h2>
+        <span class="recommended-subtitle-en">Recommended for</span>
+      </div>
       <ul class="check-list">
         <li>
           <span class="check-icon">✓</span>
@@ -855,6 +1285,7 @@
 
     <!-- ⑦ FAQ -->
     <section class="faq-section">
+      <h2>よくあるご質問</h2>
       <div class="faq-item">
         <div class="faq-q">
           <span class="faq-q-label">Q.</span>
