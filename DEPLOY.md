@@ -291,3 +291,152 @@ Cloudflare Pages が自動的に再デプロイする (1〜2分)。
 | Login with GitHub で「redirect_uri mismatch」 | OAuth App のコールバックURLと Worker URL が一致しているか確認 |
 | CMS に入れるが Publish で失敗 | リポジトリ書き込み権限がない (Collaborator 招待を受諾しているか) |
 | 編集が反映されない | Cloudflare Pages のビルドログを確認 (Pages → 該当プロジェクト → Deployments) |
+
+---
+
+# F案: パスワード認証 + Worker 経由 GitHub 直接保存（追加手順）
+
+代表承認済 (GO)。編集者1人運用 / パスワード定期ローテーション方針。
+
+Decap CMS の管理画面 (`/admin/`) を経由せず、**`edit_ui.html` から直接 GitHub に commit する経路**を追加する。
+既存の OAuth プロキシ機能 (`/auth`, `/callback`) は壊さない。
+
+## F案 構成図
+
+```
+[編集者] ──Web UI──> https://[worker].workers.dev/edit
+                        │  (Cookie 未保有 → /login へ)
+                        ▼
+                      パスワード入力 (SHARED_PASSWORD)
+                        │
+                        ▼  HMAC 署名 Cookie 発行 (8h)
+                      /edit (edit_ui.html を表示)
+                        │  「GitHubに保存」クリック
+                        ▼
+                      POST /save  (Cookie 検証)
+                        │
+                        ▼  GitHub Contents API (GITHUB_PAT)
+                      shotaso1124/haruki_the_dance @ main / index.html
+                        │
+                        ▼ push 検知 → Pages 自動再デプロイ
+                      公開URL に反映 (1〜2分)
+```
+
+## F案 追加 Step 一覧 (4 ステップ)
+
+| # | ステップ | 所要時間 | 必要なもの |
+|---|---------|---------|----------|
+| 8 | GitHub PAT 発行・Worker Secret 登録 | 10 分 | GitHub アカウント |
+| 9 | SHARED_PASSWORD / SESSION_SECRET 設定 | 5 分 | `openssl` |
+| 10 | Worker コードを `worker_full.js` で更新 | 10 分 | Cloudflare ダッシュボード |
+| 11 | 動作確認 | 5 分 | ブラウザ |
+
+合計: **約 30 分**
+
+---
+
+## Step 8: GitHub PAT 発行 + Worker Secret 登録
+
+### 8-1. GitHub Personal Access Token (PAT) を発行
+
+1. https://github.com/settings/tokens?type=beta を開く (Fine-grained PAT 推奨)
+2. 「Generate new token」
+3. 設定:
+   - **Token name**: `ai-sns-school-cms-write`
+   - **Expiration**: 90 days (定期ローテーション)
+   - **Repository access**: 「Only select repositories」→ `shotaso1124/haruki_the_dance` を選択
+   - **Repository permissions**:
+     - **Contents**: `Read and write`
+     - その他はすべて `No access`
+4. 「Generate token」→ 表示される `github_pat_xxxxxxxxxx...` をコピー (1回しか表示されない)
+
+> Classic PAT を使う場合: scope は `repo` のみで十分。
+
+### 8-2. Worker Secret として登録
+
+Cloudflare ダッシュボード:
+1. Workers & Pages → `ai-sns-school-cms-oauth` → Settings → 「Variables and Secrets」
+2. 「Add」→ Type: **Secret** → Name: `GITHUB_PAT` → Value: 8-1 でコピーした PAT → Save
+
+---
+
+## Step 9: SHARED_PASSWORD / SESSION_SECRET 設定
+
+### 9-1. パスワードを決める
+
+任意の強いパスワードを決める (16文字以上推奨)。例: `Spring2026-AiCmsLP-Edit!`
+
+### 9-2. SESSION_SECRET を生成
+
+ターミナルで実行:
+
+```bash
+openssl rand -hex 32
+```
+
+64文字の16進文字列が出力される。例: `7f3a...e1c4`
+
+### 9-3. Worker に Secret 登録
+
+Cloudflare ダッシュボードで、Step 8-2 と同じ「Variables and Secrets」画面で以下を追加:
+
+| Name | Type | Value |
+|------|------|-------|
+| `SHARED_PASSWORD` | Secret | 9-1 で決めたパスワード |
+| `SESSION_SECRET`  | Secret | 9-2 で生成した 64文字列 |
+
+Save を忘れずに。
+
+---
+
+## Step 10: Worker コード更新
+
+### 10-1. `worker_full.js` を Worker にデプロイ
+
+1. Cloudflare ダッシュボード → Workers → `ai-sns-school-cms-oauth` → 「Edit code」
+2. エディタを全選択 → 削除
+3. `/Users/shota/Claude母体/ai_sns_school/lp_template/worker_full.js` の内容を丸ごとコピペ
+4. 右上「Deploy」
+
+### 10-2. edit_ui を GitHub に push
+
+`edit_ui.html` / `edit_ui.js` の F案対応版をリポジトリに反映する必要がある:
+
+```bash
+cd /Users/shota/Claude母体/ai_sns_school/lp_template
+git add edit_ui.html edit_ui.js worker_full.js DEPLOY.md F_DEPLOY_QUICK.md
+git commit -m "feat: F案 (password auth + GitHub direct save) を追加"
+git push
+```
+
+> Worker は `raw.githubusercontent.com` から `edit_ui.html` を取得して配信するため、push が必須。
+
+---
+
+## Step 11: 動作確認
+
+1. ブラウザで `https://ai-sns-school-cms-oauth.shotso1124.workers.dev/edit` を開く
+2. パスワード入力画面が表示される → Step 9-1 のパスワードを入力 → 「ログイン」
+3. `edit_ui.html` の編集画面が表示される
+4. 任意の data-key 要素を編集（例: hero_sub のテキストを変更）
+5. 右上「**GitHubに保存（公開）**」ボタンをクリック
+6. 確認ダイアログ → OK
+7. 「GitHub に保存しました (xxxxxxx)」と表示される → コミットURL を開いて反映確認
+8. 1〜2 分後、Cloudflare Pages の公開URL (`https://aischool.shotso1124.workers.dev/`) に変更が反映される
+
+### 既存 OAuth プロキシ機能の動作確認 (リグレッション)
+
+1. `https://[pages].pages.dev/admin/` を開く
+2. 「Login with GitHub」が引き続き機能することを確認 (Decap CMS 経路も維持)
+
+---
+
+## F案 既知の制約・運用注意
+
+1. **同時編集なし前提**: 編集者が複数人で同時に編集すると、後勝ちで上書きされる (sha チェックで衝突時はエラーになる仕組みはあるが UI で再読込が必要)
+2. **パスワード定期ローテーション**: 90日ごとに GITHUB_PAT を再発行 + SHARED_PASSWORD を変更推奨
+3. **認証強度**: 単一共有パスワード方式。総当たり対策として Worker でレート制限を追加する場合は `wrangler.toml` で `[unsafe.bindings]` を使うか、Cloudflare WAF ルール推奨
+4. **編集対象は `index.html` のみ**: F案 `/save` は `index.html` 固定 (worker_full.js の `TARGET_PATH` を変更すれば他ファイルも可)
+5. **コンフリクト**: GitHub 側で別経路 (admin/CMS など) から編集が入っていた場合、Worker は sha 不一致で 409 を返す → 編集者は画面をリロードして再編集
+6. **PAT 漏洩リスク**: PAT は Cloudflare Secret 内のみ。コード/ログには出さない。漏洩時は GitHub で即 revoke
+7. **コミット履歴**: すべて `chore(cms): update index.html via edit_ui (...)` の自動メッセージ。誰が編集したかは記録されない (編集者1人運用前提)

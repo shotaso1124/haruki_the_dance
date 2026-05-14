@@ -207,6 +207,8 @@
     var resetBtn = document.getElementById('reset-btn');
     var saveBtn = document.getElementById('save-btn');
     var downloadBtn = document.getElementById('download-btn');
+    var publishBtn = document.getElementById('publish-btn');
+    var logoutBtn = document.getElementById('logout-btn');
 
     if (modeBtn) {
       modeBtn.addEventListener('click', function () {
@@ -224,6 +226,15 @@
     }
     if (downloadBtn) {
       downloadBtn.addEventListener('click', exportEditedHtml);
+    }
+    if (publishBtn) {
+      publishBtn.addEventListener('click', publishToGitHub);
+    }
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function () {
+        if (!confirm('ログアウトしますか？')) return;
+        window.location.href = '/logout';
+      });
     }
   }
 
@@ -447,6 +458,119 @@
     } catch (err) { /* noop */ }
     deselect();
     showStatus('リセットしました', '#FBBF24');
+  }
+
+  // ---------- GitHub に保存（F案: Worker /save 経由） ----------
+  function publishToGitHub() {
+    var publishBtn = document.getElementById('publish-btn');
+    if (!confirm('編集内容を GitHub に保存して公開しますか？\n\n変更は数分以内に公開URLに反映されます。')) return;
+
+    if (publishBtn) {
+      publishBtn.disabled = true;
+      publishBtn.textContent = '保存中...';
+    }
+    showStatus('GitHub に保存中...', '#FBBF24');
+
+    buildEditedHtml()
+      .then(function (html) {
+        return fetch('/save', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            html: html,
+            message: 'chore(cms): update index.html via edit_ui'
+          })
+        });
+      })
+      .then(function (res) {
+        if (res.status === 401) {
+          alert('セッションが切れました。再ログインします。');
+          window.location.href = '/login?next=' + encodeURIComponent('/edit');
+          return null;
+        }
+        return res.json().then(function (data) {
+          return { res: res, data: data };
+        });
+      })
+      .then(function (r) {
+        if (!r) return;
+        var res = r.res;
+        var data = r.data;
+        if (res.ok && data && data.ok) {
+          var sha = data.commit ? data.commit.slice(0, 7) : '';
+          showStatus('GitHub に保存しました (' + sha + ')', '#4ADE80');
+          if (data.commit_url) {
+            var msg = 'GitHub への保存に成功しました。\n\nコミット: ' + sha + '\n\nコミットURL を開きますか？';
+            if (confirm(msg)) {
+              window.open(data.commit_url, '_blank', 'noopener');
+            }
+          } else {
+            alert('GitHub への保存に成功しました（commit: ' + sha + '）');
+          }
+        } else {
+          var emsg = (data && data.error) ? data.error : 'unknown error';
+          showStatus('保存失敗: ' + emsg, '#F87171');
+          alert('GitHub への保存に失敗しました:\n' + emsg);
+        }
+      })
+      .catch(function (err) {
+        console.error(err);
+        showStatus('保存失敗: ' + err.message, '#F87171');
+        alert('保存に失敗しました:\n' + err.message);
+      })
+      .then(function () {
+        if (publishBtn) {
+          publishBtn.disabled = false;
+          publishBtn.textContent = 'GitHubに保存（公開）';
+        }
+      });
+  }
+
+  // 編集済み HTML を組み立てる（exportEditedHtml と同じロジックを Promise 返却版で）
+  function buildEditedHtml() {
+    return fetch('index.html', { credentials: 'include' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('index.html 取得失敗 (' + res.status + ')');
+        return res.text();
+      })
+      .then(function (html) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, 'text/html');
+
+        state.elements.forEach(function (el) {
+          var key = el.getAttribute('data-key');
+          if (!key) return;
+          var target = doc.querySelector('[data-key="' + cssEscape(key) + '"]');
+          if (!target) return;
+          target.innerText = el.innerText;
+          var origStyle = target.getAttribute('style') || '';
+          var origMap = parseStyleString(origStyle);
+          delete origMap['font-family'];
+          delete origMap['font-size'];
+          delete origMap['color'];
+          delete origMap['font-weight'];
+          var inlineParts = [];
+          Object.keys(origMap).forEach(function (k) {
+            inlineParts.push(k + ': ' + origMap[k]);
+          });
+          if (el.style.fontFamily) inlineParts.push('font-family: ' + el.style.fontFamily);
+          if (el.style.fontSize) inlineParts.push('font-size: ' + el.style.fontSize);
+          if (el.style.color) inlineParts.push('color: ' + el.style.color);
+          if (el.style.fontWeight) inlineParts.push('font-weight: ' + el.style.fontWeight);
+          if (inlineParts.length) {
+            target.setAttribute('style', inlineParts.join('; '));
+          } else if (origStyle) {
+            target.removeAttribute('style');
+          }
+        });
+
+        return '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+      })
+      .catch(function (err) {
+        console.warn('index.html fetch 失敗、現在のDOMから生成:', err);
+        return buildFromCurrentDom();
+      });
   }
 
   // ---------- index_edited.html ダウンロード ----------
