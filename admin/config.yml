@@ -1,0 +1,211 @@
+# Decap CMS 設定ファイル
+# 詳細: https://decapcms.org/docs/configuration-options/
+#
+# 注意:
+# - backend.repo は GitHub リポジトリ作成後に "[ユーザー名]/[リポジトリ名]" に置き換える
+# - base_url / auth_endpoint は GitHub OAuth プロキシ (Cloudflare Worker) のURLに置き換える
+# - 代表手動ステップは DEPLOY.md を参照
+
+backend:
+  name: github
+  repo: PLACEHOLDER_USER/PLACEHOLDER_REPO       # 例: shotaso1124/ai-sns-school-lp
+  branch: main
+  # OAuth プロキシ (Cloudflare Worker) — DEPLOY.md Step 4 参照
+  base_url: https://PLACEHOLDER_WORKER.workers.dev
+  auth_endpoint: /auth
+
+# 編集中のライブプレビュー (任意機能)
+site_url: https://PLACEHOLDER_PAGES.pages.dev
+display_url: https://PLACEHOLDER_PAGES.pages.dev
+
+# 画像アップロード先 (リポジトリ直下の assets/ ディレクトリ)
+media_folder: "assets"
+public_folder: "/assets"
+
+# エディタプレビューはオフ (HTMLを直接編集しないため不要)
+show_preview_links: false
+
+# ロケール
+locale: ja
+
+# ============================================================
+# コレクション定義
+# ============================================================
+# 戦略: 「単一JSONファイル編集モード」
+#   - site_data.json を 1ファイル = 1コレクション として管理
+#   - 各セクションを fields のグループとして表現
+#   - HTML側はビルドスクリプト or JS でランタイム埋め込み (今回のスコープ外)
+#
+# 編集対象 data-key 数: 約77件 (PLACEHOLDERS.md 参照)
+# 認証済みGitHubユーザーがWeb UIから編集 → GitHub commit → Cloudflare Pages 自動再デプロイ
+# ============================================================
+
+collections:
+  - name: "site"
+    label: "サイト全体"
+    label_singular: "サイト全体"
+    description: "AI_SNS_School LP の全テキスト・数値を編集します。"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "lp"
+        label: "LP コンテンツ"
+        file: "site_data.json"
+        format: "json"
+        fields:
+          # ============ ① ヒーロー ============
+          - label: "① ヒーローセクション"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "サブコピー", name: "hero_sub", widget: "string" }
+              - { label: "メインタイトル", name: "hero_title", widget: "string" }
+              - { label: "ヘッドライン (装飾文字)", name: "hero_headline", widget: "string" }
+              - { label: "サブタイトル", name: "hero_subtitle", widget: "string" }
+              - { label: "説明文 1", name: "hero_desc1", widget: "text" }
+              - { label: "説明文 2", name: "hero_desc2", widget: "text" }
+
+          # ============ 動画プレビュー ============
+          - label: "動画プレビューエリア"
+            name: "preview"
+            widget: "object"
+            fields:
+              - { label: "講師名 (プレビュー)", name: "instructor_avatar_name", widget: "string" }
+              - { label: "講師属性 (プレビュー)", name: "instructor_avatar_stat", widget: "string" }
+
+          # ============ ② コンテンツ ============
+          - label: "② 動画内容リスト"
+            name: "contents"
+            widget: "object"
+            fields:
+              - { label: "見出し", name: "contents_headline", widget: "string" }
+              - { label: "項目 1", name: "content_item_01", widget: "string" }
+              - { label: "項目 2", name: "content_item_02", widget: "string" }
+              - { label: "項目 3", name: "content_item_03", widget: "string" }
+              - { label: "項目 4", name: "content_item_04", widget: "string" }
+
+          # ============ ③ 講師紹介 ============
+          - label: "③ 講師紹介"
+            name: "instructor"
+            widget: "object"
+            fields:
+              - { label: "講師名", name: "instructor_name", widget: "string" }
+              - { label: "肩書き (日本語)", name: "instructor_title", widget: "string" }
+              - { label: "肩書き (英語)", name: "instructor_title_en", widget: "string" }
+              - { label: "実績 1", name: "instructor_stat_1", widget: "string" }
+              - { label: "実績 2", name: "instructor_stat_2", widget: "string" }
+              - { label: "実績 3", name: "instructor_stat_3", widget: "string" }
+              - { label: "実績 4", name: "instructor_stat_4", widget: "string" }
+              - { label: "実績 5", name: "instructor_stat_5", widget: "string" }
+
+          # ============ ④ こんな方へ ============
+          - label: "④ こんな方へ"
+            name: "recommended"
+            widget: "object"
+            fields:
+              - { label: "見出し", name: "recommended_title", widget: "string" }
+              - { label: "チェック項目 1", name: "check_item_1", widget: "string" }
+              - { label: "チェック項目 2", name: "check_item_2", widget: "string" }
+              - { label: "チェック項目 3", name: "check_item_3", widget: "string" }
+              - { label: "チェック項目 4", name: "check_item_4", widget: "string" }
+              - { label: "チェック項目 5", name: "check_item_5", widget: "string" }
+
+          # ============ ⑤ メインCTA ============
+          - label: "⑤ メインCTA"
+            name: "cta"
+            widget: "object"
+            fields:
+              - { label: "バッジ1 ラベル", name: "badge_label_1", widget: "string" }
+              - { label: "バッジ1 数値", name: "badge_value_1", widget: "string" }
+              - { label: "バッジ1 単位", name: "badge_unit_1", widget: "string" }
+              - { label: "バッジ2 ラベル", name: "badge_label_2", widget: "string" }
+              - { label: "バッジ2 数値", name: "badge_value_2", widget: "string" }
+              - { label: "バッジ2 単位", name: "badge_unit_2", widget: "string" }
+              - { label: "今だけラベル", name: "cta_now_label", widget: "string" }
+              - { label: "メインボタン文言", name: "cta_button_main", widget: "string" }
+              - { label: "申込者数表示", name: "cta_members", widget: "string" }
+              - { label: "サブボタン文言", name: "cta_button_sub", widget: "string" }
+
+          # ============ ⑥ お客様の声 ============
+          - label: "⑥ お客様の声"
+            name: "testimonials"
+            widget: "object"
+            fields:
+              - { label: "セクション見出し", name: "testimonials_heading", widget: "string" }
+
+              - label: "カード 1"
+                name: "testimonial_1"
+                widget: "object"
+                fields:
+                  - { label: "氏名", name: "testimonial_1_name", widget: "string" }
+                  - { label: "キャプション", name: "testimonial_1_caption", widget: "string" }
+                  - { label: "メッセージ", name: "testimonial_1_message", widget: "text" }
+                  - { label: "累積金額", name: "testimonial_1_amount", widget: "string" }
+                  - { label: "達成期間", name: "testimonial_1_period", widget: "string" }
+                  - { label: "達成金額 (大)", name: "testimonial_1_result_amount", widget: "string" }
+                  - { label: "達成ラベル", name: "testimonial_1_result_label", widget: "string", default: "達成" }
+
+              - label: "カード 2"
+                name: "testimonial_2"
+                widget: "object"
+                fields:
+                  - { label: "氏名", name: "testimonial_2_name", widget: "string" }
+                  - { label: "キャプション", name: "testimonial_2_caption", widget: "string" }
+                  - { label: "メッセージ", name: "testimonial_2_message", widget: "text" }
+                  - { label: "累積金額", name: "testimonial_2_amount", widget: "string" }
+                  - { label: "達成期間", name: "testimonial_2_period", widget: "string" }
+                  - { label: "達成金額 (大)", name: "testimonial_2_result_amount", widget: "string" }
+                  - { label: "達成ラベル", name: "testimonial_2_result_label", widget: "string", default: "達成" }
+
+              - label: "カード 3"
+                name: "testimonial_3"
+                widget: "object"
+                fields:
+                  - { label: "氏名", name: "testimonial_3_name", widget: "string" }
+                  - { label: "キャプション", name: "testimonial_3_caption", widget: "string" }
+                  - { label: "メッセージ", name: "testimonial_3_message", widget: "text" }
+                  - { label: "累積金額", name: "testimonial_3_amount", widget: "string" }
+                  - { label: "達成期間", name: "testimonial_3_period", widget: "string" }
+                  - { label: "達成金額 (大)", name: "testimonial_3_result_amount", widget: "string" }
+                  - { label: "達成ラベル", name: "testimonial_3_result_label", widget: "string", default: "達成" }
+
+              - label: "カード 4"
+                name: "testimonial_4"
+                widget: "object"
+                fields:
+                  - { label: "氏名", name: "testimonial_4_name", widget: "string" }
+                  - { label: "キャプション", name: "testimonial_4_caption", widget: "string" }
+                  - { label: "メッセージ", name: "testimonial_4_message", widget: "text" }
+                  - { label: "累積金額", name: "testimonial_4_amount", widget: "string" }
+                  - { label: "達成期間", name: "testimonial_4_period", widget: "string" }
+                  - { label: "達成金額 (大)", name: "testimonial_4_result_amount", widget: "string" }
+                  - { label: "達成ラベル", name: "testimonial_4_result_label", widget: "string", default: "達成" }
+
+          # ============ ⑦ FAQ ============
+          - label: "⑦ FAQ"
+            name: "faq"
+            widget: "object"
+            fields:
+              - { label: "Q1 質問", name: "faq_1_q", widget: "string" }
+              - { label: "Q1 回答", name: "faq_1_a", widget: "text" }
+              - { label: "Q2 質問", name: "faq_2_q", widget: "string" }
+              - { label: "Q2 回答", name: "faq_2_a", widget: "text" }
+              - { label: "Q3 質問", name: "faq_3_q", widget: "string" }
+              - { label: "Q3 回答", name: "faq_3_a", widget: "text" }
+
+          # ============ ⑧ フッターCTA ============
+          - label: "⑧ フッターCTA"
+            name: "footer_cta"
+            widget: "object"
+            fields:
+              - { label: "バッジ1 ラベル", name: "footer_cta_badge_label_1", widget: "string" }
+              - { label: "バッジ1 数値", name: "footer_cta_badge_value_1", widget: "string" }
+              - { label: "バッジ1 単位", name: "footer_cta_badge_unit_1", widget: "string" }
+              - { label: "バッジ2 ラベル", name: "footer_cta_badge_label_2", widget: "string" }
+              - { label: "バッジ2 数値", name: "footer_cta_badge_value_2", widget: "string" }
+              - { label: "バッジ2 単位", name: "footer_cta_badge_unit_2", widget: "string" }
+              - { label: "今だけラベル", name: "footer_cta_now_label", widget: "string" }
+              - { label: "メインボタン文言", name: "footer_cta_button_main", widget: "string" }
+              - { label: "申込者数表示", name: "footer_cta_members", widget: "string" }
+              - { label: "サブボタン文言", name: "footer_cta_button_sub", widget: "string" }

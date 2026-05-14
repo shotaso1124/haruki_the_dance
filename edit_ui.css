@@ -1,0 +1,281 @@
+/* ============================================
+   AI_SNS_School LP - 編集UIスタイル（パワポ風）
+   元LPのスタイルは index.html 側からそのまま取り込む
+   ============================================ */
+
+/* ---------- 編集モード OFF（普通の表示） ---------- */
+body.edit-off [data-key] {
+  outline: none !important;
+  background: transparent !important;
+  cursor: inherit !important;
+}
+
+body.edit-off [data-key]:hover {
+  outline: none !important;
+  background: transparent !important;
+}
+
+/* ---------- 編集モード ON ---------- */
+body.edit-on [data-key] {
+  outline: 1px dashed rgba(37, 99, 235, 0.35);
+  cursor: text;
+  border-radius: 2px;
+  transition: outline 0.15s ease, background 0.15s ease;
+  min-height: 1em;
+}
+
+body.edit-on [data-key]:hover {
+  outline: 2px solid #2563EB;
+  background: rgba(37, 99, 235, 0.06);
+}
+
+body.edit-on [data-key].selected {
+  outline: 2px solid #DC2626;
+  background: rgba(220, 38, 38, 0.06);
+}
+
+body.edit-on [data-key]:focus {
+  outline: 2px solid #2563EB;
+  background: rgba(37, 99, 235, 0.10);
+}
+
+/* ---------- トップヘッダー（モード切替・保存） ---------- */
+#edit-header {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background: #0F172A;
+  color: #fff;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: 'Noto Sans JP', sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+#edit-header .edit-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #94A3B8;
+}
+
+#edit-header .edit-title .ai-name {
+  color: #fff;
+  margin-right: 8px;
+}
+
+#edit-header .edit-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#save-status {
+  font-size: 12px;
+  color: #4ADE80;
+  min-width: 80px;
+  text-align: right;
+}
+
+#edit-header button {
+  border: none;
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+#mode-toggle {
+  background: #2563EB;
+  color: #fff;
+}
+
+#mode-toggle:hover {
+  background: #1D4ED8;
+}
+
+body.edit-off #mode-toggle {
+  background: #475569;
+}
+
+body.edit-off #mode-toggle:hover {
+  background: #64748B;
+}
+
+#reset-btn {
+  background: #475569;
+  color: #fff;
+}
+
+#reset-btn:hover {
+  background: #64748B;
+}
+
+#save-btn {
+  background: #16A34A;
+  color: #fff;
+}
+
+#save-btn:hover {
+  background: #15803D;
+}
+
+#download-btn {
+  background: #D97706;
+  color: #fff;
+}
+
+#download-btn:hover {
+  background: #B45309;
+}
+
+/* ---------- フロートツールバー ---------- */
+#float-toolbar {
+  position: fixed;
+  z-index: 10000;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  border: 1px solid #E2E8F0;
+  padding: 8px;
+  display: none;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  font-family: 'Noto Sans JP', sans-serif;
+  max-width: 460px;
+}
+
+body.edit-on #float-toolbar.visible {
+  display: flex;
+}
+
+#float-toolbar .tb-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px;
+  border-right: 1px solid #E2E8F0;
+}
+
+#float-toolbar .tb-group:last-child {
+  border-right: none;
+}
+
+#float-toolbar label {
+  font-size: 11px;
+  color: #475569;
+  font-weight: 700;
+}
+
+#float-toolbar select,
+#float-toolbar input[type="number"] {
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 4px 6px;
+  font-size: 12px;
+  background: #fff;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+#float-toolbar select {
+  min-width: 110px;
+}
+
+#float-toolbar input[type="number"] {
+  width: 56px;
+}
+
+#float-toolbar input[type="color"] {
+  width: 32px;
+  height: 28px;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 1px;
+  cursor: pointer;
+  background: #fff;
+}
+
+#float-toolbar .tb-preset-btn {
+  background: #F1F5F9;
+  color: #0F172A;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+#float-toolbar .tb-preset-btn:hover {
+  background: #E2E8F0;
+}
+
+#float-toolbar .tb-preset-btn.active {
+  background: #2563EB;
+  color: #fff;
+  border-color: #2563EB;
+}
+
+#float-toolbar .tb-icon-btn {
+  background: #F1F5F9;
+  color: #0F172A;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  width: 32px;
+  height: 28px;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+
+#float-toolbar .tb-icon-btn:hover {
+  background: #E2E8F0;
+}
+
+#float-toolbar .tb-icon-btn.active {
+  background: #2563EB;
+  color: #fff;
+  border-color: #2563EB;
+}
+
+#float-toolbar .tb-target {
+  font-size: 11px;
+  color: #64748B;
+  width: 100%;
+  padding: 0 6px 2px;
+  border-bottom: 1px solid #F1F5F9;
+  margin-bottom: 4px;
+}
+
+#float-toolbar .tb-target b {
+  color: #0F172A;
+}
+
+/* ---------- ページラッパー位置調整 ---------- */
+#page-content {
+  display: flex;
+  justify-content: center;
+  background: #F0F0F0;
+  min-height: 100vh;
+}
+
+/* スマホ画面狭い時のツールバー */
+@media (max-width: 520px) {
+  #float-toolbar {
+    max-width: calc(100vw - 16px);
+    left: 8px !important;
+    right: 8px;
+  }
+}
