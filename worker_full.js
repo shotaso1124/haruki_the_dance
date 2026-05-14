@@ -429,41 +429,180 @@ function renderLoginPage(next, err) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>編集ログイン — AI_SNS_School CMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;700;900&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#1a1a1a;
+      --ink-soft:#475569;
+      --deep-blue:#2B5F8D;
+      --brush-blue:#6FBCD8;
+      --pale-mint:#DFF3EE;
+      --pale-blue:#E8F4F9;
+      --yellow:#FFE000;
+      --green-1:#06C755;
+      --green-2:#2E7D32;
+      --border:#D7E4EC;
+    }
     body{
-      font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
-      background:#0F172A; color:#E2E8F0;
+      font-family:'Noto Serif JP','Hiragino Mincho ProN','Yu Mincho',serif;
+      background:
+        radial-gradient(ellipse at top right, rgba(111,188,216,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at bottom left, rgba(223,243,238,0.65) 0%, transparent 60%),
+        #FFFFFF;
+      color:var(--ink);
       min-height:100vh; display:flex; align-items:center; justify-content:center;
       padding:24px;
+      letter-spacing:0.03em;
     }
     .card{
-      background:#1E293B; border:1px solid #334155;
-      border-radius:12px; padding:32px; width:100%; max-width:380px;
-      box-shadow:0 10px 30px rgba(0,0,0,.3);
+      position:relative;
+      background:#FFFFFF;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:36px 32px 30px;
+      width:100%;
+      max-width:400px;
+      box-shadow:0 10px 30px rgba(43,95,141,0.10), 0 2px 6px rgba(43,95,141,0.06);
+      overflow:hidden;
+      isolation:isolate;
     }
-    h1{font-size:20px; font-weight:700; margin-bottom:4px;}
-    .sub{font-size:13px; color:#94A3B8; margin-bottom:24px;}
-    label{display:block; font-size:13px; color:#CBD5E1; margin-bottom:6px;}
+    /* 水彩ブラシ装飾（タイトル上の薄いSVGストローク） */
+    .brush{
+      position:absolute;
+      top:18px; left:18px; right:18px;
+      height:46px;
+      background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' preserveAspectRatio='none'><defs><linearGradient id='gh' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%236FBCD8' stop-opacity='0.55'/><stop offset='55%25' stop-color='%2386CFB6' stop-opacity='0.45'/><stop offset='100%25' stop-color='%239FD9B5' stop-opacity='0.5'/></linearGradient></defs><path d='M6,50 C70,20 150,58 220,32 C290,10 350,48 396,30 L396,56 C350,76 290,42 220,62 C150,80 70,42 6,68 Z' fill='url(%23gh)'/></svg>") no-repeat center/100% 100%;
+      z-index:0;
+      pointer-events:none;
+      opacity:0.9;
+    }
+    .accent{
+      font-family:'Caveat',cursive;
+      font-size:18px;
+      color:var(--deep-blue);
+      letter-spacing:0.02em;
+      margin-bottom:4px;
+      position:relative;
+      z-index:1;
+    }
+    h1{
+      font-family:'Noto Serif JP',serif;
+      font-size:26px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:6px;
+      letter-spacing:0.05em;
+      position:relative;
+      z-index:1;
+    }
+    h1 .marker{
+      background:linear-gradient(transparent 62%, var(--yellow) 62%);
+      padding:0 4px;
+    }
+    .sub{
+      font-family:'Noto Sans JP',sans-serif;
+      font-size:12px;
+      color:var(--ink-soft);
+      margin-bottom:26px;
+      letter-spacing:0.06em;
+      position:relative;
+      z-index:1;
+    }
+    label{
+      display:block;
+      font-family:'Noto Sans JP',sans-serif;
+      font-size:13px;
+      font-weight:700;
+      color:var(--deep-blue);
+      margin-bottom:8px;
+      letter-spacing:0.04em;
+      position:relative;
+      z-index:1;
+    }
     input[type=password]{
-      width:100%; padding:12px 14px; border-radius:8px;
-      border:1px solid #475569; background:#0F172A; color:#F1F5F9;
-      font-size:15px; outline:none;
+      width:100%;
+      padding:13px 14px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:#FFFFFF;
+      color:var(--ink);
+      font-size:15px;
+      font-family:'Noto Sans JP',sans-serif;
+      outline:none;
+      transition:border-color 0.15s ease, box-shadow 0.15s ease;
+      position:relative;
+      z-index:1;
+      min-height:46px;
     }
-    input[type=password]:focus{border-color:#2563EB;}
+    input[type=password]:focus{
+      border-color:var(--deep-blue);
+      box-shadow:0 0 0 3px rgba(111,188,216,0.25);
+    }
     button{
-      width:100%; margin-top:16px; padding:12px 14px; border:none;
-      background:#2563EB; color:#fff; font-size:15px; font-weight:600;
-      border-radius:8px; cursor:pointer;
+      width:100%;
+      margin-top:18px;
+      padding:15px 16px;
+      border:1px solid rgba(0,0,0,0.05);
+      background:linear-gradient(135deg, var(--green-1) 0%, var(--green-2) 100%);
+      color:#FFFFFF;
+      font-family:'Noto Sans JP',sans-serif;
+      font-size:16px;
+      font-weight:900;
+      letter-spacing:0.06em;
+      border-radius:50px;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(6,199,85,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+      transition:transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      position:relative;
+      z-index:1;
+      min-height:50px;
     }
-    button:hover{background:#1D4ED8;}
-    .err{color:#FCA5A5; font-size:13px; margin-top:12px; background:#7F1D1D33; padding:8px 10px; border-radius:6px;}
-    .foot{font-size:11px; color:#64748B; margin-top:20px; text-align:center;}
+    button:hover{
+      transform:translateY(-1px);
+      box-shadow:0 8px 22px rgba(6,199,85,0.45), inset 0 1px 0 rgba(255,255,255,0.3);
+      filter:brightness(1.03);
+    }
+    button:focus-visible{
+      outline:2px solid var(--deep-blue);
+      outline-offset:3px;
+    }
+    .err{
+      color:#B91C1C;
+      font-family:'Noto Sans JP',sans-serif;
+      font-size:13px;
+      font-weight:700;
+      margin-top:14px;
+      background:#FEE2E2;
+      border:1px solid #FCA5A5;
+      padding:10px 12px;
+      border-radius:8px;
+      position:relative;
+      z-index:1;
+    }
+    .foot{
+      font-family:'Noto Sans JP',sans-serif;
+      font-size:11px;
+      color:var(--ink-soft);
+      margin-top:22px;
+      text-align:center;
+      letter-spacing:0.05em;
+      position:relative;
+      z-index:1;
+    }
+    @media (max-width: 420px) {
+      .card{ padding:30px 22px 24px; border-radius:14px; }
+      h1{ font-size:22px; }
+    }
   </style>
 </head>
 <body>
   <form class="card" method="POST" action="/login">
-    <h1>編集ログイン</h1>
+    <span class="brush" aria-hidden="true"></span>
+    <p class="accent">Editor Login</p>
+    <h1><span class="marker">編集ログイン</span></h1>
     <p class="sub">AI_SNS_School LP CMS</p>
     <label for="pw">パスワード</label>
     <input id="pw" name="password" type="password" autocomplete="current-password" autofocus required>
