@@ -99,13 +99,12 @@ lp_template/
 
 ---
 
-## Cloudflare Worker コード
+## Cloudflare Worker コード（リポジトリ外管理）
 
 OAuth + パスワード認証 + GitHub保存用の Worker コード:
-- ファイル: `_workers/worker_full.js`
-- 配置場所: ルート外（`_workers/`配下）に置くことで、Cloudflare Pages/Workers の自動検出を回避
-- 実際のデプロイ: Cloudflare ダッシュボードで `ai-sns-school-cms-oauth` Worker に手動貼り付け
-- 自動デプロイ無効化推奨（管理画面で連携解除 or リポジトリ変更検知を停止）
+- バックアップ場所: `/Users/shota/Claude母体/ai_sns_school/_worker_backup/worker_full.js`
+- リポジトリには含めない（Cloudflare Pages の自動検出回避）
+- 実デプロイ: Cloudflare ダッシュボードで `ai-sns-school-cms-oauth` Worker に手動貼り付け済
 
 ---
 
