@@ -99,6 +99,16 @@ lp_template/
 
 ---
 
+## Cloudflare Worker コード
+
+OAuth + パスワード認証 + GitHub保存用の Worker コード:
+- ファイル: `_workers/worker_full.js`
+- 配置場所: ルート外（`_workers/`配下）に置くことで、Cloudflare Pages/Workers の自動検出を回避
+- 実際のデプロイ: Cloudflare ダッシュボードで `ai-sns-school-cms-oauth` Worker に手動貼り付け
+- 自動デプロイ無効化推奨（管理画面で連携解除 or リポジトリ変更検知を停止）
+
+---
+
 ## 関連ドキュメント
 
 - `PLACEHOLDERS.md` — data-key 一覧と差し替え対応表 (TBD 33件含む)
