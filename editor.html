@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>業務は10割AI、クリエイティブの3割で生きる｜AIスクール無料説明会</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;700;900&family=Caveat:wght@400;700&family=Yuji+Mai&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-soft: #333;
+      --ink-mute: #555;
+      --brush-blue: #6FBCD8;
+      --brush-teal: #9FD9B5;
+      --deep-blue: #2B5F8D;
+      --pale-mint: #DFF3EE;
+      --pale-blue: #E8F4F9;
+      --yellow-marker: #FFE000;
+      --line-green: #06C755;
+      --cta-purple-1: #5DD5D8;
+      --cta-purple-2: #6B5BC9;
+      --cta-green-1: #4CAF50;
+      --cta-green-2: #2E7D32;
+      --red-accent: #E63946;
+    }
+
+    body {
+      font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+      background: #efefef;
+      color: var(--ink);
+      display: flex;
+      justify-content: center;
+      letter-spacing: 0.03em;
+    }
+
+    .page-wrapper {
+      width: 100%;
+      max-width: 480px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    /* ===== Reusable brush stroke SVG-as-background ===== */
+    .brush-stroke-bg {
+      position: relative;
+      display: inline-block;
+      padding: 6px 18px 8px;
+    }
+    .brush-stroke-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%236FBCD8' stop-opacity='0.85'/><stop offset='55%25' stop-color='%2386CFB6' stop-opacity='0.8'/><stop offset='100%25' stop-color='%239FD9B5' stop-opacity='0.85'/></linearGradient></defs><path d='M10,42 C70,18 140,52 210,30 C280,12 340,46 392,28 L392,52 C340,72 280,40 210,58 C140,76 70,40 10,62 Z' fill='url(%23g)'/></svg>") no-repeat center/100% 100%;
+      z-index: 0;
+    }
+    .brush-stroke-bg > * { position: relative; z-index: 1; }
+
+    /* ===== Hero ===== */
+    .hero {
+      background: #fff;
+      padding: 36px 22px 28px;
+      text-align: center;
+    }
+
+    .hero-sub-wrap {
+      display: inline-block;
+      padding: 10px 22px 14px;
+      margin-bottom: 22px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' preserveAspectRatio='none'><defs><linearGradient id='gh' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%236FBCD8' stop-opacity='0.9'/><stop offset='55%25' stop-color='%2386CFB6' stop-opacity='0.85'/><stop offset='100%25' stop-color='%239FD9B5' stop-opacity='0.9'/></linearGradient></defs><path d='M6,50 C70,20 150,58 220,32 C290,10 350,48 396,30 L396,56 C350,76 290,42 220,62 C150,80 70,42 6,68 Z' fill='url(%23gh)'/></svg>") no-repeat center/100% 100%;
+    }
+
+    .hero-sub {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.12em;
+    }
+
+    .hero-bubble {
+      display: inline-block;
+      position: relative;
+      padding: 18px 28px 16px;
+      margin: 6px auto 18px;
+      border: 2px dashed var(--ink);
+      border-radius: 22px;
+      background: #fff;
+      font-family: 'Noto Serif JP', serif;
+    }
+
+    .hero-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -16px;
+      left: 32%;
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-top: 18px dashed var(--ink);
+      border-top-style: solid;
+      filter: drop-shadow(0 2px 0 #fff);
+    }
+
+    .hero-bubble-quote {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .hero-bubble-amount {
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+
+    .hero-title-wrap {
+      position: relative;
+      display: inline-block;
+      margin: 24px auto 14px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.4;
+      letter-spacing: 0.03em;
+      color: var(--deep-blue);
+      padding: 0 6px 14px;
+    }
+
+    .hero-title-wrap .kakko {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .hero-title-wrap::after {
+      content: "";
+      position: absolute;
+      left: 4%;
+      right: 4%;
+      bottom: -2px;
+      height: 18px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M5,18 Q60,2 120,16 T240,18 T370,14' stroke='%23FFD600' stroke-width='10' stroke-linecap='round' fill='none' opacity='0.85'/></svg>") no-repeat center/100% 100%;
+      z-index: -1;
+    }
+
+    .hero-headline {
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      line-height: 1.2;
+      margin: 18px auto 6px;
+      padding-bottom: 14px;
+    }
+
+    .hero-headline::after {
+      content: "";
+      position: absolute;
+      left: -4%;
+      right: -4%;
+      bottom: 0;
+      height: 14px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M4,18 C70,4 140,22 210,12 C280,2 340,20 394,10' stroke='%23B0B0B0' stroke-width='10' stroke-linecap='round' fill='none' opacity='0.6'/></svg>") no-repeat center/100% 100%;
+    }
+
+    .hero-subtitle {
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      padding: 4px 18px 6px;
+      margin: 12px 0 20px;
+      color: var(--ink);
+    }
+
+    .hero-desc1, .hero-desc2 {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--ink-soft);
+    }
+    .hero-desc1 { margin-bottom: 6px; }
+    .hero-desc2 { font-weight: 700; margin-top: 4px; }
+
+    .arrow-down {
+      width: 0;
+      height: 0;
+      border-left: 40px solid transparent;
+      border-right: 40px solid transparent;
+      border-top: 50px solid var(--red-accent);
+      margin: 18px auto;
+    }
+
+    /* ===== Video preview ===== */
+    .video-preview-section {
+      background: #fff;
+      padding: 0 22px 36px;
+      text-align: center;
+    }
+
+    .video-preview-area {
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .instructor-avatar-small {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6FBCD8, #2B5F8D);
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(43,95,141,0.25);
+    }
+
+    .instructor-avatar-small svg {
+      width: 48px;
+      height: 48px;
+      fill: #fff;
+    }
+
+    .video-player-mock {
+      flex: 1;
+      background: #111;
+      border-radius: 10px;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    }
+
+    .video-player-mock::after {
+      content: '▶';
+      color: rgba(255,255,255,0.85);
+      font-size: 28px;
+    }
+    .video-player-mock.has-iframe::after { display: none !important; }
+
+    .instructor-info-small {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 11px;
+      color: var(--ink-mute);
+      text-align: left;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* ===== Contents ===== */
+    .contents-section {
+      background: #fff;
+      padding: 38px 22px 36px;
+    }
+
+    .contents-section h2 {
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--ink);
+      margin: 0 auto 28px;
+      padding: 8px 4px 22px;
+      letter-spacing: 0.06em;
+    }
+
+    .contents-section h2::before {
+      content: "contents";
+      position: absolute;
+      top: -10px;
+      right: -54px;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      transform: rotate(-6deg);
+      letter-spacing: 0.02em;
+    }
+
+    .contents-section h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+      height: 22px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 40' preserveAspectRatio='none'><path d='M5,22 C80,4 160,32 220,16 C290,0 340,28 394,12 L394,32 C340,46 290,22 220,38 C160,54 80,30 5,40 Z' fill='%236FBCD8' opacity='0.7'/></svg>") no-repeat center/100% 100%;
+    }
+
+    .contents-wrap {
+      text-align: center;
+    }
+
+    .contents-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 18px;
+    }
+
+    .contents-list li {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      align-items: stretch;
+      gap: 0;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      min-height: 70px;
+    }
+
+    .contents-list li:nth-child(1) .content-num { background: linear-gradient(135deg, #98E0CB, #6FC8AF); }
+    .contents-list li:nth-child(1) .content-text-wrap { background: linear-gradient(90deg, #D8F2EA, #C9E9DF); }
+    .contents-list li:nth-child(2) .content-num { background: linear-gradient(135deg, #87C3DD, #5DA3C2); }
+    .contents-list li:nth-child(2) .content-text-wrap { background: linear-gradient(90deg, #D6EAF5, #C5DDED); }
+    .contents-list li:nth-child(3) .content-num { background: linear-gradient(135deg, #5DA3C2, #3F7DA0); }
+    .contents-list li:nth-child(3) .content-text-wrap { background: linear-gradient(90deg, #C5DDED, #B0CEE3); }
+    .contents-list li:nth-child(4) .content-num { background: linear-gradient(135deg, #2B5F8D, #1D4567); }
+    .contents-list li:nth-child(4) .content-text-wrap { background: linear-gradient(90deg, #B0CEE3, #9FC1DC); }
+
+    .content-num {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.02em;
+      position: relative;
+    }
+
+    .content-num::after {
+      content: "";
+      position: absolute;
+      right: -14px;
+      top: 0;
+      bottom: 0;
+      width: 16px;
+      background: inherit;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    .content-text-wrap {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px 12px 22px;
+    }
+
+    .content-text {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+
+    /* ===== Instructor ===== */
+    .instructor-section {
+      background: var(--pale-mint);
+      padding: 38px 22px 40px;
+      text-align: center;
+      background-image:
+        radial-gradient(ellipse at 15% 10%, rgba(159,217,181,0.5) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 90%, rgba(111,188,216,0.35) 0%, transparent 55%);
+    }
+
+    .instructor-section h2 {
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+      padding: 4px 14px 16px;
+    }
+
+    .instructor-section h2::before {
+      content: "Profile";
+      position: absolute;
+      top: -8px;
+      right: -52px;
+      font-family: 'Caveat', cursive;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      transform: rotate(-6deg);
+    }
+
+    .instructor-section h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 14px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M5,16 C60,4 140,24 200,12 C260,2 340,22 394,8' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' fill='none' opacity='0.7'/><path d='M5,22 C70,12 130,28 210,18 C290,8 350,24 392,16' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' fill='none' opacity='0.5'/></svg>") no-repeat center/100% 100%;
+    }
+
+    .instructor-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6FBCD8, #2B5F8D);
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(43,95,141,0.3);
+    }
+
+    .instructor-avatar svg {
+      width: 64px;
+      height: 64px;
+      fill: #fff;
+    }
+
+    .instructor-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .instructor-title {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin-bottom: 2px;
+      font-weight: 700;
+    }
+
+    .instructor-title-en {
+      font-family: 'Caveat', cursive;
+      font-size: 16px;
+      color: var(--deep-blue);
+      margin-bottom: 24px;
+    }
+
+    .instructor-stats {
+      list-style: none;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.85);
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(43,95,141,0.1);
+    }
+
+    .instructor-stats li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(43,95,141,0.1);
+      text-align: left;
+    }
+
+    .instructor-stats li:last-child { border-bottom: none; }
+
+    .check-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--deep-blue);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    /* ===== Recommended ===== */
+    .recommended-section {
+      background: #fff;
+      padding: 38px 22px 40px;
+    }
+
+    .recommended-header {
+      background: linear-gradient(180deg, #DFF3EE, #D2EBE5);
+      padding: 20px 18px 24px;
+      margin: -38px -22px 28px;
+      text-align: center;
+      position: relative;
+    }
+
+    .recommended-title {
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      padding: 0 6px 12px;
+      margin-bottom: 0;
+    }
+
+    .recommended-title::after {
+      content: "";
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      bottom: 0;
+      height: 14px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M5,18 C70,6 130,24 200,14 C270,4 340,22 394,12' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' fill='none' opacity='0.8'/><path d='M10,24 C70,14 140,28 210,20 C280,12 350,26 392,18' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' fill='none' opacity='0.55'/></svg>") no-repeat center/100% 100%;
+    }
+
+    .recommended-subtitle-en {
+      font-family: 'Caveat', cursive;
+      font-size: 18px;
+      color: var(--ink);
+      margin-left: 12px;
+      display: inline-block;
+      transform: rotate(-4deg);
+    }
+
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .check-list li {
+      background: #F2F4F6;
+      border-radius: 28px;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    /* ===== CTA section ===== */
+    .cta-section {
+      text-align: center;
+    }
+
+    .cta-arrow-area {
+      background: #fff;
+      padding: 24px 0 12px;
+    }
+
+    .badge-area {
+      background: var(--pale-mint);
+      padding: 22px 20px;
+      position: relative;
+    }
+
+    .badge-area::before {
+      content: "プレミアム動画詳細";
+      display: block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .badge-boxes {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .badge-box {
+      background: transparent;
+      border-radius: 0;
+      padding: 6px 14px;
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+
+    .badge-label {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 11px;
+      color: var(--ink-soft);
+      margin-bottom: 4px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-value-wrap {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-paren {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
+    .badge-unit {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-left: 2px;
+    }
+
+    .cta-green-block {
+      background: linear-gradient(135deg, #5DD5D8 0%, #6B5BC9 100%);
+      padding: 28px 22px 36px;
+      position: relative;
+    }
+
+    .cta-green-block::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 8%;
+      right: 8%;
+      height: 60px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' preserveAspectRatio='none'><path d='M10,40 C80,18 160,52 230,28 C300,8 360,42 394,30 L394,52 C360,68 300,38 230,58 C160,78 80,42 10,62 Z' fill='%23B6E3EA' opacity='0.7'/></svg>") no-repeat center/100% 100%;
+      pointer-events: none;
+    }
+
+    .cta-now-badge {
+      position: relative;
+      display: inline-block;
+      background: #fff;
+      color: var(--red-accent);
+      font-family: 'Noto Serif JP', serif;
+      font-size: 13px;
+      font-weight: 900;
+      border-radius: 24px;
+      padding: 6px 16px;
+      margin-bottom: 8px;
+      letter-spacing: 0.06em;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .cta-now-badge::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 24px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 10px solid #fff;
+    }
+
+    .cta-button-main {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 38px;
+      font-weight: 900;
+      color: #fff;
+      margin: 8px 0 14px;
+      line-height: 1.1;
+      letter-spacing: 0.12em;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-members {
+      display: inline-block;
+      background: var(--yellow-marker);
+      color: var(--ink);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      border-radius: 24px;
+      padding: 6px 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    a.cta-button {
+      display: block;
+      background: linear-gradient(135deg, #06C755 0%, #2E7D32 100%);
+      color: #fff;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      text-decoration: none;
+      padding: 20px 24px;
+      border-radius: 60px;
+      box-shadow: 0 6px 20px rgba(6,199,85,0.4), inset 0 2px 0 rgba(255,255,255,0.25);
+      text-align: center;
+      letter-spacing: 0.04em;
+      position: relative;
+      transition: transform 0.15s ease;
+    }
+
+    a.cta-button:hover { transform: translateY(-1px); }
+
+    /* ===== Testimonials ===== */
+    .testimonials-section {
+      background: var(--pale-mint);
+      padding: 40px 22px 36px;
+    }
+
+    .testimonials-section h2 {
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin: 0 auto 30px;
+      padding: 4px 4px 18px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .testimonials-section h2::before {
+      content: "Voice";
+      position: absolute;
+      top: -6px;
+      right: 14%;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      transform: rotate(-6deg);
+    }
+
+    .testimonials-section h2::after {
+      content: "";
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      bottom: 0;
+      height: 18px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M5,18 C70,4 140,26 210,14 C280,2 340,24 394,12 L394,30 C340,40 280,22 210,32 C140,42 70,22 5,38 Z' fill='%236FBCD8' opacity='0.7'/></svg>") no-repeat center/100% 100%;
+    }
+
+    .testimonial-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 2px solid var(--deep-blue);
+      box-shadow: 0 4px 16px rgba(43,95,141,0.12);
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .testimonial-header {
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e0e7ed;
+    }
+
+    .testimonial-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 24px;
+      font-weight: 900;
+      display: inline;
+      letter-spacing: 0.04em;
+    }
+
+    .testimonial-age {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      color: var(--ink-mute);
+      margin-left: 6px;
+      font-weight: 700;
+    }
+
+    .testimonial-caption {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 12px;
+      color: var(--ink-mute);
+      margin-top: 4px;
+      font-weight: 700;
+    }
+
+    .testimonial-body {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .testimonial-chat { flex: 1; }
+
+    .chat-bubble {
+      background: #DCF8C6;
+      border-radius: 12px;
+      border-bottom-left-radius: 0;
+      padding: 12px 14px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: var(--ink);
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    /* ===== Testimonial Images ===== */
+    .testimonial-images {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .testimonial-image-slot {
+      flex: 1;
+      aspect-ratio: 9/16;
+      background: #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .testimonial-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      font-size: 12px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    .testimonial-amount {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    /* ===== Testimonial Images - utage layout ===== */
+    .testimonial-images {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .testimonial-image-slot {
+      width: 100%;
+      background: #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      aspect-ratio: 9 / 16;
+    }
+    .testimonial-image-slot:nth-child(2) {
+      aspect-ratio: auto;
+      max-height: 240px;
+    }
+    .testimonial-image-slot:nth-child(2) img {
+      object-fit: contain !important;
+      background: #f9fafb;
+    }
+    .result-box {
+      align-self: center;
+    }
+    .testimonial-amount {
+      display: none;
+    }
+
+    .testimonial-more {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 12px;
+      color: var(--deep-blue);
+      text-decoration: underline;
+      display: block;
+      text-align: right;
+      margin-top: 6px;
+      font-weight: 700;
+    }
+
+    .result-box {
+      background: var(--yellow-marker);
+      border-radius: 4px;
+      padding: 14px 8px;
+      text-align: center;
+      min-width: 96px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%);
+    }
+
+    .result-period {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .result-amount {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .result-unit {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .result-label {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--ink);
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+    }
+
+    /* ===== FAQ ===== */
+    .faq-section {
+      background: #fff;
+      padding: 40px 22px 36px;
+    }
+
+    .faq-section h2 {
+      position: relative;
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin: 0 auto 30px;
+      padding: 4px 4px 18px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .faq-section h2::before {
+      content: "Q & A";
+      position: absolute;
+      top: -6px;
+      right: 18%;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      transform: rotate(-6deg);
+    }
+
+    .faq-section h2::after {
+      content: "";
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      bottom: 0;
+      height: 14px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 30' preserveAspectRatio='none'><path d='M5,18 C70,4 140,26 210,14 C280,2 340,24 394,12' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' fill='none' opacity='0.7'/></svg>") no-repeat center/100% 100%;
+    }
+
+    .faq-item {
+      padding: 20px 0;
+      border-bottom: 1px dashed #ccd6dd;
+    }
+
+    .faq-item:first-of-type { padding-top: 0; }
+
+    .faq-q {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .faq-q-label {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--deep-blue);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .faq-q-text {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.6;
+      padding-top: 4px;
+    }
+
+    .faq-a {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .faq-a-label {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--red-accent);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .faq-a-text {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--ink-soft);
+      padding-top: 4px;
+    }
+
+    /* ===== Footer CTA ===== */
+    .footer-cta-section {
+      background: linear-gradient(135deg, #5DD5D8 0%, #6B5BC9 100%);
+      padding: 38px 22px 44px;
+      text-align: center;
+      position: relative;
+    }
+
+    .footer-cta-section::before {
+      content: "";
+      position: absolute;
+      top: 80px;
+      left: 8%;
+      right: 8%;
+      height: 70px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80' preserveAspectRatio='none'><path d='M10,40 C80,18 160,52 230,28 C300,8 360,42 394,30 L394,52 C360,68 300,38 230,58 C160,78 80,42 10,62 Z' fill='%23B6E3EA' opacity='0.7'/></svg>") no-repeat center/100% 100%;
+      pointer-events: none;
+    }
+
+    .footer-cta-section .badge-area {
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      padding-top: 30px;
+    }
+
+    .footer-cta-section .badge-area::before {
+      color: var(--ink);
+    }
+
+    .footer-cta-section .badge-box { background: transparent; }
+  </style>
+  <style id="editor-toolbar-style">
+    /* Editor Toolbar */
+    .editor-toolbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: #0f172a; color: #fff; padding: 10px 16px;
+      display: flex; gap: 8px; align-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px; z-index: 99999;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .editor-toolbar__brand {
+      font-weight: 600; margin-right: 16px;
+    }
+    .editor-toolbar__status {
+      font-size: 12px; opacity: 0.7; margin-left: auto; margin-right: 8px;
+    }
+    .editor-toolbar button {
+      background: #1e293b; color: #fff; border: 1px solid #334155;
+      padding: 6px 14px; border-radius: 6px; cursor: pointer;
+      font-size: 13px; font-family: inherit;
+    }
+    .editor-toolbar button:hover { background: #334155; }
+    .editor-toolbar button.is-active { background: #2563eb; border-color: #2563eb; }
+    .editor-toolbar button.is-primary { background: #059669; border-color: #059669; }
+    .editor-toolbar button.is-primary:hover { background: #047857; }
+    body.editor-mode-active { padding-top: 56px !important; }
+    body.editor-mode-active [data-key][contenteditable="true"] {
+      outline: 1px dashed #2563eb;
+      outline-offset: 2px;
+      cursor: text;
+    }
+    body.editor-mode-active [data-key][contenteditable="true"]:hover {
+      outline: 2px solid #2563eb;
+      background: rgba(37, 99, 235, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <div id="editor-toolbar" class="editor-toolbar">
+    <span class="editor-toolbar__brand">📝 Editor</span>
+    <button id="btn-toggle-edit" class="is-active">編集ON</button>
+    <button id="btn-reset">リセット</button>
+    <span id="editor-status" class="editor-toolbar__status"></span>
+  </div>
+  <div id="image-edit-panel" style="display:none; position:fixed; top:70px; right:16px; background:#1e293b; color:#fff; padding:16px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,.3); z-index:99998; min-width:240px; font-family:-apple-system,BlinkMacSystemFont,sans-serif; font-size:13px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <strong>画像位置調整</strong>
+      <button id="img-close-btn" style="background:transparent; color:#fff; border:none; cursor:pointer; font-size:18px;">×</button>
+    </div>
+    <div style="margin-bottom:10px;">
+      <label style="display:block; margin-bottom:4px;">X位置: <span id="img-posx-val">50%</span></label>
+      <input type="range" id="img-posx" min="0" max="100" value="50" style="width:100%;">
+    </div>
+    <div style="margin-bottom:10px;">
+      <label style="display:block; margin-bottom:4px;">Y位置: <span id="img-posy-val">50%</span></label>
+      <input type="range" id="img-posy" min="0" max="100" value="50" style="width:100%;">
+    </div>
+    <div style="margin-bottom:14px;">
+      <label style="display:block; margin-bottom:4px;">ズーム: <span id="img-scale-val">1.00x</span></label>
+      <input type="range" id="img-scale" min="1.0" max="2.0" step="0.05" value="1.0" style="width:100%;">
+    </div>
+    <div style="display:flex; gap:8px;">
+      <button id="img-replace-btn" style="flex:1; background:#2563eb; color:#fff; border:none; padding:6px; border-radius:4px; cursor:pointer;">差し替え</button>
+      <button id="img-reset-btn" style="flex:1; background:#dc2626; color:#fff; border:none; padding:6px; border-radius:4px; cursor:pointer;">リセット</button>
+    </div>
+  </div>
+  <div class="page-wrapper">
+
+    <!-- ① ヒーロー -->
+    <section class="hero">
+      <div class="hero-sub-wrap">
+        <p class="hero-sub" data-key="hero_sub">不安だったAIが、人生の武器になる</p>
+      </div>
+
+      <div class="hero-bubble">
+        <p class="hero-bubble-quote">"AIで生産性を上げ"</p>
+        <p class="hero-bubble-amount">業務時間を月60h削った</p>
+      </div>
+
+      <h1 class="hero-title-wrap">
+        <span class="kakko">「</span><span data-key="hero_title">業務は10割AI、クリエイティブの3割で生きる</span><span class="kakko">」</span>
+      </h1>
+
+      <p class="hero-headline" data-key="hero_headline">完　全　公　開</p>
+      <p class="hero-subtitle" data-key="hero_subtitle">スクール紹介動画</p>
+      <p class="hero-desc1" data-key="hero_desc1">"多くの人が見落としている"AIの本当の使い方</p>
+      <div class="arrow-down"></div>
+      <p class="hero-desc2" data-key="hero_desc2">〜AI未経験から実際にお金を生み出すまで〜</p>
+    </section>
+
+    <!-- 動画プレビューエリア -->
+    <div class="video-preview-section">
+      <div class="video-preview-area">
+        <div>
+          <div class="instructor-avatar-small">
+            <img data-img-key="instructor_avatar_small_img" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:none;">
+            <svg data-img-fallback="instructor_avatar_small_img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+          </div>
+          <div class="instructor-info-small"><span data-key="instructor_avatar_name">[ひにちの日常]</span><br><span data-key="instructor_avatar_stat">AIを駆使してアプリ開発</span></div>
+        </div>
+        <div class="video-player-mock has-iframe" style="padding:0; overflow:hidden;">
+          <div style="position:relative;padding-top:56.25%;width:100%;height:100%;">
+            <iframe src="https://player.mediadelivery.net/embed/662545/23e760e9-3b0a-4174-ad7b-820dcdba2d02?autoplay=false&loop=false&muted=false&preload=true&responsive=true&showSpeed=false&showChapters=false&showHeatmap=false&showShare=false&showTechnicalInfo=false"
+                    loading="lazy"
+                    style="border:0;position:absolute;top:0;left:0;height:100%;width:100%;border-radius:10px;"
+                    allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
+                    allowfullscreen="true"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 動画内容リスト -->
+    <section class="contents-section">
+      <div class="contents-wrap">
+        <h2 data-key="contents_headline">実際にできるようになること</h2>
+      </div>
+      <ul class="contents-list">
+        <li>
+          <span class="content-num">01</span>
+          <div class="content-text-wrap">
+            <span class="content-text" data-key="content_item_01">月5~10万の副収入の獲得</span>
+          </div>
+        </li>
+        <li>
+          <span class="content-num">02</span>
+          <div class="content-text-wrap">
+            <span class="content-text" data-key="content_item_02">AI駆使のSNS運用で主な収入源を確立</span>
+          </div>
+        </li>
+        <li>
+          <span class="content-num">03</span>
+          <div class="content-text-wrap">
+            <span class="content-text" data-key="content_item_03">会社の給料をアップさせる</span>
+          </div>
+        </li>
+        <li>
+          <span class="content-num">04</span>
+          <div class="content-text-wrap">
+            <span class="content-text" data-key="content_item_04">業務AI化で市場価値の高い人材へ</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ③ 講師紹介 -->
+    <section class="instructor-section">
+      <h2>講師紹介</h2>
+      <div class="instructor-avatar">
+        <img data-img-key="instructor_avatar_img" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:none;">
+        <svg data-img-fallback="instructor_avatar_img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+        </svg>
+      </div>
+      <p class="instructor-name" data-key="instructor_name">[ひにちの日常]</p>
+      <p class="instructor-title" data-key="instructor_title">AIのプロフェッショナル指導者</p>
+      <p class="instructor-title-en" data-key="instructor_title_en">AI Professional Coach</p>
+      <ul class="instructor-stats">
+        <li>
+          <span class="check-icon">✓</span>
+          <span data-key="instructor_stat_1">AI活用歴▶【2年】</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span data-key="instructor_stat_2">AIでアプリ開発【App Store ランキング2位】</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span data-key="instructor_stat_3">指導実績▶【150名越え】</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span data-key="instructor_stat_4">現役慶應生</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span data-key="instructor_stat_5">この度スクール開校【少数限定】</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ④ こんな方へ -->
+    <section class="recommended-section">
+      <div class="recommended-header">
+        <h2 class="recommended-title" data-key="recommended_title">こんな方におすすめ</h2>
+        <span class="recommended-subtitle-en">Recommended for</span>
+      </div>
+      <ul class="check-list">
+        <li>
+          <span class="check-icon">✓</span>
+          <span data-key="check_item_1">AIを使って副業収入を増やしたい方</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span data-key="check_item_2">AIを使って天井のない環境で稼ぎたい方</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span data-key="check_item_3">給料、市場価値を上げたい方</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span data-key="check_item_4">AIツールを実用的な活用をしたい方</span>
+        </li>
+        <li>
+          <span class="check-icon">✓</span>
+          <span data-key="check_item_5">少人数の高密度な環境で本気で学びたい方</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ⑤ メインCTA -->
+    <section class="cta-section">
+      <div class="cta-arrow-area">
+        <div class="arrow-down"></div>
+      </div>
+      <div class="badge-area">
+        <div class="badge-boxes">
+          <div class="badge-box">
+            <p class="badge-label" data-key="badge_label_1">カリキュラム資料</p>
+            <p class="badge-value-wrap">
+              <span class="badge-paren">（</span><span data-key="badge_value_1">40</span><span class="badge-unit" data-key="badge_unit_1">項目</span><span class="badge-paren">）</span>
+            </p>
+          </div>
+          <div class="badge-box">
+            <p class="badge-label" data-key="badge_label_2">特別特典付き</p>
+            <p class="badge-value-wrap">
+              <span class="badge-paren">（</span><span data-key="badge_value_2">7</span><span class="badge-unit" data-key="badge_unit_2">個</span><span class="badge-paren">）</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="cta-green-block">
+        <p class="cta-now-badge" data-key="cta_now_label">少数限定</p>
+        <p class="cta-button-main" data-key="cta_button_main">入校希望の方はLINEで「興味あります」とメッセージ送ってください！</p>
+        <p class="cta-members" data-key="cta_members">！申込に限りがあります</p>
+        <a class="cta-button" href="#" data-key="cta_button_sub">参加希望の方は</a>
+      </div>
+    </section>
+
+    <!-- ⑥ お客様の声 -->
+    <section class="testimonials-section">
+      <h2 data-key="testimonials_heading">受講者の実績例</h2>
+
+      <!-- カード1 -->
+      <div class="testimonial-card">
+        <div class="testimonial-header">
+          <span class="testimonial-name" data-key="testimonial_1_name">[ひにちの日常]</span>
+          <span class="testimonial-age">（[TBD]）</span>
+          <p class="testimonial-caption" data-key="testimonial_1_caption">Appストアで5万超えダウンロード達成、ランキング2位</p>
+        </div>
+        <div class="testimonial-body">
+          <div class="testimonial-chat">
+            <div class="testimonial-images">
+              <div class="testimonial-image-slot">
+                <img data-img-key="testimonial_1_image_A" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:none;">
+                <div data-img-fallback="testimonial_1_image_A" class="testimonial-image-placeholder">画像A</div>
+              </div>
+              <div class="testimonial-image-slot">
+                <img data-img-key="testimonial_1_image_B" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:none;">
+                <div data-img-fallback="testimonial_1_image_B" class="testimonial-image-placeholder">画像B</div>
+              </div>
+            </div>
+            <p class="testimonial-amount" data-key="testimonial_1_amount">[TBD]</p>
+            <a class="testimonial-more" href="#">ほかの実績を見る</a>
+          </div>
+          <div class="result-box">
+            <p class="result-period" data-key="testimonial_1_period">[Geminiだけで]</p>
+            <p class="result-amount" data-key="testimonial_1_result_amount">227</p>
+            <p class="result-unit">万円</p>
+            <p class="result-label" data-key="testimonial_1_result_label">達成</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- カード2 -->
+      <div class="testimonial-card">
+        <div class="testimonial-header">
+          <span class="testimonial-name" data-key="testimonial_2_name">[マネーコードさん]</span>
+          <span class="testimonial-age">（[TBD]）</span>
+          <p class="testimonial-caption" data-key="testimonial_2_caption">初月からInstagramのフォロワー4万人達成</p>
+        </div>
+        <div class="testimonial-body">
+          <div class="testimonial-chat">
+            <div class="testimonial-images">
+              <div class="testimonial-image-slot">
+                <img data-img-key="testimonial_2_image_A" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:none;">
+                <div data-img-fallback="testimonial_2_image_A" class="testimonial-image-placeholder">画像A</div>
+              </div>
+              <div class="testimonial-image-slot">
+                <img data-img-key="testimonial_2_image_B" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:none;">
+                <div data-img-fallback="testimonial_2_image_B" class="testimonial-image-placeholder">画像B</div>
+              </div>
+            </div>
+            <p class="testimonial-amount" data-key="testimonial_2_amount">[TBD]</p>
+            <a class="testimonial-more" href="#">ほかの実績を見る</a>
+          </div>
+          <div class="result-box">
+            <p class="result-period" data-key="testimonial_2_period">[初めて3ヶ月で]</p>
+            <p class="result-amount" data-key="testimonial_2_result_amount">183</p>
+            <p class="result-unit">万円</p>
+            <p class="result-label" data-key="testimonial_2_result_label">達成</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- カード3 -->
+      <div class="testimonial-card">
+        <div class="testimonial-header">
+          <span class="testimonial-name" data-key="testimonial_3_name">[スミス式さん]</span>
+          <span class="testimonial-age">（[TBD]）</span>
+          <p class="testimonial-caption" data-key="testimonial_3_caption">未経験の状態からAIを使ってSNS運用</p>
+        </div>
+        <div class="testimonial-body">
+          <div class="testimonial-chat">
+            <div class="testimonial-images">
+              <div class="testimonial-image-slot">
+                <img data-img-key="testimonial_3_image_A" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:none;">
+                <div data-img-fallback="testimonial_3_image_A" class="testimonial-image-placeholder">画像A</div>
+              </div>
+              <div class="testimonial-image-slot">
+                <img data-img-key="testimonial_3_image_B" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:none;">
+                <div data-img-fallback="testimonial_3_image_B" class="testimonial-image-placeholder">画像B</div>
+              </div>
+            </div>
+            <p class="testimonial-amount" data-key="testimonial_3_amount">[TBD]</p>
+            <a class="testimonial-more" href="#">ほかの実績を見る</a>
+          </div>
+          <div class="result-box">
+            <p class="result-period" data-key="testimonial_3_period">[未経験から]</p>
+            <p class="result-amount" data-key="testimonial_3_result_amount">116</p>
+            <p class="result-unit">万円</p>
+            <p class="result-label" data-key="testimonial_3_result_label">達成</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- カード4 -->
+      <div class="testimonial-card">
+        <div class="testimonial-header">
+          <span class="testimonial-name" data-key="testimonial_4_name">[株式会社Sさん]</span>
+          <span class="testimonial-age">（[TBD]）</span>
+          <p class="testimonial-caption" data-key="testimonial_4_caption">AIで写真や動画を生成してXで数百万インプを連発</p>
+        </div>
+        <div class="testimonial-body">
+          <div class="testimonial-chat">
+            <div class="testimonial-images">
+              <div class="testimonial-image-slot">
+                <img data-img-key="testimonial_4_image_A" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:none;">
+                <div data-img-fallback="testimonial_4_image_A" class="testimonial-image-placeholder">画像A</div>
+              </div>
+              <div class="testimonial-image-slot">
+                <img data-img-key="testimonial_4_image_B" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:none;">
+                <div data-img-fallback="testimonial_4_image_B" class="testimonial-image-placeholder">画像B</div>
+              </div>
+            </div>
+            <p class="testimonial-amount" data-key="testimonial_4_amount">[TBD]</p>
+            <a class="testimonial-more" href="#">ほかの実績を見る</a>
+          </div>
+          <div class="result-box">
+            <p class="result-period" data-key="testimonial_4_period">[法人様の為]</p>
+            <p class="result-amount" data-key="testimonial_4_result_amount">非公開</p>
+            <p class="result-unit">万円</p>
+            <p class="result-label" data-key="testimonial_4_result_label">達成</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ⑦ FAQ -->
+    <section class="faq-section">
+      <h2>よくあるご質問</h2>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-label">Q.</span>
+          <span class="faq-q-text" data-key="faq_1_q">全くの未経験からお金を生み出すことは可能ですか？</span>
+        </div>
+        <div class="faq-a">
+          <span class="faq-a-label">A.</span>
+          <span class="faq-a-text" data-key="faq_1_a">はい、可能です。受講者の実績で取り上げた方達は元々未経験からのスタートです。必要なのは現夫段階の知識ではなく、AIを学んで自分で使えるようになりたいという気持ちのみです。</span>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-label">Q.</span>
+          <span class="faq-q-text" data-key="faq_2_q">なぜ人数に上限があるのですか？</span>
+        </div>
+        <div class="faq-a">
+          <span class="faq-a-label">A.</span>
+          <span class="faq-a-text" data-key="faq_2_a">1on1で対応するので多くの方に対応することが現実的ではない為です。その代わり一人ひとりとしっかり向き合っていきます。</span>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-label">Q.</span>
+          <span class="faq-q-text" data-key="faq_3_q">返金保証はありますか？</span>
+        </div>
+        <div class="faq-a">
+          <span class="faq-a-label">A.</span>
+          <span class="faq-a-text" data-key="faq_3_a">はい、あります。スクールで指導した内容にそって受講しても全くの結果が出なかった場合全額返金させていただきます。</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑧ フッターCTA -->
+    <section class="footer-cta-section">
+      <div class="badge-area">
+        <div class="badge-boxes">
+          <div class="badge-box">
+            <p class="badge-label" data-key="footer_cta_badge_label_1">カリキュラム資料</p>
+            <p class="badge-value-wrap">
+              <span class="badge-paren">（</span><span data-key="footer_cta_badge_value_1">.30</span><span class="badge-unit" data-key="footer_cta_badge_unit_1">項目</span><span class="badge-paren">）</span>
+            </p>
+          </div>
+          <div class="badge-box">
+            <p class="badge-label" data-key="footer_cta_badge_label_2">説明会時間</p>
+            <p class="badge-value-wrap">
+              <span class="badge-paren">（</span><span data-key="footer_cta_badge_value_2">60</span><span class="badge-unit" data-key="footer_cta_badge_unit_2">分</span><span class="badge-paren">）</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <p class="cta-now-badge" data-key="footer_cta_now_label">期間限定</p>
+      <p class="cta-button-main" data-key="footer_cta_button_main">無料参加受付中！</p>
+      <p class="cta-members" data-key="footer_cta_members">[申込者数] 突破！</p>
+      <a class="cta-button" href="#" data-key="footer_cta_button_sub">今すぐLINEで無料説明会に申し込む →</a>
+    </section>
+
+  </div>
+<script id="editor-runtime">
+(function() {
+  var STORAGE_KEY = 'ai_sns_school_lp_edits';
+  var editMode = true;
+
+  function $(id) { return document.getElementById(id); }
+  function getKeyEls() { return document.querySelectorAll('[data-key]'); }
+
+  function setEditMode(on) {
+    editMode = on;
+    document.body.classList.toggle('editor-mode-active', on);
+    getKeyEls().forEach(function(el) {
+      el.setAttribute('contenteditable', on ? 'true' : 'false');
+    });
+    var btn = $('btn-toggle-edit');
+    btn.textContent = on ? '編集ON' : '編集OFF';
+    btn.classList.toggle('is-active', on);
+  }
+
+  function status(msg, color) {
+    var s = $('editor-status');
+    s.textContent = msg;
+    s.style.color = color || '#cbd5e1';
+    setTimeout(function() { s.textContent = ''; }, 3000);
+  }
+
+  function loadEdits() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      var applied = 0;
+      getKeyEls().forEach(function(el) {
+        var key = el.getAttribute('data-key');
+        if (data[key] !== undefined && data[key] !== null) {
+          var v = data[key];
+          if (typeof v === 'object' && v.text !== undefined) v = v.text;
+          if (typeof v === 'string' && v !== el.innerText) {
+            el.innerText = v;
+            applied++;
+          }
+        }
+      });
+      if (applied > 0) status('保存済み ' + applied + ' 件を復元', '#86efac');
+    } catch (e) {
+      console.error('loadEdits error', e);
+    }
+  }
+
+  function saveEdits() {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    var data = raw ? JSON.parse(raw) : {};
+    getKeyEls().forEach(function(el) {
+      var key = el.getAttribute('data-key');
+      if (key) data[key] = el.innerText;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    status('一時保存しました（' + Object.keys(data).length + ' 件）', '#86efac');
+  }
+
+  function resetEdits() {
+    if (!confirm('編集をリセットしてリロードします。よろしいですか？')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+
+  function exportHtml() {
+    var clone = document.documentElement.cloneNode(true);
+    var tb = clone.querySelector('#editor-toolbar');
+    if (tb) tb.remove();
+    var ip = clone.querySelector('#image-edit-panel');
+    if (ip) ip.remove();
+    var st = clone.querySelector('#editor-toolbar-style');
+    if (st) st.remove();
+    var rt = clone.querySelector('#editor-runtime');
+    if (rt) rt.remove();
+    clone.querySelectorAll('[contenteditable]').forEach(function(el) {
+      el.removeAttribute('contenteditable');
+    });
+    clone.querySelectorAll('body').forEach(function(b) {
+      b.classList.remove('editor-mode-active');
+    });
+    // 画像ありの<img>はinline styleとsrcをそのまま保持（applyImageで反映済み）
+    // 画像なしの<img>はdisplay:noneのまま、対応SVGは表示状態のまま出力される
+    var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'index_edited.html';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() {
+      URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }, 100);
+    status('index_edited.html を出力', '#86efac');
+  }
+
+  // === 画像編集機能 ===
+  var IMG_STORAGE_SUBKEY = '__images';
+  var imgState = {};  // { [imgKey]: { dataUrl, posX, posY, scale } }
+
+  function loadImageState() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      if (data[IMG_STORAGE_SUBKEY]) {
+        imgState = data[IMG_STORAGE_SUBKEY];
+        Object.keys(imgState).forEach(function(k) {
+          applyImage(k);
+        });
+      }
+    } catch (e) { console.error('loadImageState', e); }
+  }
+
+  function saveImageState() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      var data = raw ? JSON.parse(raw) : {};
+      data[IMG_STORAGE_SUBKEY] = imgState;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) { console.error('saveImageState', e); }
+  }
+
+  function applyImage(imgKey) {
+    var img = document.querySelector('img[data-img-key="' + imgKey + '"]');
+    var svg = document.querySelector('[data-img-fallback="' + imgKey + '"]');
+    if (!img) return;
+    var s = imgState[imgKey];
+    if (s && s.dataUrl) {
+      img.src = s.dataUrl;
+      img.style.display = 'block';
+      img.style.objectPosition = (s.posX || 50) + '% ' + (s.posY || 50) + '%';
+      img.style.transform = 'scale(' + (s.scale || 1) + ')';
+      if (svg) svg.style.display = 'none';
+    } else {
+      img.style.display = 'none';
+      img.removeAttribute('src');
+      if (svg) svg.style.display = '';
+    }
+  }
+
+  function pickImage(imgKey) {
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = function() {
+      var f = input.files[0];
+      if (!f) return;
+      if (f.size > 5 * 1024 * 1024) {
+        if (!confirm('画像が ' + (f.size/1024/1024).toFixed(1) + 'MB です。localStorage 容量に注意。続行しますか?')) return;
+      }
+      var fr = new FileReader();
+      fr.onload = function() {
+        imgState[imgKey] = imgState[imgKey] || { posX: 50, posY: 50, scale: 1 };
+        imgState[imgKey].dataUrl = fr.result;
+        applyImage(imgKey);
+        saveImageState();
+        showImagePanel(imgKey);
+        status('画像を読み込みました', '#86efac');
+      };
+      fr.readAsDataURL(f);
+    };
+    input.click();
+  }
+
+  function showImagePanel(imgKey) {
+    var panel = document.getElementById('image-edit-panel');
+    if (!panel) return;
+    panel.style.display = 'block';
+    panel.dataset.imgKey = imgKey;
+    var s = imgState[imgKey] || { posX: 50, posY: 50, scale: 1 };
+    document.getElementById('img-posx').value = s.posX || 50;
+    document.getElementById('img-posy').value = s.posY || 50;
+    document.getElementById('img-scale').value = s.scale || 1;
+    document.getElementById('img-posx-val').textContent = (s.posX || 50) + '%';
+    document.getElementById('img-posy-val').textContent = (s.posY || 50) + '%';
+    document.getElementById('img-scale-val').textContent = (s.scale || 1).toFixed(2) + 'x';
+  }
+
+  function hideImagePanel() {
+    var panel = document.getElementById('image-edit-panel');
+    if (panel) panel.style.display = 'none';
+  }
+
+  function bindImageEditing() {
+    document.querySelectorAll('img[data-img-key]').forEach(function(img) {
+      var imgKey = img.getAttribute('data-img-key');
+      var container = img.parentElement;
+      container.style.cursor = 'pointer';
+      container.addEventListener('click', function(e) {
+        if (!editMode) return;
+        e.stopPropagation();
+        if (imgState[imgKey] && imgState[imgKey].dataUrl) {
+          showImagePanel(imgKey);
+        } else {
+          pickImage(imgKey);
+        }
+      });
+    });
+
+    var panel = document.getElementById('image-edit-panel');
+    if (!panel) return;
+    ['posx', 'posy', 'scale'].forEach(function(prop) {
+      var slider = document.getElementById('img-' + prop);
+      if (!slider) return;
+      slider.addEventListener('input', function() {
+        var imgKey = panel.dataset.imgKey;
+        if (!imgKey) return;
+        imgState[imgKey] = imgState[imgKey] || { posX: 50, posY: 50, scale: 1 };
+        var key = prop === 'scale' ? 'scale' : (prop === 'posx' ? 'posX' : 'posY');
+        var val = parseFloat(slider.value);
+        imgState[imgKey][key] = val;
+        var valEl = document.getElementById('img-' + prop + '-val');
+        if (valEl) valEl.textContent = prop === 'scale' ? val.toFixed(2) + 'x' : val + '%';
+        applyImage(imgKey);
+        saveImageState();
+      });
+    });
+
+    document.getElementById('img-replace-btn').addEventListener('click', function() {
+      var imgKey = panel.dataset.imgKey;
+      if (imgKey) pickImage(imgKey);
+    });
+    document.getElementById('img-reset-btn').addEventListener('click', function() {
+      var imgKey = panel.dataset.imgKey;
+      if (!imgKey) return;
+      if (!confirm('画像を削除して元のアイコンに戻します。よろしいですか?')) return;
+      delete imgState[imgKey];
+      applyImage(imgKey);
+      saveImageState();
+      hideImagePanel();
+    });
+    document.getElementById('img-close-btn').addEventListener('click', hideImagePanel);
+  }
+
+  function init() {
+    $('btn-toggle-edit').addEventListener('click', function() {
+      setEditMode(!editMode);
+    });
+    $('btn-reset').addEventListener('click', resetEdits);
+    setEditMode(true);
+    loadEdits();
+    loadImageState();
+    bindImageEditing();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
