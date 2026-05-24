@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI活用におけるセキュリティ対策と免責事項 ｜ NEXT AI LAB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     NEXT AI LAB — ブランド配色（SKILL.md 準拠）
+     背景 #ffffff / 見出し濃色 #2D1B3D / 水色アクセント #6FBCD8
+     LINEグリーン #06C755 / 薄紫タグライン #a08cc0 / 本文 #1a1a2e
+     見出し: Noto Serif JP / 本文: Noto Sans JP
+     ============================================================ */
+  :root {
+    --bg: #ffffff;
+    --ink: #1a1a2e;
+    --head: #2D1B3D;
+    --head2: #4A2D5E;
+    --cyan: #6FBCD8;
+    --cyan-soft: #f0f8fc;
+    --green: #06C755;
+    --green-soft: #f0fff5;
+    --lilac: #a08cc0;
+    --serif: 'Noto Serif JP', serif;
+    --sans: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    line-height: 1.75;
+    /* ページ外の背景は柔らかいグレーで、白い紙面を浮かせる */
+    background:
+      radial-gradient(900px 500px at 12% -10%, rgba(111,188,216,0.10), transparent 60%),
+      radial-gradient(900px 500px at 92% 8%, rgba(160,140,192,0.10), transparent 60%),
+      #eef1f5;
+    padding: 40px 16px;
+  }
+
+  /* ---- 紙面（1ページ = 1セクション） ---- */
+  .page {
+    position: relative;
+    width: 100%;
+    max-width: 880px;
+    min-height: 1140px;            /* A4縦比に近い縦長 */
+    margin: 0 auto 40px;
+    background: var(--bg);
+    border-radius: 18px;
+    box-shadow: 0 24px 60px -20px rgba(45,27,61,0.28), 0 4px 14px rgba(45,27,61,0.08);
+    padding: 64px 68px 88px;
+    overflow: hidden;
+  }
+  /* 上端のブランドアクセントライン */
+  .page::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--cyan) 0%, var(--cyan) 55%, var(--green) 55%, var(--green) 100%);
+  }
+
+  /* ヘッダー帯（各ページ共通の小ロゴ＋ページ番号） */
+  .page-meta {
+    position: absolute;
+    top: 26px; left: 68px; right: 68px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--lilac);
+    text-transform: uppercase;
+  }
+  .page-meta .brand { font-weight: 700; color: var(--head); letter-spacing: 0.22em; }
+  .page-meta .pno { font-variant-numeric: tabular-nums; }
+
+  /* ---- タイポグラフィ ---- */
+  .kicker {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--lilac);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  h1.section-title {
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--head);
+    line-height: 1.3;
+    border-left: 6px solid var(--cyan);
+    padding-left: 18px;
+    margin-bottom: 8px;
+  }
+  .section-lead {
+    color: #555;
+    font-size: 15px;
+    margin: 4px 0 26px;
+    padding-left: 24px;
+  }
+  h2.sub {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--head2);
+    margin: 26px 0 10px;
+  }
+  p { margin: 0 0 14px; }
+  strong { color: var(--green); font-weight: 700; }
+  em { color: var(--cyan); font-style: normal; font-weight: 600; }
+
+  /* 強調ボックス */
+  .box-cyan {
+    border: 2px solid var(--cyan);
+    border-radius: 12px;
+    background: var(--cyan-soft);
+    padding: 18px 22px;
+    margin: 6px 0 18px;
+    line-height: 1.85;
+  }
+  .box-green {
+    border: 2px solid var(--green);
+    border-radius: 12px;
+    background: var(--green-soft);
+    padding: 18px 22px;
+    margin: 6px 0 18px;
+    color: #14401f;
+    line-height: 1.85;
+  }
+  .box-quote {
+    border-left: 5px solid var(--lilac);
+    background: #faf7ff;
+    border-radius: 0 12px 12px 0;
+    padding: 18px 24px;
+    margin: 6px 0 20px;
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--head);
+    line-height: 1.9;
+  }
+  .box-note {
+    background: #f5f6f8;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #555;
+    margin: 6px 0 16px;
+  }
+
+  .lead-statement {
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.85;
+    color: var(--head);
+    font-weight: 600;
+  }
+
+  /* ============================================================
+     表紙
+     ============================================================ */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding: 80px 68px;
+  }
+  .cover .brandline {
+    font-size: 13px;
+    letter-spacing: 0.34em;
+    color: var(--lilac);
+    font-weight: 700;
+    margin-bottom: 40px;
+  }
+  .cover .crest {
+    width: 64px; height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--cyan), #4aa6c9);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 32px;
+    box-shadow: 0 10px 24px -6px rgba(111,188,216,0.6);
+  }
+  .cover .crest svg { width: 34px; height: 34px; }
+  .cover h1 {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--head);
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    margin-bottom: 22px;
+  }
+  .cover h1 .accent { color: var(--cyan); }
+  .cover .rule {
+    width: 72px; height: 4px;
+    background: var(--green);
+    border-radius: 2px;
+    margin: 0 auto 22px;
+  }
+  .cover .subj {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--head2);
+    font-weight: 600;
+    margin-bottom: 56px;
+  }
+  .cover .for-whom {
+    display: inline-block;
+    background: var(--cyan-soft);
+    border: 1.5px solid var(--cyan);
+    color: var(--head);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 10px 28px;
+    border-radius: 30px;
+    margin-bottom: 12px;
+  }
+  .cover .footnote {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: var(--lilac);
+    margin-top: 64px;
+  }
+
+  /* ============================================================
+     チェックリスト（10項目）
+     ============================================================ */
+  .check-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 6px;
+  }
+  .check-card {
+    position: relative;
+    border: 1.5px solid #e3e0ea;
+    border-radius: 12px;
+    padding: 16px 18px 16px 52px;
+    background: #fdfdff;
+    transition: border-color .2s;
+  }
+  .check-card::before {
+    content: "";
+    position: absolute;
+    left: 16px; top: 17px;
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: var(--green);
+    background-image:
+      linear-gradient(45deg, transparent 45%, #fff 45%, #fff 55%, transparent 55%);
+  }
+  /* チェックマーク（疑似要素で描く） */
+  .check-card .tick {
+    position: absolute;
+    left: 16px; top: 17px;
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .check-card .tick svg { width: 14px; height: 14px; }
+  .check-card .n {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--cyan);
+    letter-spacing: 0.12em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .check-card .t {
+    font-family: var(--serif);
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--head);
+    line-height: 1.45;
+    margin-bottom: 4px;
+  }
+  .check-card .d {
+    font-size: 12.5px;
+    color: #5d5d6b;
+    line-height: 1.65;
+  }
+
+  /* ============================================================
+     4原則
+     ============================================================ */
+  .principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 10px;
+  }
+  .principle {
+    border: 2px solid var(--head2);
+    border-radius: 16px;
+    padding: 26px 24px;
+    background: #faf7ff;
+    text-align: left;
+  }
+  .principle .pnum {
+    font-family: var(--serif);
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--cyan);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .principle .ptitle {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--head);
+    margin-bottom: 8px;
+  }
+  .principle .pdesc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.75;
+  }
+  .principle .pdesc b { color: var(--green); }
+
+  .principle-summary {
+    margin-top: 24px;
+    text-align: center;
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--head);
+    background: var(--cyan-soft);
+    border-radius: 14px;
+    padding: 20px;
+    letter-spacing: 0.02em;
+  }
+  .principle-summary .sep { color: var(--cyan); margin: 0 6px; font-weight: 700; }
+
+  /* ---- なぜ対策が必要か（フロー図） ---- */
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 10px 0 20px;
+  }
+  .flow .node {
+    flex: 1;
+    border: 1.5px solid #e3e0ea;
+    border-radius: 12px;
+    background: #fdfdff;
+    padding: 16px 14px;
+    text-align: center;
+  }
+  .flow .node .ico { font-size: 22px; margin-bottom: 6px; }
+  .flow .node .label { font-size: 13.5px; color: #444; line-height: 1.6; }
+  .flow .node .label b { color: var(--head); font-family: var(--serif); }
+  .flow .arrow {
+    align-self: center;
+    color: var(--cyan);
+    font-size: 22px;
+    font-weight: 700;
+    padding: 0 10px;
+    flex: 0 0 auto;
+  }
+  .cause-list {
+    list-style: none;
+    margin: 8px 0 14px;
+  }
+  .cause-list li {
+    position: relative;
+    padding: 12px 16px 12px 46px;
+    margin-bottom: 10px;
+    background: #fdfdff;
+    border: 1.5px solid #e3e0ea;
+    border-radius: 12px;
+    line-height: 1.7;
+  }
+  .cause-list li .marker {
+    position: absolute;
+    left: 14px; top: 13px;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--cyan);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* まとめページ */
+  .summary-list { list-style: none; margin: 4px 0 8px; }
+  .summary-list li {
+    position: relative;
+    padding: 10px 0 10px 34px;
+    border-bottom: 1px dashed #e3e0ea;
+    line-height: 1.7;
+  }
+  .summary-list li:last-child { border-bottom: none; }
+  .summary-list li .dot {
+    position: absolute; left: 4px; top: 16px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--green);
+  }
+  .closing {
+    margin-top: 26px;
+    text-align: center;
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--head);
+    line-height: 1.7;
+  }
+  .closing .accent { color: var(--cyan); }
+
+  /* ============================================================
+     レスポンシブ
+     ============================================================ */
+  @media (max-width: 720px) {
+    body { padding: 16px 8px; }
+    .page { padding: 56px 24px 64px; border-radius: 12px; min-height: auto; }
+    .page-meta { left: 24px; right: 24px; }
+    .cover { padding: 56px 24px; }
+    .cover h1 { font-size: 30px; }
+    h1.section-title { font-size: 24px; }
+    .check-grid, .principles { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow .arrow { transform: rotate(90deg); padding: 6px 0; }
+    .section-lead, .check-grid, .principles { padding-left: 0; }
+    .section-lead { padding-left: 0; }
+  }
+
+  /* ============================================================
+     印刷（@media print）— 1ページ1セクションで改ページ
+     ============================================================ */
+  @media print {
+    @page { size: A4 portrait; margin: 12mm; }
+    body {
+      background: #fff;
+      padding: 0;
+    }
+    .page {
+      box-shadow: none;
+      border-radius: 0;
+      margin: 0;
+      max-width: none;
+      min-height: auto;
+      padding: 24px 18px 28px;
+      page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+    .page::before { height: 5px; }
+    .check-card, .principle, .cause-list li, .flow .node, .box-cyan, .box-green, .box-quote {
+      break-inside: avoid;
+    }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     1. 表紙
+     ========================================================= -->
+<section class="page cover">
+  <div class="brandline">NEXT AI LAB</div>
+
+  <div class="crest" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L4 5v6c0 5 3.4 8.6 8 11 4.6-2.4 8-6 8-11V5l-8-3z" fill="#ffffff" opacity="0.95"/>
+      <path d="M9 12l2 2 4-4" stroke="#6FBCD8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+  </div>
+
+  <h1>AI活用における<br><span class="accent">セキュリティ対策</span>と免責事項</h1>
+  <div class="rule"></div>
+  <div class="subj">〜 受講者の皆様へ 〜</div>
+
+  <div class="for-whom">本資料は受講者全員にお渡しする「注意書き＋自衛ガイド」です</div>
+
+  <div class="footnote">SECURITY &amp; DISCLAIMER GUIDE</div>
+</section>
+
+<!-- =========================================================
+     2. はじめに（免責事項）
+     ========================================================= -->
+<section class="page">
+  <div class="page-meta"><span class="brand">NEXT AI LAB</span><span class="pno">02 ｜ はじめに（免責事項）</span></div>
+
+  <span class="kicker">INTRODUCTION ｜ DISCLAIMER</span>
+  <h1 class="section-title">はじめに 〜 免責事項について</h1>
+  <p class="section-lead">本資料を読み進める前に、まずこの考え方をご理解ください。</p>
+
+  <p class="lead-statement">
+    AIは、私たちの仕事や学びを大きく前に進めてくれる道具です。<br>
+    一方で、<em>AIを使う以上、情報漏洩のリスクをゼロにすることはできません。</em>
+  </p>
+
+  <h2 class="sub">免責事項</h2>
+  <div class="box-cyan">
+    当スクール（NEXT&nbsp;AI&nbsp;LAB）が講義・資料を通じて提供する情報は、<strong>一般的な教育目的の参考情報</strong>であり、法的助言または個別の情報セキュリティ診断ではありません。
+    受講者の皆様がこれらの情報を用いてAIを利用した結果、情報漏洩・データの不正利用・誤送信などによる損害が生じた場合、<strong>当スクールの故意または重大な過失による場合を除き、当方は責任を負いかねます。</strong>
+    また、ChatGPT・Gemini等の第三者AIサービスの利用に際しては、各サービスの利用規約およびプライバシーポリシーをご確認のうえ、<em>受講者ご自身の判断と責任において</em>行ってください。
+  </div>
+
+  <h2 class="sub">前提として知っておいてほしいこと</h2>
+  <div class="box-quote">
+    どんなに気をつけても、AIを使う限りリスクは「ゼロ」にはなりません。<br>
+    だからこそ大切なのは、<strong>リスクをできる限り小さくする習慣</strong>を、一人ひとりが身につけることです。
+  </div>
+
+  <div class="box-note">
+    ※ この資料は受講者の皆様の不安を煽るためのものではありません。正しく対策すれば、AIは安心して活用できます。
+    次のページから、その具体的な方法をやさしく解説していきます。
+  </div>
+</section>
+
+<!-- =========================================================
+     3. なぜ対策が必要か（原理）
+     ========================================================= -->
+<section class="page">
+  <div class="page-meta"><span class="brand">NEXT AI LAB</span><span class="pno">03 ｜ なぜ対策が必要か</span></div>
+
+  <span class="kicker">WHY ｜ 原理を知る</span>
+  <h1 class="section-title">なぜセキュリティ対策が必要か</h1>
+  <p class="section-lead">仕組みを知れば、「何に気をつければいいか」が自然と分かります。</p>
+
+  <h2 class="sub">情報漏洩はこうして起きる</h2>
+  <div class="flow">
+    <div class="node">
+      <div class="ico">🧑‍💻</div>
+      <div class="label">あなたが<br><b>情報を入力</b></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="node">
+      <div class="ico">☁️</div>
+      <div class="label">データが<br><b>外部に渡る</b></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="node">
+      <div class="ico">⚠️</div>
+      <div class="label">第三者の目や<br><b>学習に使われる</b></div>
+    </div>
+  </div>
+
+  <p>漏洩が起きる原因は、突き詰めるとシンプルです。</p>
+  <ul class="cause-list">
+    <li><span class="marker">1</span><strong>信頼できない第三者にデータが渡る</strong>こと。<br>怪しいアプリや非公式サービスに情報を入力すると、誰がそのデータを見るか分かりません。</li>
+    <li><span class="marker">2</span><strong>入力した内容が学習に使われる</strong>こと。<br>設定や契約によっては、あなたが入力した文章がAIの学習データとして再利用される場合があります。</li>
+  </ul>
+
+  <h2 class="sub">大手・公式サービスでもゼロにはならない</h2>
+  <div class="box-cyan">
+    大手や公式のサービスを使うことは、リスクを下げる<strong>とても有効な第一歩</strong>です。
+    ただし、それでも<em>「リスクがゼロになる」わけではありません。</em>
+    サービス側の障害・設定ミス・あなた自身の操作ミスなど、リスクの入り口はいくつも残っています。
+  </div>
+  <p style="font-size:14px;color:#555;">だからこそ、サービス選びに加えて「自分でも守る習慣」が必要になります。次のページのチェックリストで、具体的に確認しましょう。</p>
+</section>
+
+<!-- =========================================================
+     4. チェックリスト（10項目）
+     ========================================================= -->
+<section class="page">
+  <div class="page-meta"><span class="brand">NEXT AI LAB</span><span class="pno">04 ｜ セキュリティ対策10項目</span></div>
+
+  <span class="kicker">CHECKLIST ｜ 個人で徹底する10項目</span>
+  <h1 class="section-title">個人で徹底すべきセキュリティ対策</h1>
+  <p class="section-lead">下の10項目を、AIを使うたびに思い出せるようにしておきましょう。</p>
+
+  <div class="check-grid">
+    <div class="check-card">
+      <span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="n">CHECK 01</span>
+      <div class="t">大手・公式サービスを使う</div>
+      <div class="d">提供元が明確で実績のあるサービスを選ぶ。出所不明なツールは避ける。</div>
+    </div>
+
+    <div class="check-card">
+      <span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="n">CHECK 02</span>
+      <div class="t">連携は公式接続のみ</div>
+      <div class="d">正規のOAuth（公式ログイン連携）だけを使い、野良アプリ・非公式ツールには接続しない。</div>
+    </div>
+
+    <div class="check-card">
+      <span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="n">CHECK 03</span>
+      <div class="t">機密・個人情報はぼかす</div>
+      <div class="d">会社名・氏名・住所・電話番号・契約条件などは伏せて（仮名や「◯◯」に置き換えて）渡す。</div>
+    </div>
+
+    <div class="check-card">
+      <span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="n">CHECK 04</span>
+      <div class="t">権限は最小限に</div>
+      <div class="d">連携は「読むだけ」に絞り、送信・削除の権限は付けない。使うときだけ接続する。</div>
+    </div>
+
+    <div class="check-card">
+      <span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="n">CHECK 05</span>
+      <div class="t">有料／法人プラン＋学習オプトアウト</div>
+      <div class="d">法人プラン、または学習オプトアウトに対応した有料プランを選び、入力が学習に使われない設定・契約にする。</div>
+    </div>
+
+    <div class="check-card">
+      <span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="n">CHECK 06</span>
+      <div class="t">会社のルールを先に確認</div>
+      <div class="d">勤務先でAI利用が許可されているか、扱ってよい情報の範囲を事前に確認する。</div>
+    </div>
+
+    <div class="check-card">
+      <span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="n">CHECK 07</span>
+      <div class="t">2段階認証＋強いパスワード</div>
+      <div class="d">アカウント乗っ取りを防ぐ。使い回しを避け、2段階認証を必ず有効にする。</div>
+    </div>
+
+    <div class="check-card">
+      <span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="n">CHECK 08</span>
+      <div class="t">送信前に人が最終確認</div>
+      <div class="d">AIの出力をそのまま送らない。誤送信・宛先ミス・誤った情報がないか人の目で確認する。</div>
+    </div>
+
+    <div class="check-card">
+      <span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="n">CHECK 09</span>
+      <div class="t">規約・プライバシーポリシーを読む</div>
+      <div class="d">データの保存期間・利用目的・免責の範囲を確認してから使い始める。</div>
+    </div>
+
+    <div class="check-card">
+      <span class="tick"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="n">CHECK 10</span>
+      <div class="t">共有端末・公共Wi-Fiに注意</div>
+      <div class="d">共用パソコンや公共のWi-Fiでは情報が覗かれやすい。ログアウトと通信環境に気を配る。</div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     5. 4つの基本原則
+     ========================================================= -->
+<section class="page">
+  <div class="page-meta"><span class="brand">NEXT AI LAB</span><span class="pno">05 ｜ 4つの基本原則</span></div>
+
+  <span class="kicker">PRINCIPLES ｜ 迷ったらこれだけ</span>
+  <h1 class="section-title">4つの基本原則</h1>
+  <p class="section-lead">10項目を覚えきれなくても、この4つを守れば大きく外しません。</p>
+
+  <div class="principles">
+    <div class="principle">
+      <div class="pnum">01</div>
+      <div class="ptitle">信頼できる相手に</div>
+      <div class="pdesc">渡す先を選ぶ。<b>大手・公式・正規の連携</b>だけを使い、出所不明なツールには情報を渡さない。</div>
+    </div>
+    <div class="principle">
+      <div class="pnum">02</div>
+      <div class="ptitle">最小限だけ</div>
+      <div class="pdesc">渡す量と権限を絞る。<b>必要な情報・必要な権限</b>だけにし、使うときだけ接続する。</div>
+    </div>
+    <div class="principle">
+      <div class="pnum">03</div>
+      <div class="ptitle">伏せて渡し</div>
+      <div class="pdesc">中身を守る。<b>氏名・会社名・連絡先・契約条件</b>などの個人・機密情報はぼかして渡す。</div>
+    </div>
+    <div class="principle">
+      <div class="pnum">04</div>
+      <div class="ptitle">人が確認する</div>
+      <div class="pdesc">最後は人の目で。<b>送信前に内容・宛先・事実関係</b>を必ずチェックしてから実行する。</div>
+    </div>
+  </div>
+
+  <div class="principle-summary">
+    信頼できる相手に <span class="sep">・</span> 最小限だけ <span class="sep">・</span> 伏せて渡し <span class="sep">・</span> 人が確認する
+  </div>
+</section>
+
+<!-- =========================================================
+     6. まとめ
+     ========================================================= -->
+<section class="page">
+  <div class="page-meta"><span class="brand">NEXT AI LAB</span><span class="pno">06 ｜ まとめ</span></div>
+
+  <span class="kicker">SUMMARY ｜ 最後に</span>
+  <h1 class="section-title">まとめ</h1>
+  <p class="section-lead">この資料でいちばん伝えたいことを、3つに絞りました。</p>
+
+  <ul class="summary-list">
+    <li><span class="dot"></span><strong>大手・公式サービスを使うこと</strong>は、リスクを下げる第一歩。まずここから始めましょう。</li>
+    <li><span class="dot"></span>ただし、<em>どんなに気をつけてもリスクはゼロにはなりません。</em>その前提を忘れないこと。</li>
+    <li><span class="dot"></span>だからこそ、<strong>自分でも守る</strong>。10項目と4原則を、使うたびに思い出してください。</li>
+  </ul>
+
+  <div class="box-green">
+    繰り返しになりますが、当スクールが提供する情報は<strong>教育目的の一般的な参考情報</strong>であり、法的助言または個別のセキュリティ診断ではありません。
+    <strong>当スクールの故意または重大な過失による場合を除き、</strong>これを用いてAIを利用した結果生じた損害について当方は責任を負いかねます。
+    AIの利用は<em>受講者ご自身の判断と責任において</em>、本資料のセキュリティ対策を徹底したうえで行ってください。
+  </div>
+
+  <div class="closing">
+    正しく守れば、AIはあなたの<span class="accent">力強い味方</span>になります。<br>
+    安心して、賢く活用していきましょう。
+  </div>
+</section>
+
+</body>
+</html>
