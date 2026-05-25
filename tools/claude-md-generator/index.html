@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLAUDE.md ジェネレーター — NEXT AI LAB</title>
+<script>
+  // ===== パスワード変更はここだけ（"" の中を書き換えてpushするだけ） =====
+  const GATE_PASSWORD = "nextailab2026";
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@600;700&family=Noto+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#06C755;
+  --green-d:#04a948;
+  --green-tint:#f0fff5;
+  --cyan:#6FBCD8;
+  --cyan-d:#4a9cbd;
+  --cyan-tint:#f0f8fc;
+  --purple-900:#2D1B3D;
+  --purple-700:#4A2D5E;
+  --purple-500:#6a4a8a;
+  --purple-300:#a08cc0;
+  --purple-tint:#faf7ff;
+  --purple-line:#e7def0;
+  --ink:#2D1B3D;
+  --ink-soft:#6a4a8a;
+  --paper:#ffffff;
+  --bg:#f7f3fb;
+  --shadow:0 8px 30px rgba(45,27,61,.10);
+  --shadow-sm:0 2px 10px rgba(45,27,61,.06);
+  --r:16px;
+  --r-sm:10px;
+  --mono:'Noto Sans Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:'Noto Sans JP',-apple-system,BlinkMacSystemFont,sans-serif;
+  --serif:'Noto Serif JP',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  line-height:1.7;
+  background:
+    radial-gradient(1200px 600px at 12% -8%, rgba(111,188,216,.16), transparent 60%),
+    radial-gradient(1000px 560px at 95% 0%, rgba(6,199,85,.10), transparent 55%),
+    var(--bg);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ===== Password gate overlay ===== */
+#gate-overlay{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  background:
+    radial-gradient(1000px 560px at 20% -10%, rgba(111,188,216,.22), transparent 60%),
+    radial-gradient(900px 520px at 90% 110%, rgba(6,199,85,.16), transparent 55%),
+    #2D1B3D;
+}
+#gate-overlay .gate-card{
+  width:100%;max-width:420px;
+  background:#fff;border-radius:16px;padding:40px;
+  box-shadow:0 24px 60px rgba(0,0,0,.35);
+  text-align:center;
+  animation:gate-pop .3s cubic-bezier(.2,.9,.3,1.3);
+}
+@keyframes gate-pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+#gate-overlay .gate-eyebrow{
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;
+  color:#6a4a8a;text-transform:uppercase;
+}
+#gate-overlay h1{
+  font-family:var(--serif);font-weight:700;font-size:1.35rem;
+  color:#2D1B3D;margin:10px 0 6px;line-height:1.4;
+}
+#gate-overlay .gate-sub{font-size:.92rem;color:#6a4a8a;margin-bottom:24px}
+#gate-overlay .gate-input{
+  width:100%;font-family:var(--sans);font-size:1rem;color:#2D1B3D;
+  padding:13px 16px;border:2px solid #06C755;border-radius:10px;
+  background:#faf7ff;transition:box-shadow .15s,border-color .15s;
+  text-align:center;letter-spacing:.04em;
+}
+#gate-overlay .gate-input:focus{
+  outline:none;border-color:#04a948;background:#fff;
+  box-shadow:0 0 0 4px rgba(6,199,85,.18);
+}
+#gate-overlay .gate-input:disabled{opacity:.6;cursor:not-allowed}
+#gate-overlay .gate-btn{
+  width:100%;margin-top:14px;font-family:var(--sans);font-weight:700;font-size:1rem;
+  cursor:pointer;border:none;border-radius:10px;padding:13px 20px;color:#fff;
+  background:#06C755;transition:background .15s,transform .12s,filter .15s;
+}
+#gate-overlay .gate-btn:hover{background:#04a948}
+#gate-overlay .gate-btn:active{transform:translateY(1px)}
+#gate-overlay .gate-btn:disabled{background:#a08cc0;cursor:not-allowed}
+#gate-overlay .gate-error{
+  min-height:1.2em;margin-top:12px;font-size:.86rem;font-weight:600;color:#ff4d4d;
+}
+#gate-overlay .gate-foot{margin-top:20px;font-size:.74rem;color:#a08cc0}
+
+/* ===== Header ===== */
+header.site{
+  padding:38px 28px 30px;
+  text-align:center;
+  position:relative;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;
+  color:var(--purple-500);
+  background:var(--paper);
+  border:1.5px solid var(--purple-line);
+  padding:7px 15px;border-radius:999px;
+  box-shadow:var(--shadow-sm);
+  text-transform:uppercase;
+}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(6,199,85,.18)}
+header.site h1{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(1.9rem,4.6vw,3rem);
+  margin:18px auto 10px;
+  letter-spacing:.01em;
+  background:linear-gradient(100deg,var(--purple-900) 0%,var(--purple-700) 45%,var(--cyan-d) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+header.site .lead{
+  font-size:1.02rem;color:var(--ink-soft);max-width:620px;margin:0 auto;
+}
+.flow-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.flow-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:.82rem;font-weight:700;
+  padding:8px 16px;border-radius:999px;background:var(--paper);
+  border:2px solid transparent;box-shadow:var(--shadow-sm);
+}
+.flow-pill.p{border-color:var(--cyan);color:var(--cyan-d)}
+.flow-pill.g{border-color:var(--green);color:var(--green-d)}
+.flow-pill.e{border-color:var(--purple-300);color:var(--purple-500)}
+.flow-arrow{align-self:center;color:var(--purple-300);font-weight:700}
+
+/* ===== Layout ===== */
+.wrap{
+  max-width:1340px;margin:0 auto;padding:8px 24px 64px;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:26px;
+  align-items:start;
+}
+.col-preview{position:sticky;top:18px}
+
+.card{
+  background:var(--paper);
+  border:1px solid var(--purple-line);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.card + .card{margin-top:22px}
+.card-head{
+  padding:18px 22px;
+  border-bottom:1px solid var(--purple-line);
+  display:flex;align-items:center;gap:12px;
+}
+.card-head .num{
+  width:30px;height:30px;flex:none;border-radius:9px;
+  display:grid;place-items:center;font-weight:700;font-size:.92rem;
+  color:#fff;background:linear-gradient(135deg,var(--purple-700),var(--purple-500));
+}
+.card-head h2{font-family:var(--serif);font-size:1.18rem;font-weight:700}
+.card-head .sub{font-size:.8rem;color:var(--ink-soft);font-weight:500;margin-left:auto;text-align:right}
+.card-body{padding:22px}
+
+/* ===== Form ===== */
+label.field{display:block;margin-bottom:16px}
+label.field:last-child{margin-bottom:0}
+.field .lab{display:block;font-size:.85rem;font-weight:700;margin-bottom:6px;color:var(--purple-700)}
+.field .hint{font-weight:400;color:var(--purple-300);font-size:.78rem;margin-left:6px}
+input[type=text],textarea,select{
+  width:100%;font-family:var(--sans);font-size:.95rem;color:var(--ink);
+  padding:11px 14px;border:2px solid var(--purple-line);border-radius:var(--r-sm);
+  background:var(--purple-tint);transition:border-color .15s,box-shadow .15s,background .15s;
+}
+textarea{resize:vertical;min-height:62px;line-height:1.6}
+input[type=text]:focus,textarea:focus,select:focus{
+  outline:none;border-color:var(--cyan);background:#fff;
+  box-shadow:0 0 0 4px rgba(111,188,216,.18);
+}
+select{appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236a4a8a' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;
+}
+
+/* ===== Default team table ===== */
+.team-grid{display:grid;gap:10px}
+.layer-block + .layer-block{margin-top:6px}
+.layer-tag{
+  display:inline-flex;align-items:center;gap:7px;font-size:.74rem;font-weight:700;letter-spacing:.04em;
+  padding:4px 11px;border-radius:999px;margin-bottom:9px;
+}
+.layer-tag.p{background:var(--cyan-tint);color:var(--cyan-d);border:1.5px solid var(--cyan)}
+.layer-tag.g{background:var(--green-tint);color:var(--green-d);border:1.5px solid var(--green)}
+.layer-tag.e{background:var(--purple-tint);color:var(--purple-500);border:1.5px solid var(--purple-300)}
+.agent-row{
+  display:flex;align-items:flex-start;gap:12px;padding:11px 14px;border-radius:var(--r-sm);
+  background:var(--purple-tint);border:1px solid var(--purple-line);
+}
+.agent-row .av{
+  width:36px;height:36px;flex:none;border-radius:10px;display:grid;place-items:center;
+  font-family:var(--serif);font-weight:700;color:#fff;font-size:.95rem;
+}
+.agent-row.p .av{background:linear-gradient(135deg,var(--cyan),var(--cyan-d))}
+.agent-row.g .av{background:linear-gradient(135deg,var(--green),var(--green-d))}
+.agent-row.e .av{background:linear-gradient(135deg,var(--purple-500),var(--purple-700))}
+.agent-row .nm{font-weight:700;font-size:.95rem}
+.agent-row .ro{font-size:.83rem;color:var(--ink-soft);line-height:1.5}
+
+/* ===== Added agents chips ===== */
+.added-wrap{margin-top:18px}
+.added-head{display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:700;color:var(--purple-700);margin-bottom:10px}
+.added-head .cnt{background:var(--green);color:#fff;font-size:.72rem;padding:1px 9px;border-radius:999px}
+#addedList{display:grid;gap:10px}
+.added-card{
+  position:relative;padding:13px 40px 13px 15px;border-radius:var(--r-sm);
+  background:#fff;border:2px solid var(--green);box-shadow:var(--shadow-sm);
+  animation:pop .28s cubic-bezier(.2,.9,.3,1.3);
+}
+@keyframes pop{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:none}}
+.added-card .ac-top{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.added-card .ac-name{font-weight:700;font-size:.96rem}
+.added-card .ac-layer{font-size:.7rem;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--green-tint);color:var(--green-d)}
+.added-card .ac-meta{font-size:.82rem;color:var(--ink-soft);margin-top:5px}
+.added-card .ac-meta b{color:var(--purple-700);font-weight:700}
+.added-card .del{
+  position:absolute;top:9px;right:9px;width:26px;height:26px;border:none;cursor:pointer;
+  border-radius:8px;background:var(--purple-tint);color:var(--purple-500);font-size:1.1rem;line-height:1;
+  display:grid;place-items:center;transition:background .15s,color .15s;
+}
+.added-card .del:hover{background:#fde8e8;color:#c0392b}
+.empty-note{font-size:.85rem;color:var(--purple-300);padding:14px;text-align:center;border:1.5px dashed var(--purple-line);border-radius:var(--r-sm);background:var(--purple-tint)}
+
+/* ===== Buttons ===== */
+.btn{
+  font-family:var(--sans);font-weight:700;font-size:.95rem;cursor:pointer;
+  border:none;border-radius:var(--r-sm);padding:12px 20px;transition:transform .12s,box-shadow .15s,filter .15s;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:linear-gradient(135deg,var(--green),var(--green-d));color:#fff;box-shadow:0 6px 18px rgba(6,199,85,.32);width:100%}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn-ghost{background:var(--purple-tint);color:var(--purple-700);border:2px solid var(--purple-line)}
+.btn-ghost:hover{border-color:var(--purple-300)}
+.btn-copy{background:linear-gradient(135deg,var(--cyan),var(--cyan-d));color:#fff;box-shadow:0 6px 18px rgba(111,188,216,.32)}
+.btn-copy:hover{filter:brightness(1.04)}
+.btn-row{display:flex;gap:10px}
+
+/* ===== Preview ===== */
+.preview-head{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 18px;border-bottom:1px solid #3a2550;
+  background:linear-gradient(120deg,var(--purple-900),var(--purple-700));
+}
+.preview-head .tl{display:flex;gap:7px}
+.preview-head .tl i{width:11px;height:11px;border-radius:50%;display:block}
+.tl i:nth-child(1){background:#ff5f57}.tl i:nth-child(2){background:#febc2e}.tl i:nth-child(3){background:var(--green)}
+.preview-head .fname{
+  font-family:var(--mono);font-size:.82rem;color:#e7def0;margin-left:6px;font-weight:500;
+  display:flex;align-items:center;gap:7px;
+}
+.preview-head .fname .badge{background:rgba(255,255,255,.14);padding:1px 8px;border-radius:6px;font-size:.7rem;color:#fff}
+.preview-head .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:.72rem;color:#cdbfe0;font-weight:600}
+.preview-head .live .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(6,199,85,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(6,199,85,.55)}70%{box-shadow:0 0 0 9px rgba(6,199,85,0)}100%{box-shadow:0 0 0 0 rgba(6,199,85,0)}}
+pre.preview{
+  margin:0;padding:22px;max-height:74vh;overflow:auto;
+  background:#231533;color:#e9e1f3;
+  font-family:var(--mono);font-size:.82rem;line-height:1.62;
+  white-space:pre-wrap;word-break:break-word;tab-size:2;
+}
+pre.preview::-webkit-scrollbar{width:11px;height:11px}
+pre.preview::-webkit-scrollbar-thumb{background:#4A2D5E;border-radius:6px;border:2px solid #231533}
+pre.preview::-webkit-scrollbar-track{background:#1c1029}
+/* markdown-ish coloring via spans */
+.md-h{color:#9ad7f0;font-weight:700}
+.md-h1{color:var(--green);font-weight:700}
+.md-fence{color:#7fd9a3}
+.md-tablebar{color:#a08cc0}
+.md-bullet{color:var(--cyan)}
+.md-comment{color:#8a76aa}
+
+.preview-foot{
+  padding:14px 18px;border-top:1px solid var(--purple-line);background:var(--purple-tint);
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.preview-foot .meta{font-size:.78rem;color:var(--ink-soft)}
+.preview-foot .meta b{color:var(--purple-700)}
+.preview-foot .spacer{flex:1}
+
+/* ===== Toast ===== */
+#toast{
+  position:fixed;left:50%;bottom:32px;transform:translateX(-50%) translateY(28px);
+  background:linear-gradient(135deg,var(--green),var(--green-d));color:#fff;font-weight:700;font-size:.92rem;
+  padding:13px 24px;border-radius:999px;box-shadow:0 12px 34px rgba(6,199,85,.4);
+  display:flex;align-items:center;gap:9px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:50;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.err{background:linear-gradient(135deg,#e0506a,#c0392b);box-shadow:0 12px 34px rgba(192,57,43,.4)}
+
+footer.site{text-align:center;padding:10px 24px 40px;color:var(--purple-300);font-size:.8rem}
+footer.site b{color:var(--purple-500)}
+
+@media (max-width:980px){
+  .wrap{grid-template-columns:1fr;gap:20px}
+  .col-preview{position:static}
+  pre.preview{max-height:60vh}
+}
+@media (max-width:520px){
+  header.site{padding:28px 18px 22px}
+  .wrap{padding:4px 14px 48px}
+  .card-body{padding:17px}
+  .btn-row{flex-direction:column}
+  .flow-arrow{display:none}
+  #gate-overlay .gate-card{padding:30px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Password gate (shown until correct password) ===== -->
+<div id="gate-overlay">
+  <div class="gate-card">
+    <div class="gate-eyebrow">NEXT AI LAB</div>
+    <h1>NEXT AI LAB｜CLAUDE.md生成ツール</h1>
+    <p class="gate-sub">合言葉を入力してください</p>
+    <input type="password" id="gate-input" class="gate-input" placeholder="合言葉" autocomplete="off" autofocus>
+    <button type="button" id="gate-btn" class="gate-btn">開く</button>
+    <div class="gate-error" id="gate-error" role="alert"></div>
+    <div class="gate-foot">すべての処理はあなたのブラウザ内で完結します</div>
+  </div>
+</div>
+
+<!-- ===== Tool body (hidden until gate is unlocked) ===== -->
+<div id="tool-container" style="display:none">
+
+<header class="site">
+  <span class="eyebrow"><span class="dot"></span>NEXT AI LAB · Claude Code 第5回</span>
+  <h1>CLAUDE.md ジェネレーター</h1>
+  <p class="lead">フォームに入力するだけで、自分専用のAIチーム設定ファイルが完成。コピーして、あなたのプロジェクトに貼るだけです。</p>
+  <div class="flow-pills">
+    <span class="flow-pill p">Planning 設計</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-pill g">Generation 生成</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-pill e">Evaluation 検証</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- LEFT: INPUT -->
+  <div class="col-input">
+
+    <!-- 1. project -->
+    <section class="card">
+      <div class="card-head">
+        <span class="num">1</span>
+        <h2>プロジェクトの基本</h2>
+      </div>
+      <div class="card-body">
+        <label class="field">
+          <span class="lab">プロジェクト名<span class="hint">CLAUDE.md の見出しになります</span></span>
+          <input type="text" id="projName" value="my-project" autocomplete="off">
+        </label>
+        <label class="field">
+          <span class="lab">このプロジェクトで何をする？<span class="hint">任意 / 1行でOK</span></span>
+          <input type="text" id="projGoal" placeholder="例: SNS運用と週次レポートをチームで回す" autocomplete="off">
+        </label>
+      </div>
+    </section>
+
+    <!-- 2. default team -->
+    <section class="card">
+      <div class="card-head">
+        <span class="num">2</span>
+        <h2>基本チーム（3部門6名）</h2>
+        <span class="sub">そのまま使えます</span>
+      </div>
+      <div class="card-body">
+        <div class="team-grid" id="defaultTeam"><!-- filled by JS --></div>
+      </div>
+    </section>
+
+    <!-- 3. add your agent -->
+    <section class="card">
+      <div class="card-head">
+        <span class="num">3</span>
+        <h2>自分専用エージェントを追加</h2>
+        <span class="sub">Step3 演習</span>
+      </div>
+      <div class="card-body">
+        <label class="field">
+          <span class="lab">エージェント名</span>
+          <input type="text" id="agName" placeholder="例: サポート対応担当" autocomplete="off">
+        </label>
+        <label class="field">
+          <span class="lab">所属する層</span>
+          <select id="agLayer">
+            <option value="Planning">Planning（計画 / 何を作るか決める）</option>
+            <option value="Generation" selected>Generation（生成 / 実際に作る）</option>
+            <option value="Evaluation">Evaluation（評価 / 品質をチェックする）</option>
+          </select>
+        </label>
+        <label class="field">
+          <span class="lab">担当範囲</span>
+          <textarea id="agScope" placeholder="例: 問い合わせメールの一次対応文を作成する"></textarea>
+        </label>
+        <label class="field">
+          <span class="lab">出力形式<span class="hint">任意</span></span>
+          <input type="text" id="agFormat" placeholder="例: 300字以内・丁寧語" autocomplete="off">
+        </label>
+        <button class="btn btn-primary" id="addBtn">＋ プレビューに追加する</button>
+
+        <div class="added-wrap">
+          <div class="added-head">追加したエージェント<span class="cnt" id="addedCnt">0</span></div>
+          <div id="addedList">
+            <div class="empty-note" id="emptyNote">まだ追加されていません。上のフォームから、あなただけの担当を加えてみましょう。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- RIGHT: PREVIEW -->
+  <div class="col-preview">
+    <section class="card">
+      <div class="preview-head">
+        <span class="tl"><i></i><i></i><i></i></span>
+        <span class="fname">CLAUDE.md<span class="badge" id="previewProj">my-project</span></span>
+        <span class="live"><span class="pulse"></span>ライブ生成中</span>
+      </div>
+      <pre class="preview" id="preview"></pre>
+      <div class="preview-foot">
+        <span class="meta">合計 <b id="agentTotal">6</b> 名 · <b id="charCount">0</b> 文字</span>
+        <span class="spacer"></span>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="dlBtn">ダウンロード</button>
+          <button class="btn btn-copy" id="copyBtn">📋 全文をコピー</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>
+
+<footer class="site">
+  すべての処理は<b>あなたのブラウザ内</b>で完結します。入力内容が送信されることはありません。 · NEXT AI LAB
+</footer>
+
+<div id="toast"></div>
+
+</div><!-- /#tool-container -->
+
+<script>
+"use strict";
+
+/* ---------- Default 3-department / 6-member team ---------- */
+const DEFAULT_TEAM = [
+  { layer:"Planning",   name:"司令官",           init:"司", role:"タスクを分解し、誰に振るか決める（自分では作業しない）", dont:"自分でファイルを読む・書く・調べる" },
+  { layer:"Planning",   name:"プロンプト設計官", init:"設", role:"曖昧な指示を「何を・どこまで作るか」に構造化する",   dont:"成果物そのものを作る" },
+  { layer:"Generation", name:"ハル",             init:"ハ", role:"SNS投稿・記事・原稿・メールなどの文章を作る",         dont:"自分でEvaluation層を起動する（チェック依頼はメイン経由）" },
+  { layer:"Generation", name:"ソウ",             init:"ソ", role:"レポート・集計・データ整理・簡単な分析を行う",         dont:"自分でEvaluation層を起動する（チェック依頼はメイン経由）" },
+  { layer:"Evaluation", name:"リク",             init:"リ", role:"コードや成果物が要件を満たしているかレビューする",     dont:"自分で成果物を書き換える（指摘のみ）" },
+  { layer:"Evaluation", name:"ナギ",             init:"ナ", role:"文章を校正し、誤字・事実の矛盾をチェックする",         dont:"自分で本文を書き換える（指摘のみ）" }
+];
+
+const LAYER_JP = { Planning:"計画", Generation:"生成", Evaluation:"評価" };
+const LAYER_CLASS = { Planning:"p", Generation:"g", Evaluation:"e" };
+
+/* user-added agents */
+let added = [];
+
+/* ---------- Render default team panel ---------- */
+function renderDefaultTeam(){
+  const order = ["Planning","Generation","Evaluation"];
+  const labelMap = {
+    Planning:"Planning — 計画する",
+    Generation:"Generation — 作る",
+    Evaluation:"Evaluation — チェックする"
+  };
+  const host = document.getElementById("defaultTeam");
+  host.innerHTML = order.map(layer=>{
+    const cls = LAYER_CLASS[layer];
+    const rows = DEFAULT_TEAM.filter(a=>a.layer===layer).map(a=>`
+      <div class="agent-row ${cls}">
+        <span class="av">${a.init}</span>
+        <span>
+          <span class="nm">${esc(a.name)}</span>
+          <span class="ro">${esc(a.role)}</span>
+        </span>
+      </div>`).join("");
+    return `<div class="layer-block">
+      <span class="layer-tag ${cls}">${labelMap[layer]}</span>
+      <div class="team-grid">${rows}</div>
+    </div>`;
+  }).join("");
+}
+
+/* ---------- Render added-agent chips ---------- */
+function renderAdded(){
+  const host = document.getElementById("addedList");
+  const empty = document.getElementById("emptyNote");
+  document.getElementById("addedCnt").textContent = added.length;
+  if(added.length === 0){
+    host.innerHTML = "";
+    host.appendChild(empty);
+    empty.style.display = "block";
+    return;
+  }
+  host.innerHTML = added.map((a,i)=>`
+    <div class="added-card">
+      <button class="del" data-i="${i}" title="削除" aria-label="削除">×</button>
+      <div class="ac-top">
+        <span class="ac-name">${esc(a.name)}</span>
+        <span class="ac-layer">${a.layer} / ${LAYER_JP[a.layer]}</span>
+      </div>
+      <div class="ac-meta"><b>担当:</b> ${esc(a.scope)}</div>
+      ${a.format ? `<div class="ac-meta"><b>出力:</b> ${esc(a.format)}</div>` : ""}
+    </div>`).join("");
+  host.querySelectorAll(".del").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      added.splice(parseInt(btn.dataset.i,10),1);
+      renderAdded();
+      renderPreview();
+    });
+  });
+}
+
+/* ---------- Build CLAUDE.md text ---------- */
+function buildMarkdown(){
+  const proj = (document.getElementById("projName").value.trim() || "my-project");
+  const goal = document.getElementById("projGoal").value.trim();
+
+  // all agents (default + added), numbered, grouped by layer order
+  const all = DEFAULT_TEAM.map(a=>({layer:a.layer,name:a.name,role:a.role,dont:a.dont,custom:false}))
+    .concat(added.map(a=>({
+      layer:a.layer,
+      name:a.name,
+      role:a.scope + (a.format ? `（出力: ${a.format}）` : ""),
+      dont:a.layer==="Evaluation" ? "自分で成果物を書き換える（指摘のみ）"
+          : a.layer==="Planning" ? "成果物そのものを作る"
+          : "自分でEvaluation層を起動する（チェック依頼はメイン経由）",
+      custom:true
+    })));
+
+  const order = ["Planning","Generation","Evaluation"];
+  all.sort((x,y)=>order.indexOf(x.layer)-order.indexOf(y.layer));
+
+  // members of each layer for the flow diagram
+  const byLayer = l => all.filter(a=>a.layer===l).map(a=>a.name).join("・");
+  const planNames = byLayer("Planning");
+  const genNames  = byLayer("Generation");
+  const evalNames = byLayer("Evaluation");
+
+  const total = all.length;
+
+  let rows = "";
+  all.forEach((a,i)=>{
+    rows += `| ${i+1} | ${a.name} | ${a.layer} | ${escMd(a.role)} |\n`;
+  });
+
+  // responsibilities block
+  const genList  = all.filter(a=>a.layer==="Generation").map(a=>a.name).join(" / ");
+  const evalList = all.filter(a=>a.layer==="Evaluation").map(a=>a.name).join(" / ");
+
+  // custom agents detail (only if any added)
+  let customBlock = "";
+  if(added.length){
+    customBlock = `\n---\n\n## 追加したエージェント\n\nこのプロジェクト独自の担当です。\n\n`;
+    added.forEach(a=>{
+      customBlock += `### ${a.name}（${a.layer} / ${LAYER_JP[a.layer]}）\n`;
+      customBlock += `- 担当範囲: ${a.scope}\n`;
+      if(a.format) customBlock += `- 出力形式: ${a.format}\n`;
+      customBlock += `- やらないこと: ${a.layer==="Evaluation" ? "自分で成果物を書き換える（指摘のみ）" : a.layer==="Planning" ? "成果物そのものを作る" : "自分でEvaluation層を起動する（チェック依頼はメイン経由）"}\n\n`;
+    });
+    customBlock = customBlock.replace(/\n+$/,"\n");
+  }
+
+  const goalLine = goal
+    ? `${goal}を、3部門のチームで進めるための設定ファイルです。`
+    : `1つの指示を「設計 → 生成 → 検証」の流れで処理する、AIチームの設定ファイルです。`;
+
+  return `# CLAUDE.md — ${proj}
+
+${goalLine}
+このファイルが「中枢」になり、メインのClaudeが全体を統括します。
+
+> Claude Code の \`CLAUDE.md\` は、プロジェクトのルート（一番上の階層）に置きます。
+> Claude はセッション開始時にこのファイルを自動で読み込みます。
+
+---
+
+## コアの考え方: P→G→E フロー
+
+1つの指示を、役割の違う3つの層が順番に処理します。
+
+\`\`\`
+あなたの指示
+  ↓
+Planning層 — 何を作るか決める（${planNames}）
+  ↓
+Generation層 — 実際に作る（${genNames}）
+  ↓
+Evaluation層 — 品質をチェックする（${evalNames}）
+  ↓
+完成・報告
+\`\`\`
+
+- Planning（計画）: 指示を整理し、誰が何をやるか決める
+- Generation（生成）: 文章・レポート・コードなどを実際に作る
+- Evaluation（評価）: 出来上がったものをレビュー・校正する
+
+層を分けることで、「とりあえず作る → あとでチェック」の品質サイクルが回ります。
+
+---
+
+## チーム構成（${total}名）
+
+| # | 名前 | 層 | 役割 |
+|---|------|----|----|
+${rows}
+各エージェントの詳しい定義は \`.claude/agents/\` に置きます。
+
+---
+
+## メインClaudeの行動ルール
+
+メインのClaudeは「司令塔」に徹し、自分では仕上げず担当に渡します。
+
+### ルール1: 直接作業せず、担当に任せる
+メインClaudeは自分でファイルを書かず、適切なエージェント（Agent tool）に作業を渡します。
+これにより「誰が何をやったか」が明確になります。
+
+### ルール2: 曖昧な指示は設計官へ
+「何を・どこまで作るか」が不明確な指示は、まず**プロンプト設計官**に渡して構造化します。
+
+\`\`\`
+指示に「作るもの」「完了の条件」が含まれている？
+  YES → 担当（${genList}）に直接わたす
+  NO  → プロンプト設計官に構造化を依頼する
+\`\`\`
+
+### ルール3: P→G→E を守る
+成果物がコードや外部に出す文章の場合は、作って終わりにせず Evaluation層（${evalList}）でチェックします。
+
+### ルール4: 複数部門にまたがるなら司令官へ
+2人以上のGeneration担当が必要な大きめのタスクは、先に**司令官**に「誰が・何を・どの順で」を整理してもらいます。
+
+### ルール5: 迷ったら設計官に通す
+判断に迷うときはプロンプト設計官に通すのが安全です。
+単純な事実確認や概念の説明だけなら、メインClaudeが直接答えてかまいません。
+
+---
+
+## 各エージェントの責務（やること / やらないこと）
+
+- 司令官（Planning）: タスクを分解し担当と順番を決める / 自分でファイルを読む・書く・調べる
+- プロンプト設計官（Planning）: 曖昧な指示を構造化し完了条件を定義する / 成果物そのものを作る
+- Generation層（${genList}）: 指示に従って成果物を作る / 自分でEvaluation層を起動する
+- Evaluation層（${evalList}）: 成果物をレビュー・校正し合格/要修正を返す / 自分で成果物を書き換える
+
+> Evaluation層が「要修正」を返したら、メインClaudeがGeneration層に差し戻します。
+${customBlock}
+---
+
+## ディレクトリ構成
+
+\`\`\`
+${proj}/
+├── CLAUDE.md           # このファイル（中枢）
+├── .gitignore          # .env などを除外
+├── .env.example        # APIキー等のプレースホルダ（実キーは書かない）
+└── .claude/
+    └── agents/         # エージェント定義（1体1ファイル）
+\`\`\`
+
+---
+
+## 作業の原則
+
+- ファイルを編集する前に、必ず中身を読んでから直す
+- 頼まれていない機能追加・リファクタリングはしない
+- 大きめのタスクは、いきなり作らず計画から始める
+
+---
+
+## やらないこと
+
+- APIキーや認証情報をコードに直接書く・コミットする（必ず \`.env\` を使う）
+- \`reset --hard\` など、作業内容を消してしまうgitコマンドを安易に使う
+`;
+}
+
+/* ---------- escape helpers ---------- */
+function esc(s){
+  return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+}
+function escMd(s){ return String(s).replace(/\|/g,"\\|"); }
+
+/* ---------- syntax-highlight preview (lightweight) ---------- */
+function highlight(md){
+  const lines = md.split("\n");
+  let inFence = false;
+  return lines.map(line=>{
+    const e = esc(line);
+    if(/^```/.test(line)){ inFence = !inFence; return `<span class="md-fence">${e}</span>`; }
+    if(inFence) return e;
+    if(/^#\s/.test(line))   return `<span class="md-h1">${e}</span>`;
+    if(/^#{2,}\s/.test(line)) return `<span class="md-h">${e}</span>`;
+    if(/^>\s/.test(line))   return `<span class="md-comment">${e}</span>`;
+    if(/^\|/.test(line))    return `<span class="md-tablebar">${e}</span>`;
+    if(/^\s*[-*]\s/.test(line)) return e.replace(/^(\s*)([-*])(\s)/,'$1<span class="md-bullet">$2</span>$3');
+    return e;
+  }).join("\n");
+}
+
+/* ---------- render preview ---------- */
+let lastMd = "";
+function renderPreview(){
+  lastMd = buildMarkdown();
+  document.getElementById("preview").innerHTML = highlight(lastMd);
+  document.getElementById("charCount").textContent = lastMd.length.toLocaleString();
+  document.getElementById("agentTotal").textContent = DEFAULT_TEAM.length + added.length;
+  const proj = (document.getElementById("projName").value.trim() || "my-project");
+  document.getElementById("previewProj").textContent = proj;
+}
+
+/* ---------- toast ---------- */
+let toastTimer = null;
+function toast(msg, isErr){
+  const t = document.getElementById("toast");
+  t.textContent = (isErr ? "⚠ " : "✓ ") + msg;
+  t.classList.toggle("err", !!isErr);
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove("show"), 2200);
+}
+
+/* ---------- copy ---------- */
+async function copyMarkdown(){
+  const text = lastMd || buildMarkdown();
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+    }else{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position="fixed"; ta.style.top="-9999px";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    toast("CLAUDE.md をコピーしました");
+  }catch(e){
+    toast("コピーに失敗しました。手動で選択してください", true);
+  }
+}
+
+/* ---------- download ---------- */
+function downloadMarkdown(){
+  const text = lastMd || buildMarkdown();
+  const blob = new Blob([text], {type:"text/markdown;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "CLAUDE.md";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast("CLAUDE.md をダウンロードしました");
+}
+
+/* ---------- add agent ---------- */
+function addAgent(){
+  const name   = document.getElementById("agName").value.trim();
+  const layer  = document.getElementById("agLayer").value;
+  const scope  = document.getElementById("agScope").value.trim();
+  const format = document.getElementById("agFormat").value.trim();
+
+  if(!name){ toast("エージェント名を入力してください", true); document.getElementById("agName").focus(); return; }
+  if(!scope){ toast("担当範囲を入力してください", true); document.getElementById("agScope").focus(); return; }
+
+  added.push({ name, layer, scope, format });
+  // reset inputs (keep layer selection for convenience)
+  document.getElementById("agName").value = "";
+  document.getElementById("agScope").value = "";
+  document.getElementById("agFormat").value = "";
+  document.getElementById("agName").focus();
+
+  renderAdded();
+  renderPreview();
+  toast(`「${name}」を追加しました`);
+}
+
+/* ---------- password gate ---------- */
+function initGate(){
+  const overlay = document.getElementById("gate-overlay");
+  const container = document.getElementById("tool-container");
+  const input = document.getElementById("gate-input");
+  const btn = document.getElementById("gate-btn");
+  const err = document.getElementById("gate-error");
+
+  let toolStarted = false;
+  let fails = 0;
+  let lockTimer = null;
+
+  function unlock(){
+    overlay.style.display = "none";
+    container.style.display = "";
+    if(!toolStarted){ toolStarted = true; init(); }
+  }
+
+  function lockInputs(seconds){
+    input.disabled = true;
+    btn.disabled = true;
+    let remaining = seconds;
+    err.textContent = `しばらくお待ちください（${remaining}秒）`;
+    clearInterval(lockTimer);
+    lockTimer = setInterval(()=>{
+      remaining -= 1;
+      if(remaining <= 0){
+        clearInterval(lockTimer);
+        input.disabled = false;
+        btn.disabled = false;
+        err.textContent = "";
+        fails = 0;
+        input.focus();
+      }else{
+        err.textContent = `しばらくお待ちください（${remaining}秒）`;
+      }
+    }, 1000);
+  }
+
+  function attempt(){
+    if(input.disabled) return;
+    if(input.value === GATE_PASSWORD){
+      err.textContent = "";
+      unlock();
+      return;
+    }
+    fails += 1;
+    input.value = "";
+    if(fails >= 3){
+      lockInputs(5); // soft lock after 3 consecutive failures
+    }else{
+      err.textContent = "合言葉が違います。もう一度お試しください。";
+      input.focus();
+    }
+  }
+
+  btn.addEventListener("click", attempt);
+  input.addEventListener("keydown", e=>{
+    if(e.key === "Enter"){ e.preventDefault(); attempt(); }
+    else if(err.textContent && !input.disabled){ err.textContent = ""; }
+  });
+  input.focus();
+}
+
+/* ---------- wire up tool (called after gate unlock) ---------- */
+function init(){
+  renderDefaultTeam();
+  renderAdded();
+  renderPreview();
+
+  document.getElementById("addBtn").addEventListener("click", addAgent);
+  document.getElementById("copyBtn").addEventListener("click", copyMarkdown);
+  document.getElementById("dlBtn").addEventListener("click", downloadMarkdown);
+
+  // live preview on any field change
+  ["projName","projGoal"].forEach(id=>{
+    document.getElementById(id).addEventListener("input", renderPreview);
+  });
+
+  // Enter inside the agent-name field adds the agent
+  document.getElementById("agName").addEventListener("keydown",e=>{
+    if(e.key==="Enter"){ e.preventDefault(); addAgent(); }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initGate);
+</script>
+</body>
+</html>
