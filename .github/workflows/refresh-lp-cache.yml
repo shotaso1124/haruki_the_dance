@@ -1,0 +1,15 @@
+name: Refresh LP Cache
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  refresh-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Pages deployment
+        run: sleep 60
+      - name: Refresh LP cache
+        run: |
+          curl -s "https://summer-mud-dc71.shotso1124.workers.dev/refresh-cache?secret=${{ secrets.CACHE_SECRET }}"
