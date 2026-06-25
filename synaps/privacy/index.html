@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プライバシーポリシー｜シナプス（Synaps）</title>
+<meta name="description" content="学習アプリ「シナプス（Synaps）」のプライバシーポリシー。取得する情報、利用目的、Google AdMob・Firebase等の外部サービス、未成年の利用者に配慮した非パーソナライズ広告の方針、データの開示・削除請求についてご案内します。">
+<meta name="theme-color" content="#2D1B3D">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://hinichi.com/synaps/privacy/">
+
+<!-- OGP -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="プライバシーポリシー｜シナプス（Synaps）">
+<meta property="og:description" content="学習アプリ「シナプス（Synaps）」のプライバシーポリシー。取得する情報・利用目的・外部サービス・広告・未成年への配慮について。">
+<meta property="og:url" content="https://hinichi.com/synaps/privacy/">
+<meta property="og:site_name" content="Synaps">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="プライバシーポリシー｜シナプス（Synaps）">
+<meta name="twitter:description" content="学習アプリ「シナプス（Synaps）」のプライバシーポリシー。">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     Synaps（シナプス）プライバシーポリシー
+     hinichi.com トーン準拠（synaps/index.html と同一デザインシステム）：
+     見出し濃色 #2D1B3D / 水色 #6FBCD8 / アクセント紫 #7C3AED /
+     本文 #1a1a2e / 背景 白 / 見出し: Noto Serif JP / 本文: Noto Sans JP
+     ============================================================ */
+  :root {
+    --bg: #ffffff;
+    --ink: #1a1a2e;
+    --ink-soft: #475569;
+    --head: #2D1B3D;
+    --cyan: #6FBCD8;
+    --cyan-deep: #3FA0C4;
+    --violet: #7C3AED;
+    --violet-soft: #f3eefe;
+    --cyan-soft: #eef8fc;
+    --line: #e8ebf0;
+    --serif: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+    --sans: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    line-height: 1.85;
+    background:
+      radial-gradient(900px 520px at 10% -8%, rgba(111,188,216,0.14), transparent 60%),
+      radial-gradient(900px 520px at 94% 4%, rgba(124,58,237,0.10), transparent 60%),
+      #f7f9fc;
+  }
+  a { color: var(--cyan-deep); }
+  a:hover { color: var(--violet); }
+  img { max-width: 100%; display: block; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- ヘッダー ---------- */
+  header.site {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,0.86);
+    backdrop-filter: saturate(160%) blur(10px);
+    -webkit-backdrop-filter: saturate(160%) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand .mark {
+    width: 38px; height: 38px; border-radius: 11px; flex: 0 0 auto;
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 100%);
+    display: grid; place-items: center;
+    box-shadow: 0 6px 16px -6px rgba(124,58,237,0.55);
+  }
+  .brand .mark svg { width: 22px; height: 22px; }
+  .brand .name { font-family: var(--serif); font-weight: 900; font-size: 1.25rem; color: var(--head); letter-spacing: .02em; }
+  .brand .name small { display: block; font-family: var(--sans); font-weight: 500; font-size: .62rem; color: var(--ink-soft); letter-spacing: .14em; }
+  .nav { display: flex; align-items: center; gap: 22px; }
+  .nav a.link { text-decoration: none; font-size: .92rem; font-weight: 500; color: var(--ink-soft); }
+  .nav a.link:hover { color: var(--head); }
+  .btn-store {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: var(--head); color: #fff; text-decoration: none;
+    padding: 10px 18px; border-radius: 999px; font-weight: 700; font-size: .9rem;
+    box-shadow: 0 10px 24px -10px rgba(45,27,61,0.6);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-store:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -12px rgba(45,27,61,0.7); color: #fff; }
+  .btn-store svg { width: 20px; height: 20px; }
+  @media (max-width: 720px){ .nav a.link { display: none; } }
+
+  /* ---------- ページヘッダー ---------- */
+  .page-head { padding: 56px 0 28px; }
+  .crumb { font-size: .82rem; color: var(--ink-soft); margin-bottom: 18px; }
+  .crumb a { text-decoration: none; }
+  .crumb a:hover { text-decoration: underline; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .8rem; font-weight: 700; letter-spacing: .08em;
+    color: var(--violet); background: var(--violet-soft);
+    padding: 7px 14px; border-radius: 999px; margin-bottom: 18px;
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--violet); }
+  h1.page-title {
+    font-family: var(--serif); font-weight: 900; color: var(--head);
+    font-size: clamp(1.9rem, 4.4vw, 2.8rem); line-height: 1.34; letter-spacing: .01em;
+  }
+  .page-lead { margin-top: 18px; font-size: 1.02rem; color: var(--ink-soft); max-width: 44em; }
+  .meta-dates {
+    margin-top: 22px; display: flex; gap: 26px; flex-wrap: wrap;
+    font-size: .86rem; color: var(--ink-soft);
+  }
+  .meta-dates b { color: var(--head); }
+
+  /* ---------- 本文カード ---------- */
+  .doc { padding: 18px 0 40px; }
+  .doc-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 22px;
+    padding: clamp(28px, 5vw, 56px);
+    box-shadow: 0 18px 40px -28px rgba(45,27,61,0.22);
+  }
+
+  /* 目次 */
+  .toc {
+    background: var(--cyan-soft); border: 1px solid #d7e6ef; border-radius: 16px;
+    padding: 22px 26px; margin-bottom: 40px;
+  }
+  .toc h2 {
+    font-family: var(--serif); font-weight: 700; font-size: 1.02rem; color: var(--head);
+    margin-bottom: 12px; letter-spacing: .02em;
+  }
+  .toc ol { list-style: none; counter-reset: toc; columns: 2; column-gap: 36px; }
+  @media (max-width: 640px){ .toc ol { columns: 1; } }
+  .toc li { counter-increment: toc; margin-bottom: 7px; break-inside: avoid; }
+  .toc li a {
+    text-decoration: none; font-size: .92rem; color: var(--ink-soft);
+    display: flex; gap: 9px; align-items: baseline;
+  }
+  .toc li a::before {
+    content: counter(toc); color: var(--cyan-deep); font-weight: 700; font-size: .82rem;
+    min-width: 1.3em;
+  }
+  .toc li a:hover { color: var(--head); }
+
+  /* 見出し・本文 */
+  section.sec { scroll-margin-top: 84px; }
+  section.sec + section.sec { margin-top: 40px; padding-top: 38px; border-top: 1px solid var(--line); }
+  .sec h2 {
+    font-family: var(--serif); font-weight: 900; color: var(--head);
+    font-size: clamp(1.2rem, 2.6vw, 1.5rem); line-height: 1.45;
+    display: flex; gap: 12px; align-items: baseline;
+  }
+  .sec h2 .no {
+    flex: 0 0 auto; font-size: .8em; color: #fff; background: linear-gradient(135deg, var(--cyan-deep), var(--violet));
+    width: 1.9em; height: 1.9em; border-radius: 9px; display: inline-grid; place-items: center;
+    box-shadow: 0 8px 18px -8px rgba(124,58,237,0.5); font-family: var(--sans);
+  }
+  .sec h3 {
+    font-family: var(--sans); font-weight: 700; color: var(--head);
+    font-size: 1.02rem; margin-top: 22px;
+  }
+  .sec p { margin-top: 12px; color: var(--ink); font-size: .98rem; }
+  .sec p.note { color: var(--ink-soft); font-size: .9rem; }
+  .sec ul { margin: 12px 0 0; padding-left: 0; list-style: none; }
+  .sec ul li {
+    position: relative; padding-left: 22px; margin-top: 9px; color: var(--ink); font-size: .98rem;
+  }
+  .sec ul li::before {
+    content: ""; position: absolute; left: 4px; top: .68em;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--cyan-deep);
+  }
+  .sec ul li b { color: var(--head); }
+
+  /* 表 */
+  .tbl-wrap { margin-top: 18px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+  table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .92rem; }
+  thead th {
+    background: var(--head); color: #fff; text-align: left; font-weight: 700;
+    padding: 12px 16px; white-space: nowrap;
+  }
+  tbody td { padding: 13px 16px; border-top: 1px solid var(--line); color: var(--ink); vertical-align: top; }
+  tbody tr:nth-child(even) td { background: #fbfcfe; }
+  tbody td b { color: var(--head); }
+  tbody td a { word-break: break-all; }
+
+  /* 強調ボックス */
+  .callout {
+    margin-top: 18px; border-radius: 14px; padding: 20px 22px;
+    background: var(--violet-soft); border: 1px solid #e4d8fb;
+  }
+  .callout.cyan { background: var(--cyan-soft); border-color: #d7e6ef; }
+  .callout .ttl { font-weight: 700; color: var(--head); display: flex; align-items: center; gap: 9px; }
+  .callout .ttl svg { width: 19px; height: 19px; flex: 0 0 auto; }
+  .callout p { margin-top: 9px; font-size: .95rem; color: var(--ink); }
+
+  /* お問い合わせ枠 */
+  .contact-box {
+    margin-top: 14px; background: #fbfcfe; border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 22px; font-size: .96rem;
+  }
+  .contact-box dt { font-weight: 700; color: var(--head); margin-top: 10px; }
+  .contact-box dt:first-child { margin-top: 0; }
+  .contact-box dd { color: var(--ink); }
+
+  /* フッター */
+  footer.site { padding: 44px 0 60px; border-top: 1px solid var(--line); background: #fff; margin-top: 56px; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 28px; flex-wrap: wrap; }
+  .foot-brand .name { font-family: var(--serif); font-weight: 900; color: var(--head); font-size: 1.1rem; }
+  .foot-brand p { margin-top: 8px; font-size: .85rem; color: var(--ink-soft); max-width: 26em; }
+  .foot-links { display: flex; flex-direction: column; gap: 10px; }
+  .foot-links a { font-size: .9rem; color: var(--ink-soft); text-decoration: none; }
+  .foot-links a:hover { color: var(--head); text-decoration: underline; }
+  .copy { margin-top: 30px; font-size: .8rem; color: #9aa3b2; }
+</style>
+</head>
+<body>
+
+<!-- ============ ヘッダー ============ -->
+<header class="site">
+  <div class="wrap site-inner">
+    <a class="brand" href="/synaps/">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="6" cy="6" r="2.4" fill="#fff"/>
+          <circle cx="18" cy="7" r="2.0" fill="#fff"/>
+          <circle cx="7" cy="17.5" r="2.0" fill="#fff"/>
+          <circle cx="17" cy="17" r="2.6" fill="#fff"/>
+          <path d="M7.6 7.2 16.2 7.6 M7.4 7.8 8.4 15.4 M9 16.6 15 16.8 M8.2 16 16 8.4 M16.6 9 16.9 15" stroke="#fff" stroke-width="1.1" stroke-linecap="round" opacity=".85"/>
+        </svg>
+      </span>
+      <span class="name">シナプス<small>SYNAPS — STUDY FOCUS</small></span>
+    </a>
+    <nav class="nav">
+      <a class="link" href="/synaps/">トップ</a>
+      <a class="link" href="/synaps/#features">機能</a>
+      <a class="btn-store" href="https://apps.apple.com/jp/app/id6756655880" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 12.78c-.02-2.05 1.67-3.03 1.75-3.08-.95-1.4-2.44-1.59-2.97-1.61-1.26-.13-2.46.74-3.1.74-.64 0-1.63-.72-2.68-.7-1.38.02-2.65.8-3.36 2.04-1.43 2.49-.37 6.17 1.03 8.19.68.99 1.49 2.1 2.55 2.06 1.02-.04 1.41-.66 2.65-.66 1.23 0 1.59.66 2.68.64 1.11-.02 1.81-1 2.49-2 .78-1.15 1.1-2.27 1.12-2.33-.02-.01-2.15-.83-2.17-3.28zM14.3 6.1c.56-.68.94-1.62.84-2.56-.81.03-1.79.54-2.37 1.22-.52.6-.98 1.56-.86 2.48.9.07 1.83-.46 2.39-1.14z"/></svg>
+        App Store
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ ページヘッダー ============ -->
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="/synaps/">シナプス（Synaps）</a> ／ プライバシーポリシー</div>
+    <span class="eyebrow"><span class="dot"></span>PRIVACY POLICY</span>
+    <h1 class="page-title">プライバシーポリシー</h1>
+    <p class="page-lead">
+      学習アプリ「シナプス（Synaps）」（以下「本アプリ」といいます）における、利用者の個人情報および利用データの取り扱いについて、以下のとおり定めます。本アプリは、利用者のプライバシーを尊重し、個人情報の保護に努めます。
+    </p>
+    <div class="meta-dates">
+      <span><b>制定日：</b>2026年6月26日</span>
+      <span><b>最終改定日：</b>2026年6月26日</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 本文 ============ -->
+<section class="doc">
+  <div class="wrap">
+    <div class="doc-card">
+
+      <!-- 目次 -->
+      <nav class="toc" aria-label="目次">
+        <h2>目次</h2>
+        <ol>
+          <li><a href="#operator">運営者・お問い合わせ窓口</a></li>
+          <li><a href="#collect">取得する情報</a></li>
+          <li><a href="#purpose">利用目的</a></li>
+          <li><a href="#third-party">外部サービス・第三者提供</a></li>
+          <li><a href="#ads">広告について</a></li>
+          <li><a href="#children">お子様（未成年）のプライバシー</a></li>
+          <li><a href="#cookie">Cookie・類似技術について</a></li>
+          <li><a href="#retention">データの保持・削除・開示請求</a></li>
+          <li><a href="#security">安全管理措置</a></li>
+          <li><a href="#revision">本ポリシーの改定</a></li>
+          <li><a href="#law">準拠法・お問い合わせ</a></li>
+        </ol>
+      </nav>
+
+      <!-- 1 運営者 -->
+      <section class="sec" id="operator">
+        <h2><span class="no">1</span>運営者・お問い合わせ窓口</h2>
+        <p>本アプリは、以下の個人事業主（以下「運営者」といいます）が運営しています。本ポリシーに関するお問い合わせ、および後述の開示・訂正・削除等のご請求は、下記の窓口までご連絡ください。</p>
+        <div class="contact-box">
+          <dl>
+            <dt>サービス名</dt>
+            <dd>シナプス（Synaps）</dd>
+            <dt>個人情報に関するお問い合わせ窓口</dt>
+            <dd><a href="mailto:shotso1124@gmail.com">shotso1124@gmail.com</a></dd>
+          </dl>
+        </div>
+        <p class="note">いただいたお問い合わせには、内容を確認のうえ、合理的な期間内に順次対応いたします。</p>
+      </section>
+
+      <!-- 2 取得する情報 -->
+      <section class="sec" id="collect">
+        <h2><span class="no">2</span>取得する情報</h2>
+        <p>本アプリは、サービスの提供にあたり、以下の情報を取得することがあります。本アプリは、原則として氏名・住所・電話番号といった、特定の個人を直接識別する情報の入力を求めません。</p>
+
+        <h3>(1) 学習記録・利用データ</h3>
+        <p>集中タイマーの利用時間、学習記録、単語帳・クイズの取り組み状況、カレンダーへの記録、アプリ内の設定など、本アプリの利用にともない生成されるデータ。これらは原則として利用者の端末内（ローカル）に保存され、データのバックアップ・同期のためにFirebase（後述）の匿名認証および保存機能を利用することがあります。</p>
+
+        <h3>(2) 端末・利用環境に関する情報</h3>
+        <p>OSの種類・バージョン、アプリのバージョン、言語設定、端末の種類、アプリ内での操作・利用状況（アクセス解析）など、本アプリの動作・改善のために取得される情報。</p>
+
+        <h3>(3) 広告識別子</h3>
+        <p>広告の配信・計測のために、広告配信事業者（Google AdMob）が広告識別子（IDFA等）その他の識別情報を取得・利用することがあります。なお、本アプリでは後述のとおり、行動ターゲティングを行わない非パーソナライズ広告を配信します。</p>
+
+        <h3>(4) アフィリエイトに関する情報</h3>
+        <p>本アプリ内に掲載するアフィリエイトリンク（塾・教育サービス等）を経由した場合、成果計測のために、ASP（アフィリエイト・サービス・プロバイダ）等の事業者により、リンクの遷移・成果に関する情報がCookieや識別子を通じて取得されることがあります。</p>
+
+        <div class="callout cyan">
+          <div class="ttl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="color:#3FA0C4"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+            端末ローカル保存が基本です
+          </div>
+          <p>学習記録などの主要なデータは、まず利用者の端末内に保存されます。クラウドへの同期・バックアップを行う場合に限り、Firebaseの匿名認証を用いてデータを保管します。匿名認証では、氏名やメールアドレスの登録は不要です。</p>
+        </div>
+      </section>
+
+      <!-- 3 利用目的 -->
+      <section class="sec" id="purpose">
+        <h2><span class="no">3</span>利用目的</h2>
+        <p>運営者は、取得した情報を以下の目的の範囲内で利用します。</p>
+        <ul>
+          <li>本アプリの提供・維持・運営（学習記録の保存、データの同期・バックアップ等）のため</li>
+          <li>本アプリの不具合の調査・改善、新機能の開発、品質向上のため</li>
+          <li>アクセス解析による利用状況の把握、およびサービス改善のため</li>
+          <li>広告（非パーソナライズ広告）の配信・表示・効果測定のため</li>
+          <li>アフィリエイトリンク経由の成果計測のため</li>
+          <li>お問い合わせへの対応、本人確認、必要な連絡のため</li>
+          <li>利用規約に違反する行為への対応、不正利用の防止のため</li>
+          <li>法令の遵守、および法令にもとづく対応のため</li>
+        </ul>
+      </section>
+
+      <!-- 4 外部サービス・第三者提供 -->
+      <section class="sec" id="third-party">
+        <h2><span class="no">4</span>外部サービス・第三者提供</h2>
+        <p>本アプリは、機能の提供・改善・広告配信等のために、以下の外部サービスを利用しています。これらのサービスでは、各事業者のプライバシーポリシーにもとづいて情報が取得・処理される場合があります。利用者は、各リンク先で詳細をご確認いただけます。</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>サービス名（提供者）</th>
+                <th>利用目的</th>
+                <th>プライバシーポリシー</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Google AdMob</b><br>（Google LLC）</td>
+                <td>アプリ内広告の配信・表示・効果測定（非パーソナライズ広告）</td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a><br><a href="https://support.google.com/admob/answer/6128543" target="_blank" rel="noopener">AdMobの情報の取り扱い</a></td>
+              </tr>
+              <tr>
+                <td><b>Firebase</b><br>（Google LLC）</td>
+                <td>匿名認証、学習データの保存・同期、アプリの安定運用</td>
+                <td><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">firebase.google.com/support/privacy</a><br><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></td>
+              </tr>
+              <tr>
+                <td><b>アフィリエイト</b><br>（各ASP事業者）</td>
+                <td>アプリ内アフィリエイトリンク（塾・教育サービス等）経由の成果計測</td>
+                <td>各ASP事業者が定めるプライバシーポリシーによります（遷移先の各サービスの規定を含みます）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>第三者への提供</h3>
+        <p>運営者は、次のいずれかに該当する場合を除き、取得した個人情報を、あらかじめ本人の同意を得ることなく第三者に提供しません。</p>
+        <ul>
+          <li>法令にもとづく場合</li>
+          <li>人の生命・身体または財産の保護のために必要があり、本人の同意を得ることが困難な場合</li>
+          <li>本アプリの運営に必要な範囲で、上記の外部サービス事業者に対し、その提供目的の達成に必要な情報を取り扱わせる場合（業務委託に準じる取り扱いを含みます）</li>
+          <li>合併その他の事由による事業の承継にともなって提供される場合</li>
+        </ul>
+        <p class="note">上記の外部サービスには、海外（米国等）に所在する事業者が含まれ、これにともない取得された情報が外国にある第三者に移転される場合があります。</p>
+      </section>
+
+      <!-- 5 広告について -->
+      <section class="sec" id="ads">
+        <h2><span class="no">5</span>広告について</h2>
+        <p>本アプリは、運営の継続のために、Google AdMobによる広告を表示します。広告の配信にあたり、運営者は本アプリの利用者層に配慮し、以下の方針を採用しています。</p>
+
+        <div class="callout">
+          <div class="ttl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="color:#7C3AED"><path d="M12 3l2.5 5.2 5.7.8-4.1 4 1 5.7L12 21l-5.1 2.7 1-5.7-4.1-4 5.7-.8z"/></svg>
+            非パーソナライズ広告を配信しています
+          </div>
+          <p>本アプリは中学生・高校生をはじめとする<b>未成年の利用者が多い</b>ことをふまえ、利用者の興味・関心や閲覧・行動の履歴にもとづく<b>行動ターゲティング（パーソナライズ）広告は配信しません</b>。配信するのは、行動履歴を用いない<b>非パーソナライズ広告</b>のみです。また、広告コンテンツのレーティングは<b>「G（全年齢向け）」を上限</b>として設定しています。</p>
+        </div>
+
+        <p>非パーソナライズ広告であっても、広告の配信・表示や不正防止のために、広告識別子や端末・利用環境に関する情報が利用されることがあります。詳細は、上記「外部サービス・第三者提供」に記載のGoogle／AdMobのプライバシーポリシーをご確認ください。</p>
+        <p class="note">広告識別子の利用は、端末（iOS）の設定からトラッキングの許可・制限を変更することで、利用者ご自身で管理いただけます。</p>
+      </section>
+
+      <!-- 6 お子様のプライバシー -->
+      <section class="sec" id="children">
+        <h2><span class="no">6</span>お子様（未成年）のプライバシー</h2>
+        <p>本アプリは、中学生・高校生をはじめとする未成年の利用者を主な対象に含む学習アプリです。運営者は、お子様のプライバシー保護を特に重視し、以下の方針で運営しています。</p>
+        <ul>
+          <li>前項のとおり、<b>追跡型（行動ターゲティング）広告は配信せず</b>、非パーソナライズ広告のみを表示します。</li>
+          <li>本アプリは、氏名・住所・電話番号等の個人を直接識別する情報の入力を、原則として求めません。</li>
+          <li>未成年の利用者がご利用になる場合は、<b>保護者の方の理解と関与のもとでのご利用を推奨</b>します。本ポリシーの内容についても、保護者の方とご確認いただくことをおすすめします。</li>
+          <li>保護者の方が、お子様に関する情報の確認・削除等をご希望の場合は、上記お問い合わせ窓口までご連絡ください。</li>
+        </ul>
+        <p class="note">運営者は、保護者の同意なく未成年から不必要な個人情報を収集することを意図していません。万一、そのような情報が取得されていることが判明した場合は、合理的な範囲で速やかに削除等の対応を行います。</p>
+      </section>
+
+      <!-- 7 Cookie -->
+      <section class="sec" id="cookie">
+        <h2><span class="no">7</span>Cookie・類似技術について</h2>
+        <p>本アプリおよび関連するWebページやアフィリエイトリンクの遷移先では、Cookieや広告識別子等の類似技術が、利用状況の把握、広告の配信・計測、アフィリエイトの成果計測のために利用されることがあります。</p>
+        <p>これらの技術により取得される情報には、単独では特定の個人を識別できない情報が含まれます。利用者は、ご利用の端末・ブラウザの設定や、iOSのトラッキング設定により、Cookieや広告識別子の利用を制限することができます。ただし、制限により本アプリや一部機能が正常に動作しない場合があります。</p>
+      </section>
+
+      <!-- 8 データの保持・削除・開示請求 -->
+      <section class="sec" id="retention">
+        <h2><span class="no">8</span>データの保持・削除・開示請求</h2>
+        <h3>保持期間</h3>
+        <p>運営者は、利用目的の達成に必要な範囲で情報を保持し、目的を達成した後、または利用者からの削除のご請求があった場合は、法令で保存が義務づけられている場合を除き、合理的な期間内に削除または匿名化します。</p>
+        <h3>利用者ご自身による削除</h3>
+        <p>端末内（ローカル）に保存された学習記録等のデータは、本アプリのアンインストールや、アプリ内の該当する操作により削除できます。クラウドに同期されたデータの削除をご希望の場合は、お問い合わせ窓口までご連絡ください。</p>
+        <h3>開示・訂正・利用停止等のご請求</h3>
+        <p>利用者は、個人情報の保護に関する法律にもとづき、運営者が保有する自己の個人情報について、開示・訂正・追加・削除・利用停止・第三者提供の停止等を請求することができます。ご請求は、上記「運営者・お問い合わせ窓口」記載の連絡先にて受け付けます。ご本人からのご請求であることを確認のうえ、法令にしたがって対応いたします。</p>
+      </section>
+
+      <!-- 9 安全管理措置 -->
+      <section class="sec" id="security">
+        <h2><span class="no">9</span>安全管理措置</h2>
+        <p>運営者は、取得した情報の漏えい、滅失またはき損の防止その他の安全管理のために、必要かつ適切な措置を講じます。また、情報を取り扱う外部サービス事業者に対しても、適切な取り扱いがなされるよう必要な確認を行います。</p>
+      </section>
+
+      <!-- 10 改定 -->
+      <section class="sec" id="revision">
+        <h2><span class="no">10</span>本ポリシーの改定</h2>
+        <p>運営者は、法令の変更やサービス内容の変更等に応じて、本ポリシーを改定することがあります。重要な変更を行う場合は、本ページへの掲載その他の適切な方法によりお知らせします。改定後の本ポリシーは、本ページに掲載した時点から効力を生じるものとします。最新の改定日は、ページ上部の「最終改定日」に記載します。</p>
+      </section>
+
+      <!-- 11 準拠法 -->
+      <section class="sec" id="law">
+        <h2><span class="no">11</span>準拠法・お問い合わせ</h2>
+        <p>本ポリシーの解釈および適用は、日本法（個人情報の保護に関する法律を含みます）に準拠します。本アプリのプライバシーに関するご質問・ご要望・各種ご請求は、下記までお問い合わせください。</p>
+        <div class="contact-box">
+          <dl>
+            <dt>お問い合わせ窓口</dt>
+            <dd><a href="mailto:shotso1124@gmail.com">shotso1124@gmail.com</a></dd>
+          </dl>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ フッター ============ -->
+<footer class="site">
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <div class="name">シナプス（Synaps）</div>
+      <p>勉強に集中するためのポモドーロ学習タイマー。集中タイマー × 単語帳・クイズ × 学習記録で、中高生の毎日の学びを支えます。</p>
+    </div>
+    <div class="foot-links">
+      <a href="/synaps/">トップへ戻る</a>
+      <a href="https://apps.apple.com/jp/app/id6756655880" target="_blank" rel="noopener">App Store でダウンロード</a>
+      <a href="/synaps/privacy/">プライバシーポリシー</a>
+      <a href="mailto:shotso1124@gmail.com">お問い合わせ</a>
+    </div>
+  </div>
+  <div class="wrap"><div class="copy">© 2026 Synaps. All rights reserved.</div></div>
+</footer>
+
+</body>
+</html>
