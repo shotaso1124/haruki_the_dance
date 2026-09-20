@@ -167,6 +167,30 @@
   .callout.cyan { background: var(--cyan-soft); border-color: #d7e6ef; }
   .callout .ttl { font-weight: 700; color: var(--head); }
   .callout p { margin-top: 9px; font-size: .95rem; color: var(--ink); }
+  .callout ul { margin: 10px 0 0; padding-left: 0; list-style: none; }
+  .callout ul li {
+    position: relative; padding-left: 22px; margin-top: 9px;
+    font-size: .95rem; color: var(--ink);
+  }
+  .callout ul li::before {
+    content: ""; position: absolute; left: 4px; top: .68em;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--cyan-deep);
+  }
+
+  /* このページの要点（ページ冒頭） */
+  .page-head .callout { max-width: 44em; }
+  .lead-more { margin-top: 12px; font-size: .9rem; color: var(--ink-soft); max-width: 44em; }
+
+  /* ---------- 折りたたみ（details/summary・JS不要） ---------- */
+  details.fold { margin-top: 18px; }
+  details.fold > summary {
+    cursor: pointer; font-weight: 700; color: var(--cyan-deep);
+    font-size: .95rem; line-height: 1.6; padding: 10px 0;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  details.fold > summary:hover { color: var(--violet); }
+  details.fold > summary:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; border-radius: 6px; }
+  details.fold > summary + * { margin-top: 10px; }
 
   /* お問い合わせ枠 */
   .contact-box {
@@ -222,6 +246,18 @@
       シナプス（Synaps）Android版のテストにご協力いただき、ありがとうございます。<br>
       テスターのご登録でお預かりするメールアドレスの扱いを、このページにまとめました。
     </p>
+
+    <div class="callout cyan">
+      <div class="ttl">このページの要点</div>
+      <ul>
+        <li>お預かりするのは、Gmail（Googleアカウントのメールアドレス）だけです。</li>
+        <li>使うのは、Google Play（アメリカのGoogle社）へのテスター登録と、そのご連絡だけです。</li>
+        <li>テストが終わったら削除します。やめたいときは、いつでも外せます。</li>
+        <li>内容にご了承いただける場合だけ、アドレスをお送りください。16歳未満の方は、保護者の方の同意をもらってからお願いします。</li>
+      </ul>
+    </div>
+    <p class="lead-more">くわしい内容は、この下に書いています。</p>
+
     <div class="meta-dates">
       <span><b>公開日：</b>2026年9月20日</span>
     </div>
@@ -264,9 +300,14 @@
         <h3>法律で決められている、3つのお知らせ</h3>
         <ul>
           <li><b>渡す先の国</b>：アメリカ合衆国です。</li>
-          <li><b>その国の制度</b>：米国には、日本の個人情報保護法にあたる分野横断的な連邦法はなく、州ごとの法律や分野ごとの法律によって保護が定められています。日本と同等の水準にあると認められた国（EU・英国）には指定されていません。</li>
-          <li><b>渡す先が講じている措置</b>：Google LLCは、同社の<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>および<a href="https://play.google.com/about/developer-distribution-agreement.html" target="_blank" rel="noopener">デベロッパー販売/配布契約</a>にもとづき、安全管理のための措置を講じています。</li>
         </ul>
+        <details class="fold">
+          <summary>アメリカの制度と、Googleの対策について（タップで開く）</summary>
+          <ul>
+            <li><b>その国の制度</b>：米国には、日本の個人情報保護法にあたる分野横断的な連邦法はなく、州ごとの法律や分野ごとの法律によって保護が定められています。日本と同等の水準にあると認められた国（EU・英国）には指定されていません。</li>
+            <li><b>渡す先が講じている措置</b>：Google LLCは、同社の<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>および<a href="https://play.google.com/about/developer-distribution-agreement.html" target="_blank" rel="noopener">デベロッパー販売/配布契約</a>にもとづき、安全管理のための措置を講じています。</li>
+          </ul>
+        </details>
         <p>Google以外の、ほかの人や会社に渡すことはありません。</p>
       </section>
 
@@ -300,17 +341,20 @@
         <p>理由をおうかがいすることはありません。</p>
         <p>ご本人からの申し出と確認できしだい、速やかに（通常は7日以内に）テスター登録から外し、メールアドレスを削除します。</p>
 
-        <h3>ご自身のアドレスについて、お願いできること</h3>
-        <ul>
-          <li>どう登録されているか<b>知りたい</b></li>
-          <li>内容を<b>直してほしい・足してほしい</b></li>
-          <li><b>使うのをやめてほしい</b></li>
-          <li><b>Googleへの登録をやめてほしい</b></li>
-        </ul>
-        <p class="note">法律では「開示・訂正・追加・利用停止・第三者提供の停止」と呼びます。</p>
-        <p>手数料はいただきません。</p>
-        <p>18歳未満の方は、保護者の方からもお願いできます。</p>
-        <p>ご本人の確認は、お送りいただいたメールアドレスからのご連絡か、登録のときにやり取りしたSNSアカウントからのDMで行います。</p>
+        <details class="fold">
+          <summary>自分のアドレスについての確認・訂正などのご請求（タップで開く）</summary>
+          <h3>ご自身のアドレスについて、お願いできること</h3>
+          <ul>
+            <li>どう登録されているか<b>知りたい</b></li>
+            <li>内容を<b>直してほしい・足してほしい</b></li>
+            <li><b>使うのをやめてほしい</b></li>
+            <li><b>Googleへの登録をやめてほしい</b></li>
+          </ul>
+          <p class="note">法律では「開示・訂正・追加・利用停止・第三者提供の停止」と呼びます。</p>
+          <p>手数料はいただきません。</p>
+          <p>18歳未満の方は、保護者の方からもお願いできます。</p>
+          <p>ご本人の確認は、お送りいただいたメールアドレスからのご連絡か、登録のときにやり取りしたSNSアカウントからのDMで行います。</p>
+        </details>
       </section>
 
       <!-- 7 18歳未満の方へ -->
@@ -341,10 +385,13 @@
         </div>
         <p class="note">いただいたお問い合わせには、できるだけ早くお返事します。</p>
 
-        <h3>アプリ本体のプライバシーポリシーとの関係</h3>
-        <p>このページは、アプリの外（SNSのDM）でお預かりするメールアドレスについての定めです。</p>
-        <p><a href="/synaps/privacy/">シナプス（Synaps）プライバシーポリシー</a>は、アプリが氏名・メールアドレスなどの入力を求めないことを前提にした、別のものです。</p>
-        <p>テスター登録については、このページの定めが優先します。</p>
+        <details class="fold">
+          <summary>アプリ本体のプライバシーポリシーとの関係（タップで開く）</summary>
+          <h3>アプリ本体のプライバシーポリシーとの関係</h3>
+          <p>このページは、アプリの外（SNSのDM）でお預かりするメールアドレスについての定めです。</p>
+          <p><a href="/synaps/privacy/">シナプス（Synaps）プライバシーポリシー</a>は、アプリが氏名・メールアドレスなどの入力を求めないことを前提にした、別のものです。</p>
+          <p>テスター登録については、このページの定めが優先します。</p>
+        </details>
       </section>
 
     </div>
