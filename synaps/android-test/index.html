@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Android版テストにご協力いただく方へ — メールアドレスの取り扱いについて</title>
-<meta name="description" content="シナプス（Synaps）Android版のテストにご協力いただく方へ。テスター登録でお預かりするGoogleアカウントのメールアドレスの使いみち・登録先・保管と削除についてご案内します。">
+<title>Android版のテストにご協力いただく方へ — メールアドレスの取り扱いについて</title>
+<meta name="description" content="シナプス（Synaps）Android版のテストにご協力いただく方へ。テスター登録でお預かりするGoogleアカウントのメールアドレス（Gmailのアドレス）の使いみち・登録先（アメリカのGoogle）・保管と削除についてご案内します。">
 <meta name="theme-color" content="#2D1B3D">
 <meta name="robots" content="noindex">
 
@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
-     Synaps（シナプス）プライバシーポリシー
+     Synaps（シナプス）Android版のテスト メールアドレスの取り扱い
      hinichi.com トーン準拠（synaps/index.html と同一デザインシステム）：
      見出し濃色 #2D1B3D / 水色 #6FBCD8 / アクセント紫 #7C3AED /
      本文 #1a1a2e / 背景 白 / 見出し: Noto Serif JP / 本文: Noto Sans JP
@@ -72,16 +72,16 @@
   .nav { display: flex; align-items: center; gap: 22px; }
   .nav a.link { text-decoration: none; font-size: .92rem; font-weight: 500; color: var(--ink-soft); }
   .nav a.link:hover { color: var(--head); }
-  .btn-store {
-    display: inline-flex; align-items: center; gap: 9px;
-    background: var(--head); color: #fff; text-decoration: none;
-    padding: 10px 18px; border-radius: 999px; font-weight: 700; font-size: .9rem;
-    box-shadow: 0 10px 24px -10px rgba(45,27,61,0.6);
-    transition: transform .15s ease, box-shadow .15s ease;
+  @media (max-width: 560px){ .nav a.link { font-size: .84rem; } .nav { gap: 14px; } }
+
+  /* ---------- スマホでの詰め ---------- */
+  @media (max-width: 560px){
+    body { line-height: 1.78; }
+    .page-head { padding: 32px 0 18px; }
+    .page-lead { font-size: .96rem; }
+    .doc { padding: 12px 0 28px; }
+    footer.site { margin-top: 36px; padding: 32px 0 44px; }
   }
-  .btn-store:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -12px rgba(45,27,61,0.7); color: #fff; }
-  .btn-store svg { width: 20px; height: 20px; }
-  @media (max-width: 720px){ .nav a.link { display: none; } }
 
   /* ---------- ページヘッダー ---------- */
   .page-head { padding: 56px 0 28px; }
@@ -105,12 +105,6 @@
     font-size: .86rem; color: var(--ink-soft);
   }
   .meta-dates b { color: var(--head); }
-  .ver-badge {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-size: .8rem; font-weight: 700; letter-spacing: .04em;
-    color: var(--cyan-deep); background: var(--cyan-soft); border: 1px solid #d7e6ef;
-    padding: 4px 12px; border-radius: 999px;
-  }
 
   /* ---------- 本文カード ---------- */
   .doc { padding: 18px 0 40px; }
@@ -120,43 +114,10 @@
     box-shadow: 0 18px 40px -28px rgba(45,27,61,0.22);
   }
 
-  /* 目次 */
-  .toc {
-    background: var(--cyan-soft); border: 1px solid #d7e6ef; border-radius: 16px;
-    padding: 22px 26px; margin-bottom: 40px;
-  }
-  .toc h2 {
-    font-family: var(--serif); font-weight: 700; font-size: 1.02rem; color: var(--head);
-    margin-bottom: 12px; letter-spacing: .02em;
-  }
-  .toc ol { list-style: none; counter-reset: toc; columns: 2; column-gap: 36px; }
-  @media (max-width: 640px){ .toc ol { columns: 1; } }
-  .toc li { counter-increment: toc; margin-bottom: 7px; break-inside: avoid; }
-  .toc li a {
-    text-decoration: none; font-size: .92rem; color: var(--ink-soft);
-    display: flex; gap: 9px; align-items: baseline;
-  }
-  .toc li a::before {
-    content: counter(toc); color: var(--cyan-deep); font-weight: 700; font-size: .82rem;
-    min-width: 1.3em;
-  }
-  .toc li a:hover { color: var(--head); }
-
-  /* 改訂ポイント枠 */
-  .revnote {
-    background: var(--violet-soft); border: 1px solid #e4d8fb; border-radius: 16px;
-    padding: 22px 26px; margin-bottom: 40px;
-  }
-  .revnote h2 {
-    font-family: var(--serif); font-weight: 700; font-size: 1.02rem; color: var(--head);
-    margin-bottom: 12px; letter-spacing: .02em;
-  }
-  .revnote p { font-size: .92rem; color: var(--ink); margin-top: 8px; }
-  .revnote p.note { color: var(--ink-soft); font-size: .86rem; margin-top: 12px; }
-
   /* 見出し・本文 */
   section.sec { scroll-margin-top: 84px; }
   section.sec + section.sec { margin-top: 40px; padding-top: 38px; border-top: 1px solid var(--line); }
+  @media (max-width: 560px){ section.sec + section.sec { margin-top: 26px; padding-top: 24px; } }
   .sec h2 {
     font-family: var(--serif); font-weight: 900; color: var(--head);
     font-size: clamp(1.2rem, 2.6vw, 1.5rem); line-height: 1.45;
@@ -198,15 +159,13 @@
   tbody td b { color: var(--head); }
   tbody td a { word-break: break-all; }
 
-  /* 強調ボックス */
+  /* 案内ボックス */
   .callout {
     margin-top: 18px; border-radius: 14px; padding: 20px 22px;
     background: var(--violet-soft); border: 1px solid #e4d8fb;
   }
   .callout.cyan { background: var(--cyan-soft); border-color: #d7e6ef; }
-  .callout.warn { background: #fff5ec; border-color: #f6dcc0; }
-  .callout .ttl { font-weight: 700; color: var(--head); display: flex; align-items: center; gap: 9px; }
-  .callout .ttl svg { width: 19px; height: 19px; flex: 0 0 auto; }
+  .callout .ttl { font-weight: 700; color: var(--head); }
   .callout p { margin-top: 9px; font-size: .95rem; color: var(--ink); }
 
   /* お問い合わせ枠 */
@@ -249,10 +208,6 @@
     <nav class="nav">
       <a class="link" href="/synaps/">トップ</a>
       <a class="link" href="/synaps/#features">機能</a>
-      <a class="btn-store" href="https://apps.apple.com/jp/app/id6756655880" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 12.78c-.02-2.05 1.67-3.03 1.75-3.08-.95-1.4-2.44-1.59-2.97-1.61-1.26-.13-2.46.74-3.1.74-.64 0-1.63-.72-2.68-.7-1.38.02-2.65.8-3.36 2.04-1.43 2.49-.37 6.17 1.03 8.19.68.99 1.49 2.1 2.55 2.06 1.02-.04 1.41-.66 2.65-.66 1.23 0 1.59.66 2.68.64 1.11-.02 1.81-1 2.49-2 .78-1.15 1.1-2.27 1.12-2.33-.02-.01-2.15-.83-2.17-3.28zM14.3 6.1c.56-.68.94-1.62.84-2.56-.81.03-1.79.54-2.37 1.22-.52.6-.98 1.56-.86 2.48.9.07 1.83-.46 2.39-1.14z"/></svg>
-        App Store
-      </a>
     </nav>
   </div>
 </header>
@@ -260,15 +215,15 @@
 <!-- ============ ページヘッダー ============ -->
 <section class="page-head">
   <div class="wrap">
-    <div class="crumb"><a href="/synaps/">シナプス（Synaps）</a> ／ Android版テストのメールアドレスの取り扱い</div>
+    <div class="crumb"><a href="/synaps/">シナプス（Synaps）</a> ／ Android版のテストでお預かりするメールアドレスについて</div>
     <span class="eyebrow"><span class="dot"></span>ANDROID TEST</span>
-    <h1 class="page-title">Android版テストにご協力いただく方へ — メールアドレスの取り扱いについて</h1>
+    <h1 class="page-title">Android版のテストにご協力いただく方へ — メールアドレスの取り扱いについて</h1>
     <p class="page-lead">
       シナプス（Synaps）Android版のテストにご協力いただき、ありがとうございます。<br>
-      テスターのご登録でお預かりするメールアドレスを、どのように扱うかを、このページにまとめました。
+      テスターのご登録でお預かりするメールアドレスの扱いを、このページにまとめました。
     </p>
     <div class="meta-dates">
-      <span><b>制定日：</b>2026年9月20日</span>
+      <span><b>公開日：</b>2026年9月20日</span>
     </div>
   </div>
 </section>
@@ -278,55 +233,99 @@
   <div class="wrap">
     <div class="doc-card">
 
-      <!-- 1 お預かりする情報 -->
+      <!-- 1 お預かりするもの -->
       <section class="sec" id="collect">
-        <h2><span class="no">1</span>お預かりする情報</h2>
-        <p>お預かりするのは、<b>Googleアカウントのメールアドレスだけ</b>です。</p>
-        <p>氏名・住所・電話番号などの個人情報は、いただきません。</p>
+        <h2><span class="no">1</span>お預かりするもの</h2>
+        <p>お預かりするのは、<b>Googleアカウントのメールアドレス（Gmailのアドレス）だけ</b>です。</p>
+        <p>DMで「Gmailを教えてください」とお願いしているのは、このアドレスのことです。</p>
+        <p>氏名・住所・電話番号は、いただきません。</p>
       </section>
 
       <!-- 2 使いみち -->
       <section class="sec" id="purpose">
         <h2><span class="no">2</span>使いみち</h2>
-        <p>Google Playのテスト版を受け取れるようにするための、<b>テスター登録にだけ</b>使います。</p>
-        <p>お知らせや宣伝のメールをお送りすることはありません。</p>
-        <p>それ以外の目的にも使いません。</p>
+        <p>使いみちは、次の2つだけです。</p>
+        <ul>
+          <li>Google Playのテスト版を受け取れるようにするための、<b>テスター登録</b></li>
+          <li>登録と解除についての<b>ご連絡</b>、削除のご依頼への<b>対応</b></li>
+        </ul>
+        <p>宣伝やお知らせのメールは、お送りしません。</p>
+        <p>それ以外には使いません。</p>
       </section>
 
       <!-- 3 登録先 -->
       <section class="sec" id="where">
-        <h2><span class="no">3</span>登録先</h2>
-        <p>いただいたメールアドレスは、<b>Google Play（Google LLC）のテスター管理画面</b>に登録します。</p>
-        <p>テスト版の配信は、Googleの仕組みを通じて行われます。</p>
-        <p>Google側での取り扱いは、<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Googleのプライバシーポリシー</a>に従います。</p>
-        <p>それ以外の、ほかの人や会社に渡すことはありません。</p>
+        <h2><span class="no">3</span>登録先（アメリカのGoogleに登録します）</h2>
+        <p>いただいたアドレスは、<b>Google Playのテスター管理画面</b>に登録します。</p>
+        <p>Google Playを運営しているのは、アメリカの会社 Google LLC（所在国：アメリカ合衆国）です。</p>
+        <p>テスト版を誰に配信するかを判定するため、Google側でもアドレスが取り扱われます。</p>
+        <p>つまり、日本の外の会社にアドレスを渡すことになります（法律では「外国にある第三者への個人データの提供」と呼びます）。</p>
+
+        <h3>法律で決められている、3つのお知らせ</h3>
+        <ul>
+          <li><b>渡す先の国</b>：アメリカ合衆国です。</li>
+          <li><b>その国の制度</b>：米国には、日本の個人情報保護法にあたる分野横断的な連邦法はなく、州ごとの法律や分野ごとの法律によって保護が定められています。日本と同等の水準にあると認められた国（EU・英国）には指定されていません。</li>
+          <li><b>渡す先が講じている措置</b>：Google LLCは、同社の<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>および<a href="https://play.google.com/about/developer-distribution-agreement.html" target="_blank" rel="noopener">デベロッパー販売/配布契約</a>にもとづき、安全管理のための措置を講じています。</li>
+        </ul>
+        <p>Google以外の、ほかの人や会社に渡すことはありません。</p>
       </section>
 
-      <!-- 4 保管と削除 -->
+      <!-- 4 お送りいただく前に -->
+      <section class="sec" id="consent">
+        <h2><span class="no">4</span>お送りいただく前に</h2>
+        <div class="callout cyan">
+          <div class="ttl">この内容でよければ、アドレスをお送りください</div>
+          <p>このページの内容、とくに<b>アメリカのGoogleへ登録すること</b>をご確認ください。</p>
+          <p>了承いただける場合にかぎり、メールアドレスをお送りください。</p>
+          <p>お送りいただいた場合は、このページの内容に同意いただいたものとして取り扱います。</p>
+        </div>
+        <p>分からない点は、送る前にDMか下の窓口へ気軽に聞いてください。</p>
+      </section>
+
+      <!-- 5 保管と削除 -->
       <section class="sec" id="retention">
-        <h2><span class="no">4</span>保管と削除</h2>
-        <p>テストが終わったあと（<b>製品版の公開から30日以内</b>）に、テスター登録から削除します。</p>
-        <p>手元に残した控えも、あわせて消去します。</p>
+        <h2><span class="no">5</span>保管と削除</h2>
+        <p>テストが終わったときから<b>30日以内</b>に、テスター登録からメールアドレスを削除します。</p>
+        <p>「テストが終わったとき」は、製品版の公開・テストの終了・ご本人からのお申し出のうち、いちばん早いときです。</p>
+        <p>こちらで控えているメモ・名簿からも、あわせて削除します。</p>
+        <p>テストを続ける場合は、その間は登録を維持しますが、いつでも削除を申し出られます。</p>
+        <p class="note">SNSのDMのやり取りそのものは、各SNSの仕組みの中に残ることがあります。</p>
       </section>
 
-      <!-- 5 やめたいとき -->
+      <!-- 6 やめたいとき -->
       <section class="sec" id="optout">
-        <h2><span class="no">5</span>やめたいとき</h2>
+        <h2><span class="no">6</span>やめたいとき</h2>
         <p>いつでもご連絡ください。</p>
+        <p>ご連絡は、<a href="mailto:shotso1124@gmail.com">shotso1124@gmail.com</a> か、やり取りしているSNSのDMへお願いします。</p>
         <p>理由をおうかがいすることはありません。</p>
-        <p>すぐにテスター登録から外し、メールアドレスを削除します。</p>
+        <p>ご本人からの申し出と確認できしだい、速やかに（通常は7日以内に）テスター登録から外し、メールアドレスを削除します。</p>
+
+        <h3>ご自身のアドレスについて、お願いできること</h3>
+        <ul>
+          <li>どう登録されているか<b>知りたい</b></li>
+          <li>内容を<b>直してほしい・足してほしい</b></li>
+          <li><b>使うのをやめてほしい</b></li>
+          <li><b>Googleへの登録をやめてほしい</b></li>
+        </ul>
+        <p class="note">法律では「開示・訂正・追加・利用停止・第三者提供の停止」と呼びます。</p>
+        <p>手数料はいただきません。</p>
+        <p>18歳未満の方は、保護者の方からもお願いできます。</p>
+        <p>ご本人の確認は、お送りいただいたメールアドレスからのご連絡か、登録のときにやり取りしたSNSアカウントからのDMで行います。</p>
       </section>
 
-      <!-- 6 18歳未満の方へ -->
+      <!-- 7 18歳未満の方へ -->
       <section class="sec" id="minors">
-        <h2><span class="no">6</span>18歳未満の方へ</h2>
-        <p>18歳未満の方は、<b>保護者の方と一緒にこのページを確認したうえで</b>、ご協力ください。</p>
+        <h2><span class="no">7</span>18歳未満の方へ</h2>
+        <p>18歳未満の方は、おうちの方にもこのページを見せて、ひとこと伝えてからご協力ください。</p>
+        <p><b>16歳未満の方は、保護者の方の同意を得てから、メールアドレスをお送りください。</b></p>
+        <p>保護者の方からお申し出があれば、速やかに登録を外し、メールアドレスを削除します。</p>
+        <p class="note">Googleアカウントには年齢の条件があります。日本では13歳以上です。それより下の年齢の方は、保護者の方の管理のもとでのご利用になります。</p>
       </section>
 
-      <!-- 7 お問い合わせ・運営者 -->
+      <!-- 8 お問い合わせ・運営者 -->
       <section class="sec" id="operator">
-        <h2><span class="no">7</span>お問い合わせ・運営者</h2>
-        <p>このページの内容や、メールアドレスの削除のご依頼は、下記の窓口までご連絡ください。</p>
+        <h2><span class="no">8</span>お問い合わせ・運営者</h2>
+        <p>このページについてのご質問や、メールアドレスを削除してほしいというご依頼は、下の窓口までご連絡ください。</p>
         <div class="tbl-wrap">
           <table>
             <thead>
@@ -335,14 +334,17 @@
             <tbody>
               <tr><td><b>サービス名</b></td><td>シナプス（Synaps）</td></tr>
               <tr><td><b>運営者</b></td><td>岩本昌大（個人開発者）</td></tr>
-              <tr><td><b>所在地</b></td><td>個人開発者のため住所は非公開とし、お問い合わせはメール窓口（下記）にて受け付けます。</td></tr>
+              <tr><td><b>所在地</b></td><td>個人で開発しているため、住所は公開していません。ご連絡は下のメールアドレスへお願いします。</td></tr>
               <tr><td><b>お問い合わせ窓口</b></td><td><a href="mailto:shotso1124@gmail.com">shotso1124@gmail.com</a></td></tr>
             </tbody>
           </table>
         </div>
-        <p class="note">いただいたお問い合わせには、内容を確認のうえ、合理的な期間内に順次対応いたします。</p>
-        <p>アプリ全体のデータの取り扱いについては、<a href="/synaps/privacy/">シナプス（Synaps）プライバシーポリシー</a>をご覧ください。</p>
-        <p class="note"><b>制定日：</b>2026年9月20日</p>
+        <p class="note">いただいたお問い合わせには、できるだけ早くお返事します。</p>
+
+        <h3>アプリ本体のプライバシーポリシーとの関係</h3>
+        <p>このページは、アプリの外（SNSのDM）でお預かりするメールアドレスについての定めです。</p>
+        <p><a href="/synaps/privacy/">シナプス（Synaps）プライバシーポリシー</a>は、アプリが氏名・メールアドレスなどの入力を求めないことを前提にした、別のものです。</p>
+        <p>テスター登録については、このページの定めが優先します。</p>
       </section>
 
     </div>
@@ -358,11 +360,11 @@
     </div>
     <div class="foot-links">
       <a href="/synaps/">トップへ戻る</a>
-      <a href="https://apps.apple.com/jp/app/id6756655880" target="_blank" rel="noopener">App Store でダウンロード</a>
       <a href="/synaps/privacy/">プライバシーポリシー</a>
       <a href="/synaps/tokushoho/">特定商取引法に基づく表記</a>
       <a href="/synaps/anonymized-data/">匿名加工情報の公表</a>
       <a href="mailto:shotso1124@gmail.com">お問い合わせ</a>
+      <a href="https://apps.apple.com/jp/app/id6756655880" target="_blank" rel="noopener">iPhone版はApp Storeで公開中</a>
     </div>
   </div>
   <div class="wrap"><div class="copy">© 2026 Synaps. All rights reserved.</div></div>
