@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>営業商談 失注要因分析レポート</title>
+<style>
+  :root{
+    --ink:#0f172a;
+    --ink-2:#475569;
+    --accent:#1e3a8a;
+    --accent-soft:#e0e7ff;
+    --line:#e2e8f0;
+    --bg:#f8fafc;
+    --card:#ffffff;
+    --warn:#b45309;
+    --warn-soft:#fef3c7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:820px;
+    margin:0 auto;
+    padding:32px 20px 80px;
+  }
+  header.page{
+    text-align:center;
+    padding:8px 0 24px;
+    border-bottom:2px solid var(--accent);
+    margin-bottom:24px;
+  }
+  header.page h1{
+    font-size:1.5rem;
+    margin:0 0 8px;
+    letter-spacing:.02em;
+  }
+  header.page p{
+    margin:0;
+    color:var(--ink-2);
+    font-size:.9rem;
+  }
+  .toc{
+    background:var(--accent-soft);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:32px;
+  }
+  .toc h3{margin:0 0 10px;font-size:.95rem;color:var(--accent);}
+  .toc ol{margin:0;padding-left:1.3em;font-size:.9rem;}
+  .toc li{margin:0 0 6px;}
+  .toc a{color:var(--ink);text-decoration:none;}
+  .toc a:hover{color:var(--accent);text-decoration:underline;}
+
+  h2.secttl{
+    font-size:1.25rem;
+    margin:44px 0 16px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--accent);
+    scroll-margin-top:16px;
+  }
+  h3.subttl{
+    font-size:1.05rem;
+    margin:26px 0 10px;
+  }
+  p{margin:0 0 14px;font-size:1rem;}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.95rem;}
+  .card dt{color:var(--ink-2);font-weight:600;white-space:nowrap;}
+  .card dd{margin:0;}
+
+  .phase{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:4px solid var(--accent);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:16px;
+  }
+  .phase h4{margin:0 0 8px;font-size:1.02rem;display:flex;align-items:center;gap:8px;}
+  .badge{
+    display:inline-block;
+    font-size:.72rem;
+    font-weight:700;
+    padding:2px 10px;
+    border-radius:999px;
+    color:#fff;
+    background:var(--accent);
+  }
+  .badge.warn{background:var(--warn);}
+  .phase .ts{
+    font-variant-numeric:tabular-nums;
+    font-size:.78rem;
+    color:var(--ink-2);
+  }
+
+  blockquote{
+    margin:10px 0 14px;
+    padding:10px 16px;
+    border-left:3px solid var(--accent);
+    background:var(--accent-soft);
+    font-size:.92rem;
+    color:var(--ink);
+    border-radius:0 6px 6px 0;
+  }
+  blockquote .cite{display:block;margin-top:4px;font-size:.78rem;color:var(--ink-2);}
+
+  .factor{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-bottom:16px;
+    counter-increment:factor;
+  }
+  .factor h4{
+    margin:0 0 10px;
+    font-size:1.02rem;
+    color:var(--accent);
+  }
+
+  .action{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .action h4{margin:0 0 10px;font-size:1.02rem;color:var(--accent);}
+  .script{
+    background:var(--bg);
+    border:1px dashed var(--line);
+    border-radius:8px;
+    padding:12px 16px;
+    font-size:.92rem;
+    white-space:pre-wrap;
+    margin:8px 0 10px;
+  }
+
+  .conclusion{
+    background:var(--ink);
+    color:#fff;
+    border-radius:10px;
+    padding:20px 22px;
+    margin:28px 0;
+    font-size:.98rem;
+    line-height:1.9;
+  }
+  .conclusion strong{color:#93c5fd;}
+
+  details.transcript-wrap{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 18px;
+    margin-top:8px;
+  }
+  details.transcript-wrap > summary{
+    cursor:pointer;
+    font-weight:700;
+    font-size:1rem;
+    color:var(--accent);
+    padding:6px 0;
+  }
+  .transcript-meta{
+    font-size:.85rem;
+    color:var(--ink-2);
+    margin:10px 0 18px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+  }
+  .trow{
+    display:grid;
+    grid-template-columns:88px 44px 1fr;
+    gap:8px;
+    font-size:.88rem;
+    padding:5px 0;
+    border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .tts{color:var(--ink-2);font-variant-numeric:tabular-nums;font-size:.78rem;padding-top:2px;}
+  .tspk{font-weight:700;font-size:.8rem;padding-top:2px;}
+  .spk-daihyo .tspk{color:var(--accent);}
+  .spk-aite .tspk{color:#b45309;}
+  .ttxt{margin:0;}
+  .tnote{font-size:.82rem;color:var(--ink-2);margin:10px 0;}
+
+  footer.page{
+    text-align:center;
+    color:var(--ink-2);
+    font-size:.8rem;
+    margin-top:48px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+  }
+  @media (max-width:600px){
+    header.page h1{font-size:1.25rem;}
+    .trow{grid-template-columns:1fr;gap:2px;}
+    .tts{font-size:.72rem;}
+    .card dl{grid-template-columns:1fr;}
+  }
+  @media print{
+    body{background:#fff;}
+    details.transcript-wrap{display:block;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page">
+    <h1>営業商談 失注要因分析レポート</h1>
+    <p>対象商談：AI副業スクール個別相談（40分40秒）／分析日 2026-09-24</p>
+  </header>
+
+  <div class="toc">
+    <h3>目次</h3>
+    <ol>
+      <li><a href="#s1">1. 商談サマリー</a></li>
+      <li><a href="#s2">2. 営業フェーズ別の実施状況</a></li>
+      <li><a href="#s3">3. 契約に至らなかった要因（5点）</a></li>
+      <li><a href="#s4">4. 次回営業で使える改善アクション</a></li>
+      <li><a href="#s5">5. 文字起こし全文</a></li>
+    </ol>
+  </div>
+
+  <h2 class="secttl" id="s1">1. 商談サマリー</h2>
+  <div class="card">
+    <dl>
+      <dt>見込み客</dt><dd>ほのかさん・25歳女性。本業は配送業、副業は幼稚園（元幼稚園教諭、今年3月まで本業）。婚約中。休みはほぼない。</dd>
+      <dt>支払余力</dt><dd>カード枠20〜30万円。月の余裕資金は約5万円。</dd>
+      <dt>流入経路</dt><dd>紹介者さやさんのTikTok（AI副業実績投稿）にコメント→LINE→今回の商談call。</dd>
+      <dt>所要時間</dt><dd>40分40秒</dd>
+      <dt>商材</dt><dd>AI副業スクール。楽天アフィリエイト＋SNS運用が柱。AIプラン33万円（一括）／ラボプラン55万円、分割払い推奨。</dd>
+      <dt>結果</dt><dd>「ちょっと考えてみてもいいですか」で持ち帰り。次回アポなし・検討期限なし・宿題なしで終了。契約に至らず。</dd>
+    </dl>
+  </div>
+
+  <h2 class="secttl" id="s2">2. 営業フェーズ別の実施状況</h2>
+
+  <div class="phase">
+    <h4><span class="badge">実施○</span>アイスブレイク<span class="ts">[00:00–02:59]</span></h4>
+    <p>紹介経路・職業・年齢の確認は自然にできている。25歳と判明した際は持ち上げも入れており、ここは問題なし。</p>
+    <blockquote>「ちなみにさやさんとはどういったつながりなんですか」<span class="cite">[00:11–00:15]</span></blockquote>
+    <blockquote>「まだまだ若いですね希望しかない」<span class="cite">[02:53–02:59]</span></blockquote>
+  </div>
+
+  <div class="phase">
+    <h4><span class="badge warn">実施△</span>ヒアリング<span class="ts">[03:00–05:00] 約2分で打ち切り</span></h4>
+    <p>「一番やりたいことって何なんですか」への回答が「稼いだと（稼ぎたい）」の一言。ここで深掘りせず、即座に自分の話（奥さんの90万円のネックレス）に移った。</p>
+    <p>相手が自発的に出した重要情報を拾って掘る質問がゼロだった。</p>
+    <blockquote>「子供とかできたらそれこそ配送業とか幼稚園の先生とかできない」<span class="cite">[04:00–04:16]</span></blockquote>
+    <blockquote>「育児休暇の時って絶対お金入ってこない」<span class="cite">[04:21–04:24]</span></blockquote>
+    <p>目標金額・希望時期・使える作業時間・過去の副業経験、いずれも未確認のまま提案フェーズへ進んだ。</p>
+  </div>
+
+  <div class="phase">
+    <h4><span class="badge warn">実施◎だが過剰</span>提案<span class="ts">[05:00–27:20] 約22分の一方通行</span></h4>
+    <p>楽天アフィリの説明、全自動デモ、実績LINE画面共有、受講生動画の再生（約1分半）、AI時代論、プラン説明と情報量は豊富。だがこの22分間、相手の発話はほぼ相槌のみだった。</p>
+    <blockquote>「需要ありそうだなと思いませんでした」<span class="cite">[07:51–07:55]</span></blockquote>
+    <p>相手の状況に紐づけた双方向性のある質問が、この程度しか挟まれていない。</p>
+  </div>
+
+  <div class="phase">
+    <h4><span class="badge warn">実施したが順序が崩壊</span>クロージング<span class="ts">[27:20–40:07]</span></h4>
+    <p>金額提示は単位も曖昧なまま一瞬で通過し、即分割払いの推奨に移行した。</p>
+    <blockquote>「33と55ですね」<span class="cite">[27:27–27:47]</span></blockquote>
+    <p>プラン意思確認までは取れたが、「やるかどうか」のYesを取る前に支払手段の話に突入。カード枠確認→枠不足判明→振込併用案→カード会社特定→分割回数調査→PayPayカード新規作成案と、約5分をカード事務作業に費やした。</p>
+    <blockquote>「とりあえずラインサポートで」<span class="cite">[30:03–30:07]</span></blockquote>
+    <p>その後ようやく意思確認し、相手の本音を引き出す。</p>
+    <blockquote>「支払い面で大丈夫かな」<span class="cite">[35:37–35:41]</span></blockquote>
+    <p>最悪ケーストーク（月13,000円のリスク）と巻き込みは打ったが、直後に自ら検討期間を先に差し出した。</p>
+    <blockquote>「カードを作りながらいろいろ検討してみて」<span class="cite">[38:48–38:55]</span></blockquote>
+    <p>最後の増枠申請クロージングは、Yes未獲得のまま手段だけ進めようとする筋の悪い形で、撃沈した。</p>
+    <blockquote>「ちょっと考えてみてもいいですか」<span class="cite">[40:08–40:11]</span></blockquote>
+  </div>
+
+  <div class="phase">
+    <h4><span class="badge warn">実質ゼロ</span>ネクストアクション<span class="ts">[40:12–40:39]</span></h4>
+    <p>「大丈夫です」と即受諾。再callの日時なし。検討期限なし。さらにフォロー権を紹介者に手放して終了した。</p>
+    <blockquote>「さやさんのほうが相談しやすいかな、女性なんで」<span class="cite">[40:23–40:25]</span></blockquote>
+  </div>
+
+  <h2 class="secttl" id="s3">3. 契約に至らなかった要因（5点）</h2>
+
+  <div class="factor">
+    <h4>要因1｜予算確認が33分遅い。枠不足の発覚が商談終盤で、クロージングが「カード事務相談」にすり替わった</h4>
+    <p>カード枠20万円と判明したのは商談開始から31分後。33万円の商材に対し枠20万円・貯金余力月5万円という支払能力は、冒頭ヒアリングで掴めていれば提案設計を変えられた。結果、クロージングの山場5分間が「セゾンの分割回数は24回か」「PayPayカードなら36回」という事務作業に消え、購買熱が完全に冷めた。PayPayカードを新規で作るという物理的・時間的ハードルを自ら商談内に持ち込んだ時点で、即決の芽は死んだ。</p>
+  </div>
+
+  <div class="factor">
+    <h4>要因2｜ヒアリング2分・提案22分。相手の「欲しい理由」を相手の口から言わせていないので、金額の壁を越える動機が育っていない</h4>
+    <p>相手の動機は「稼ぎたい」の一言のまま放置された。結婚・育休・両立不能という強烈なペイン素材を相手が自分から出したのに、相槌で流した。「育休中に月いくら必要か」「いつまでに仕事を辞めたいか」を数値化していないため、終盤の「月13,000円のリスク」トークが相手の具体的な未来と接続されず、一般論のまま滑った。興味は取れたが、興味と33万円の支払いの間の橋が架かっていない。</p>
+  </div>
+
+  <div class="factor">
+    <h4>要因3｜テストクロージングなしで支払手段に飛び、断り文句を「支払い面」に固定させた</h4>
+    <p>「やる前提でいいですか」の確認を挟まずカードの話に入った。その結果、相手は40分間で唯一の懸念表明を「支払い面で大丈夫かな」という形で出した。売り手が支払いの話ばかりしたから、断り理由も支払いになった。本当の懸念（本当に自分に稼げるのか・パートナーへの相談等）は最後まで表面化しないまま「考えてみてもいいですか」に逃げられた。</p>
+  </div>
+
+  <div class="factor">
+    <h4>要因4｜検討を自分から許可し、期限もアポも取らず、フォローを紹介者に丸投げした</h4>
+    <p>増枠申請の所要日数を言い訳に、売り手側から検討期間を提供した。「ちょっと考えてみてもいいですか」への返しは「大丈夫です」のみ。次回callの約束・検討期限・「何を検討するのか」の特定、すべてなし。極めつけはクロージング権を営業経験のない紹介者に譲渡したことだ。この商談は再燃しない構造で閉じている。</p>
+  </div>
+
+  <div class="factor">
+    <h4>要因5｜一方通行の実績誇示に時間を使いすぎ、機材トラブルまで含めて相手の当事者化が起きていない</h4>
+    <p>画面共有トラブル、受講生動画の1分半視聴を含め、実績パートだけで約9分。その間の相手の反応は「すごい」止まりで、「自分ならどの商品を売るか」を相手に考えさせるターンが一度もない。他人の成功はいくら見せても「その人だからできた」で終わる。当事者化の仕掛けが提案パート全体に欠落している。</p>
+  </div>
+
+  <h2 class="secttl" id="s4">4. 次回営業で使える改善アクション</h2>
+
+  <div class="action">
+    <h4>アクション1｜ヒアリング冒頭5分で「金額・期限・支払余力」の3点を必ず数値化する</h4>
+    <div class="script">「ほのかさん、育休って収入ゼロになるって仰いましたよね。ぶっちゃけ、月いくら副収入があったら『幼稚園か配送、どっちか辞めていい』って思えます？」
+（回答後）「それ、いつまでに実現したいですか？ 結婚のタイミングとかあります？」
+「もう一個だけ現実的な話をさせてください。学びに投資するとしたら、今って一括と分割どっちが現実的です？ カードって普段使ってます？ 枠っていくらくらいでした？」</div>
+    <p>枠20万円が冒頭で分かっていれば、「振込10万円＋カード23万円の分割」を提案パートに織り込んだ設計ができ、終盤のカード事務5分は消滅する。</p>
+  </div>
+
+  <div class="action">
+    <h4>アクション2｜実績デモを「相手主語」に変換する質問を必ず挟む</h4>
+    <div class="script">「この方、赤ちゃん用品でしたけど——ほのかさん、元幼稚園の先生じゃないですか。保護者が『これ安くていいの？』って先生に聞いてくるやつ、ありました？ それ、そのまま商品になるんですよ。ほのかさんが初日に作るアカウント、何の発信にします？」</div>
+    <p>相手が商品ジャンルを口にした瞬間、他人の実績が自分の計画に変わる。</p>
+  </div>
+
+  <div class="action">
+    <h4>アクション3｜支払手段の前にテストクロージングを入れ、Yesを取ってから事務に入る</h4>
+    <p>順序を固定する。「意思→金額→手段」。</p>
+    <div class="script">「支払い方法の前に一個だけ確認させてください。お金の問題が仮になかったとして、これ、やりたいですか？」
+（Yesなら）「じゃあ残りは払い方の設計だけですね。一緒に組みましょう」
+（渋ったら）「ですよね。金額以外で引っかかってるの、正直どこですか？」</div>
+    <p>Yesが取れていない状態でカード枠の話をするのは、断り理由を支払いに固定させるだけだ。二度とやらない。</p>
+  </div>
+
+  <div class="action">
+    <h4>アクション4｜「考えます」への返しをテンプレ化し、その場で次回アポを切る</h4>
+    <div class="script">「もちろんです。ただ『考えます』って、だいたい3日で熱が冷めて終わるんですよ。それはほのかさんの時間がもったいない。何を考えたいのか、今ここで一緒に整理させてください。——支払いの組み方？ それとも本当に稼げるかの不安？ どっちです？」
+（整理後）「じゃあ増枠申請の結果が出る金曜の20時、10分だけLINE通話でどうですか。そこでやるやらない、スパッと決めましょう。カレンダー入れちゃいますね」</div>
+    <p>紹介者さやさんは「相談窓口」ではなく「背中押し役」として使う。こちらから紹介者に渡す情報をコントロールし、丸投げしない。</p>
+  </div>
+
+  <div class="action">
+    <h4>アクション5｜婚約者を意思決定に組み込む（今回完全に未対応の潜在障壁）</h4>
+    <div class="script">「ちなみにこれ、婚約者さんに相談してから決めたいタイプですか？ だったら今日、説明用に僕から3分でまとめた資料送りますよ。『育休中も収入が止まらない準備』って伝えると、反対されにくいです」</div>
+    <p>25歳・婚約中・33万円の契約で、パートナー相談が出ないはずがない。持ち帰られる前に潰す。</p>
+  </div>
+
+  <div class="conclusion">
+    <strong>結論。</strong><br>
+    契約を落とした核心は「予算確認の遅れ」と「Yes前の手段クロージング」の2点だ。<br>
+    そこに「フォロー権の放棄」が重なり、再挑戦の道まで塞いだ。<br>
+    上記スクリプトを次回商談に直接適用すれば、同条件の見込み客でも増枠申請を「契約前提の宿題」に変換してクローズまで持ち込める。
+  </div>
+
+  <h2 class="secttl" id="s5">5. 文字起こし全文</h2>
+  <details class="transcript-wrap">
+    <summary>営業録画 文字起こし全文を開く（タイムスタンプ・話者区別付き）</summary>
+    <div class="transcript-meta">
+      対象ファイル: /Users/shota/Downloads/video1240866585.mp4　／　動画総尺: 40:40（2440.5秒）　／　文字起こし方式: ffmpeg音声抽出＋Whisper(small, ja, ローカルCPU実行)<br>
+      話者ラベルについての注意: 音声は単一チャンネルのため厳密な声紋ベースの話者分離は未実施。「代表」「相手」ラベルは質問文・相槌・説明文といった会話上の役割パターンによるヒューリスティック推定であり、機械的な断定ではない。重要箇所の話者特定は必要に応じて原音声で確認すること。
+    </div>
+<div class="trow spk-daihyo"><span class="tts">00:00–00:06</span><span class="tspk">代表</span><span class="ttxt">さやさんのご紹介というところ になってくるかなと思っていくつ</span></div>
+<div class="trow spk-aite"><span class="tts">00:06–00:11</span><span class="tspk">相手</span><span class="ttxt">くちとお話をお伺いしながら ってお勧めさせていただきます</span></div>
+<div class="trow spk-daihyo"><span class="tts">00:11–00:15</span><span class="tspk">代表</span><span class="ttxt">ちなみにさやさんとはどういった つながりなんですか</span></div>
+<div class="trow spk-aite"><span class="tts">00:15–00:41</span><span class="tspk">相手</span><span class="ttxt">ちょまどキックトックで見つけて そこ から詳しい話を聞きたければみたいな感じであったのでコメント させていただいてそこからこのラインになってって感じでさやさんキックトックしてるん ですね初めてだ</span></div>
+<div class="trow spk-daihyo"><span class="tts">00:41–00:42</span><span class="tspk">代表</span><span class="ttxt">そうですね</span></div>
+<div class="trow spk-aite"><span class="tts">00:42–00:45</span><span class="tspk">相手</span><span class="ttxt">なんかインスタを知るのは知って たんですけどね</span></div>
+<div class="trow spk-daihyo"><span class="tts">00:45–00:46</span><span class="tspk">代表</span><span class="ttxt">はいはいはい</span></div>
+<div class="trow spk-aite"><span class="tts">00:46–00:47</span><span class="tspk">相手</span><span class="ttxt">一つ一つ</span></div>
+<div class="trow spk-daihyo"><span class="tts">00:47–00:51</span><span class="tspk">代表</span><span class="ttxt">どんな箸どんな箸にしてるんです か</span></div>
+<div class="trow spk-aite"><span class="tts">00:51–00:59</span><span class="tspk">相手</span><span class="ttxt">これをこうやってAI使ってやったら これだけ稼げましたみたいな</span></div>
+<div class="trow spk-daihyo"><span class="tts">00:59–01:00</span><span class="tspk">代表</span><span class="ttxt">なるほど</span></div>
+<div class="trow spk-aite"><span class="tts">01:00–01:03</span><span class="tspk">相手</span><span class="ttxt">感じの簡単に説明してて</span></div>
+<div class="trow spk-daihyo"><span class="tts">01:03–01:04</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">01:04–01:06</span><span class="tspk">相手</span><span class="ttxt">それで興味もったっていう感じ です</span></div>
+<div class="trow spk-daihyo"><span class="tts">01:06–01:11</span><span class="tspk">代表</span><span class="ttxt">なるほどちょい今職業って何やってらっしゃ るんですよ</span></div>
+<div class="trow spk-aite"><span class="tts">01:11–01:17</span><span class="tspk">相手</span><span class="ttxt">今私は主にが配送業をやっていて</span></div>
+<div class="trow spk-daihyo"><span class="tts">01:17–01:19</span><span class="tspk">代表</span><span class="ttxt">配送業はい</span></div>
+<div class="trow spk-aite"><span class="tts">01:19–01:26</span><span class="tspk">相手</span><span class="ttxt">副業で元々幼稚園共有だった ので幼稚園で働いてます副業で幼稚園って珍しいですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">01:26–01:27</span><span class="tspk">代表</span><span class="ttxt">そうですね</span></div>
+<div class="trow spk-aite"><span class="tts">01:27–01:32</span><span class="tspk">相手</span><span class="ttxt">元々去年の3 今年の3月までは本業 として幼稚園先生やってたんです</span></div>
+<div class="trow spk-daihyo"><span class="tts">01:32–01:33</span><span class="tspk">代表</span><span class="ttxt">けど</span></div>
+<div class="trow spk-aite"><span class="tts">01:33–01:36</span><span class="tspk">相手</span><span class="ttxt">ちょっと今年からちょっといろいろ 新しいこと始めようかなっていう</span></div>
+<div class="trow spk-daihyo"><span class="tts">01:36–01:38</span><span class="tspk">代表</span><span class="ttxt">のではい</span></div>
+<div class="trow spk-aite"><span class="tts">01:38–01:43</span><span class="tspk">相手</span><span class="ttxt">そう幼稚園続けてるとちょっと 副業できなかったりとか不具合があったので</span></div>
+<div class="trow spk-daihyo"><span class="tts">01:43–01:44</span><span class="tspk">代表</span><span class="ttxt">ああ</span></div>
+<div class="trow spk-aite"><span class="tts">01:44–01:51</span><span class="tspk">相手</span><span class="ttxt">それでちょっと対策していただき ましてちょっと幼稚園で私と幼稚園 時の子供がいるんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">01:51–01:53</span><span class="tspk">代表</span><span class="ttxt">はいあれですか</span></div>
+<div class="trow spk-aite"><span class="tts">01:53–02:11</span><span class="tspk">相手</span><span class="ttxt">お残り3みたいなところだけやって いるような感じなんですよ今は朝からクラスの補助に入って あずかりで保育時間外に預かってることも見てて恐怖それで今終わってからっていう 感じです</span></div>
+<div class="trow spk-daihyo"><span class="tts">02:11–02:15</span><span class="tspk">代表</span><span class="ttxt">えちょい配送業いつやってるんですか 手の当てくれと</span></div>
+<div class="trow spk-aite"><span class="tts">02:15–02:19</span><span class="tspk">相手</span><span class="ttxt">えっと川木で幼稚園やってるのに それ以外入れる日はっていう感じ</span></div>
+<div class="trow spk-daihyo"><span class="tts">02:19–02:20</span><span class="tspk">代表</span><span class="ttxt">です</span></div>
+<div class="trow spk-aite"><span class="tts">02:20–02:24</span><span class="tspk">相手</span><span class="ttxt">なるほど火曜日と木曜日でそれ以外 が配送業やってるような感じ</span></div>
+<div class="trow spk-daihyo"><span class="tts">02:24–02:28</span><span class="tspk">代表</span><span class="ttxt">とはいそうですね休み取れてるんですか</span></div>
+<div class="trow spk-aite"><span class="tts">02:28–02:36</span><span class="tspk">相手</span><span class="ttxt">あんまり取れてるそうですよね火曜日と木曜日がたまん配送 業の休みなんだろうなって受け取ったんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">02:36–02:37</span><span class="tspk">代表</span><span class="ttxt">そうですね</span></div>
+<div class="trow spk-aite"><span class="tts">02:37–02:42</span><span class="tspk">相手</span><span class="ttxt">それ以外を配送してたりするので 基本 休みはあんまりないっていう</span></div>
+<div class="trow spk-daihyo"><span class="tts">02:42–02:43</span><span class="tspk">代表</span><span class="ttxt">感じで</span></div>
+<div class="trow spk-aite"><span class="tts">02:43–02:50</span><span class="tspk">相手</span><span class="ttxt">ちなみにちょっと失礼ながら お聞きしたいんですけどあんまり年齢と変わらないぐらい なんですけど私は20代後半なんです</span></div>
+<div class="trow spk-daihyo"><span class="tts">02:50–02:51</span><span class="tspk">代表</span><span class="ttxt">よ</span></div>
+<div class="trow spk-aite"><span class="tts">02:51–02:52</span><span class="tspk">相手</span><span class="ttxt">私今25です</span></div>
+<div class="trow spk-daihyo"><span class="tts">02:52–02:53</span><span class="tspk">代表</span><span class="ttxt">25?</span></div>
+<div class="trow spk-aite"><span class="tts">02:53–02:59</span><span class="tspk">相手</span><span class="ttxt">おはようまだまだ若いですね希望しかない</span></div>
+<div class="trow spk-daihyo"><span class="tts">02:59–03:00</span><span class="tspk">代表</span><span class="ttxt">なるほど</span></div>
+<div class="trow spk-aite"><span class="tts">03:00–03:05</span><span class="tspk">相手</span><span class="ttxt">そこでAIとかを活用していきたい ということだと思うんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">03:05–03:10</span><span class="tspk">代表</span><span class="ttxt">一番AIできるようになって例えば 収入とかあって例えば10万とか</span></div>
+<div class="trow spk-aite"><span class="tts">03:10–03:15</span><span class="tspk">相手</span><span class="ttxt">20万とか全然頑張ったら 目指していけるかなって思うんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">03:15–03:18</span><span class="tspk">代表</span><span class="ttxt">はい一番やりたいことって何なん ですか</span></div>
+<div class="trow spk-aite"><span class="tts">03:18–03:19</span><span class="tspk">相手</span><span class="ttxt">稼いだと</span></div>
+<div class="trow spk-daihyo"><span class="tts">03:19–03:32</span><span class="tspk">代表</span><span class="ttxt">何となくでしかまだAIを使った 稼ぎ方っていうのが分からないから</span></div>
+<div class="trow spk-aite"><span class="tts">03:32–03:43</span><span class="tspk">相手</span><span class="ttxt">それも教えてもらえたらいいかな って思ってでもいろいろこういうのか サイサーも紹介したのでそのいろいろできたらいいのかな と思っています</span></div>
+<div class="trow spk-daihyo"><span class="tts">03:43–03:45</span><span class="tspk">代表</span><span class="ttxt">うんそうですね</span></div>
+<div class="trow spk-aite"><span class="tts">03:45–03:59</span><span class="tspk">相手</span><span class="ttxt">例えばAIとかで稼いできたら 私がですねほのかさんの立ち位置だとまずどっちか仕事やめるん ですよまあまあ私かね私もそれで今今夜仕掛けつけを</span></div>
+<div class="trow spk-daihyo"><span class="tts">03:59–04:00</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">04:00–04:05</span><span class="tspk">相手</span><span class="ttxt">で子供とかできたらそれこそ 配送業とかに一緒の先生とかできないなっていうので</span></div>
+<div class="trow spk-daihyo"><span class="tts">04:06–04:07</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">04:07–04:16</span><span class="tspk">相手</span><span class="ttxt">できる仕事っていうのでまあそれでAIで稼げててそれで安定 してればそれでいいのかなと思って</span></div>
+<div class="trow spk-daihyo"><span class="tts">04:16–04:21</span><span class="tspk">代表</span><span class="ttxt">てうんうんそうですねまあそこがベストですかね</span></div>
+<div class="trow spk-aite"><span class="tts">04:21–04:24</span><span class="tspk">相手</span><span class="ttxt">はいやっぱり育児休暇の時って絶対 お金入ってこないんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">04:24–04:25</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">04:25–04:30</span><span class="tspk">相手</span><span class="ttxt">そうですよねまあ私の奥さんもほんと 今初めて2週間くらいなんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">04:30–04:34</span><span class="tspk">代表</span><span class="ttxt">はい私自身がずっとやってたんです けどこの時は結婚10周年迎えて</span></div>
+<div class="trow spk-aite"><span class="tts">04:34–04:42</span><span class="tspk">相手</span><span class="ttxt">はいねにびや買いに行ったら1本 90万円するブルガリーノーでにびや欲しいって言われたん ですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">04:42–04:45</span><span class="tspk">代表</span><span class="ttxt">はいはいはい</span></div>
+<div class="trow spk-aite"><span class="tts">04:45–04:50</span><span class="tspk">相手</span><span class="ttxt">そうです自分でもちょっと稼げるようになり たいってちょっと1週間2週間ぐらい今ちょっと経ってるんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">04:50–04:51</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">04:51–04:55</span><span class="tspk">相手</span><span class="ttxt">その奥さんの実績というか全然 見せれるんで私のパスクから</span></div>
+<div class="trow spk-daihyo"><span class="tts">04:55–04:57</span><span class="tspk">代表</span><span class="ttxt">はいはい</span></div>
+<div class="trow spk-aite"><span class="tts">04:57–05:02</span><span class="tspk">相手</span><span class="ttxt">まあ色々今日はどっちかという と勉強っていうのは単的に2分から5分ぐらいの動画をサクサク 見ていくだけなんですよね</span></div>
+<div class="trow spk-daihyo"><span class="tts">05:02–05:03</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">05:03–05:10</span><span class="tspk">相手</span><span class="ttxt">でなんかその分からないことあれば もうずもう20時間やつでもサポートを伝っていただいていいですし</span></div>
+<div class="trow spk-daihyo"><span class="tts">05:10–05:12</span><span class="tspk">代表</span><span class="ttxt">はいうん</span></div>
+<div class="trow spk-aite"><span class="tts">05:12–05:19</span><span class="tspk">相手</span><span class="ttxt">であとはそうですね2分から5分 動画を見て終わるではなく必ずこれちょっと試してみましょうね みたいな終わり方になるんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">05:19–05:20</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">05:20–05:28</span><span class="tspk">相手</span><span class="ttxt">なんかこう1日1時間ぐらいでなんか 30分動画見てその30分動画で学んだことを残り30分ちょっとこうチャット GPTとかで遊んでみるみたいな</span></div>
+<div class="trow spk-daihyo"><span class="tts">05:28–05:30</span><span class="tspk">代表</span><span class="ttxt">はいはい</span></div>
+<div class="trow spk-aite"><span class="tts">05:30–05:33</span><span class="tspk">相手</span><span class="ttxt">全然もう1週間2週間とかも結果 変わってくると思うんですよね</span></div>
+<div class="trow spk-daihyo"><span class="tts">05:33–05:38</span><span class="tspk">代表</span><span class="ttxt">はい今日はどちらかというと時間にも 限りがありますし先ほど言っていただいた</span></div>
+<div class="trow spk-aite"><span class="tts">05:38–05:44</span><span class="tspk">相手</span><span class="ttxt">稼ぎ方みたいな部分っていうのを結構 フォーカスしてちょっとお話ししていけたらなというふうに思います</span></div>
+<div class="trow spk-daihyo"><span class="tts">05:44–05:48</span><span class="tspk">代表</span><span class="ttxt">はいはいなんか質問たら適議に何でも聞いて くださいね</span></div>
+<div class="trow spk-aite"><span class="tts">05:48–05:50</span><span class="tspk">相手</span><span class="ttxt">はいわかりました</span></div>
+<div class="trow spk-daihyo"><span class="tts">05:50–05:51</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">05:51–05:55</span><span class="tspk">相手</span><span class="ttxt">戦争とかってなんかラインの スタンプとかなんかいろいろ作ってるイメージなんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">05:55–05:56</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">05:56–05:58</span><span class="tspk">相手</span><span class="ttxt">それも全然適はするんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">05:58–06:04</span><span class="tspk">代表</span><span class="ttxt">はいなんかどちらかというとまあその 僕とかで提案していきたいのは</span></div>
+<div class="trow spk-aite"><span class="tts">06:04–06:12</span><span class="tspk">相手</span><span class="ttxt">月数万円とかではなくやっぱ数十万とか 目指している領域っていうところもやっぱこう教えていけたらなって 思ってるんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">06:12–06:14</span><span class="tspk">代表</span><span class="ttxt">はいまあちょっといくつかお話しして いくんですけど</span></div>
+<div class="trow spk-aite"><span class="tts">06:14–06:21</span><span class="tspk">相手</span><span class="ttxt">はいまず私たちのお客さんってあの さやさんみたいな若い方いれば結構中年層が多いんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">06:21–06:22</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">06:22–06:25</span><span class="tspk">相手</span><span class="ttxt">ね一番稼げるのと正直僕 SNSだと思ってるんですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">06:25–06:27</span><span class="tspk">代表</span><span class="ttxt">はいうん</span></div>
+<div class="trow spk-aite"><span class="tts">06:27–06:32</span><span class="tspk">相手</span><span class="ttxt">SNSとかだったら全然私たちからも 仕事触れるんで仕事の量に困ることがないんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">06:32–06:33</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">06:33–06:38</span><span class="tspk">相手</span><span class="ttxt">ただやっぱ中年代の人ってSNS 苦手なのでこういったら楽天アピレートとかっていうのも準備してるんですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">06:38–06:40</span><span class="tspk">代表</span><span class="ttxt">はいうん</span></div>
+<div class="trow spk-aite"><span class="tts">06:40–06:46</span><span class="tspk">相手</span><span class="ttxt">まあ単純に言うとあのシールとか 一切しなくていいんで最初にバーっとお金がかかることもないので やりやすいんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">06:46–06:48</span><span class="tspk">代表</span><span class="ttxt">うんうん</span></div>
+<div class="trow spk-aite"><span class="tts">06:48–06:57</span><span class="tspk">相手</span><span class="ttxt">でまあ本当に例えばそうですね 私とかでいくなら楽天とかって全員40代に女性が一番登録率高いんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">06:57–06:58</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">06:58–07:05</span><span class="tspk">相手</span><span class="ttxt">まあすぐ全部AIか教えてもらったんですけどってなった時にあの女性向けの商品発信しようと思って</span></div>
+<div class="trow spk-daihyo"><span class="tts">07:05–07:06</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">07:06–07:12</span><span class="tspk">相手</span><span class="ttxt">なんか田舎とかであれば車とかで買い物いけるのでなんか重たいとかあまり気にしないと思うんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">07:12–07:14</span><span class="tspk">代表</span><span class="ttxt">はいうん</span></div>
+<div class="trow spk-aite"><span class="tts">07:14–07:17</span><span class="tspk">相手</span><span class="ttxt">ただ国会の人って車とかないんで自転車のイメージありません</span></div>
+<div class="trow spk-daihyo"><span class="tts">07:17–07:19</span><span class="tspk">代表</span><span class="ttxt">はいはい</span></div>
+<div class="trow spk-aite"><span class="tts">07:19–07:26</span><span class="tspk">相手</span><span class="ttxt">だからこの買い物の荷物量を減らしてあげてなんてやつかね 消耗品とかでは毎月買ってくれるだろうなってイメージが湧いたんでですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">07:26–07:32</span><span class="tspk">代表</span><span class="ttxt">はいトイレとペーパーとか あとはそうですね キッチン関係の消耗品とか</span></div>
+<div class="trow spk-aite"><span class="tts">07:32–07:35</span><span class="tspk">相手</span><span class="ttxt">あとは洗剤券とかを結構私売ってるんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">07:35–07:41</span><span class="tspk">代表</span><span class="ttxt">はいうんでただ売るんじゃなくて例えば洗濯とかでも一回あたり十何円とか</span></div>
+<div class="trow spk-aite"><span class="tts">07:41–07:42</span><span class="tspk">相手</span><span class="ttxt">買ってるんですよね</span></div>
+<div class="trow spk-daihyo"><span class="tts">07:42–07:44</span><span class="tspk">代表</span><span class="ttxt">あー洗剤の使用量的ですから</span></div>
+<div class="trow spk-aite"><span class="tts">07:44–07:48</span><span class="tspk">相手</span><span class="ttxt">はいだからそれを半額以下とかで抑えている商品とかっていうのをピックアップしようとして出してます</span></div>
+<div class="trow spk-daihyo"><span class="tts">07:48–07:50</span><span class="tspk">代表</span><span class="ttxt">うーん</span></div>
+<div class="trow spk-aite"><span class="tts">07:51–07:55</span><span class="tspk">相手</span><span class="ttxt">それで結構今話聞いただけも確かに重要ありそうだなと思いませんでした</span></div>
+<div class="trow spk-daihyo"><span class="tts">07:55–07:56</span><span class="tspk">代表</span><span class="ttxt">はいはい</span></div>
+<div class="trow spk-aite"><span class="tts">07:56–08:02</span><span class="tspk">相手</span><span class="ttxt">そういったのを自分で考えるじゃなくちゃんとGPT教えてくれましたあーなるほど</span></div>
+<div class="trow spk-daihyo"><span class="tts">08:02–08:03</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">08:03–08:08</span><span class="tspk">相手</span><span class="ttxt">これAIがある前って今私が話す内容を自分で調査するっていう時間があった</span></div>
+<div class="trow spk-daihyo"><span class="tts">08:08–08:09</span><span class="tspk">代表</span><span class="ttxt">はいはいはい</span></div>
+<div class="trow spk-aite"><span class="tts">08:09–08:19</span><span class="tspk">相手</span><span class="ttxt">でもAIがあることによって自分で売りやすい商品を探すのではなくもうAIからその重要がある商品っていうのを教えてくれるって感じなんですよね</span></div>
+<div class="trow spk-daihyo"><span class="tts">08:19–08:27</span><span class="tspk">代表</span><span class="ttxt">うんでその売りやすい商品を出すってことはそれだけやっぱりネットの世界にはたくさん売ってる方がいるってことじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">08:27–08:32</span><span class="tspk">相手</span><span class="ttxt">はい次はその紹介分とかっていうところを結構丁寧に作っていくんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">08:32–08:38</span><span class="tspk">代表</span><span class="ttxt">うんじゃあそのいろんな紹介分でどこがいいか悪いかって自分で判断つかないと思うんですね</span></div>
+<div class="trow spk-aite"><span class="tts">08:38–08:47</span><span class="tspk">相手</span><span class="ttxt">うんなのでいろんなスクショットってちゃんとGPTに投げていいとこ悪いとこまとめてもらっていいところだけで自分の作ってもらうってこともできるんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">08:47–08:48</span><span class="tspk">代表</span><span class="ttxt">はいはいはい</span></div>
+<div class="trow spk-aite"><span class="tts">08:48–08:54</span><span class="tspk">相手</span><span class="ttxt">なので今まで1つの商品を出すのに数時間かかっていた工程が正直10分ぐらいできちゃうと</span></div>
+<div class="trow spk-daihyo"><span class="tts">08:54–08:56</span><span class="tspk">代表</span><span class="ttxt">あーーうん</span></div>
+<div class="trow spk-aite"><span class="tts">08:56–09:01</span><span class="tspk">相手</span><span class="ttxt">なので費用対抗価よくここは正直本当に費用対抗価よく数万円を固くいきます</span></div>
+<div class="trow spk-daihyo"><span class="tts">09:01–09:03</span><span class="tspk">代表</span><span class="ttxt">へー</span></div>
+<div class="trow spk-aite"><span class="tts">09:03–09:13</span><span class="tspk">相手</span><span class="ttxt">だからコピページ店も商品出品するこれを1日3商品とかしていけば1日30分ぐらいと思うんでそういった風に進めていくってやり方なんですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">09:13–09:14</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">09:14–09:19</span><span class="tspk">相手</span><span class="ttxt">でだいたい報酬率が楽点とかでいくなら10%はいかないんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">09:19–09:20</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">09:20–09:25</span><span class="tspk">相手</span><span class="ttxt">なので6,980円コンパクト水販機例えばこれ多分1人暮らし4みたいな感じ</span></div>
+<div class="trow spk-daihyo"><span class="tts">09:25–09:29</span><span class="tspk">代表</span><span class="ttxt">うんノーブランドでも全然いいじゃないですか1人暮らしだったら</span></div>
+<div class="trow spk-aite"><span class="tts">09:29–09:44</span><span class="tspk">相手</span><span class="ttxt">うんそれで今ほんと10%はいかないぐらいのお金が入ってくるって感じなんでなんかいろんな商品使って付き100個売るぐらいの名誌ですねあーなるほどそれが一番固く見える一応副業みたいな部分にはなってくるかなと</span></div>
+<div class="trow spk-daihyo"><span class="tts">09:44–09:45</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">09:45–09:49</span><span class="tspk">相手</span><span class="ttxt">で一応利益出たからといって私たち会社側に1000も払わなくていいので</span></div>
+<div class="trow spk-daihyo"><span class="tts">09:49–09:51</span><span class="tspk">代表</span><span class="ttxt">うんうん</span></div>
+<div class="trow spk-aite"><span class="tts">09:51–10:02</span><span class="tspk">相手</span><span class="ttxt">私たちはあくまでこのスクールっていうところで知識だとか稼ぎ方を教えるそこの環境大としてお金をいただく形になるんでですねなのでそこから先の稼いだ部分に関しても自分で全部取ってほしいです</span></div>
+<div class="trow spk-daihyo"><span class="tts">10:02–10:03</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">10:03–10:06</span><span class="tspk">相手</span><span class="ttxt">でちなみに今お話ししたのと半次道なんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">10:06–10:07</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">10:07–10:10</span><span class="tspk">相手</span><span class="ttxt">みなさん自分がちゃんとGPTと会話しながら続けていくみたいな</span></div>
+<div class="trow spk-daihyo"><span class="tts">10:10–10:12</span><span class="tspk">代表</span><span class="ttxt">うんはい</span></div>
+<div class="trow spk-aite"><span class="tts">10:12–10:15</span><span class="tspk">相手</span><span class="ttxt">これ全自動にできます</span></div>
+<div class="trow spk-daihyo"><span class="tts">10:15–10:16</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">10:16–10:21</span><span class="tspk">相手</span><span class="ttxt">私は正直こっち系のビジネスで例えば先のスタンプを作るもそうなんですよさやさんがやってる</span></div>
+<div class="trow spk-daihyo"><span class="tts">10:21–10:26</span><span class="tspk">代表</span><span class="ttxt">うんあれもやっぱりどこまで行ってもあれで付き100万とかは絶対目指せないんですね</span></div>
+<div class="trow spk-aite"><span class="tts">10:26–10:33</span><span class="tspk">相手</span><span class="ttxt">はいはいってなったらさやさんとかのやり方だとある程度形にできたものを全自動にしていってるんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">10:33–10:38</span><span class="tspk">代表</span><span class="ttxt">はいはいはいそしたらもう違うことにすぎ時間を使うじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">10:38–10:39</span><span class="tspk">相手</span><span class="ttxt">うんうんうん</span></div>
+<div class="trow spk-daihyo"><span class="tts">10:39–10:43</span><span class="tspk">代表</span><span class="ttxt">なので数万人ぐらいの収入限定をたくさん作っていくみたいなイメージでか</span></div>
+<div class="trow spk-aite"><span class="tts">10:43–10:46</span><span class="tspk">相手</span><span class="ttxt">まあ一番固くやりやすいっちゃやりやすいんですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">10:46–10:47</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">10:47–10:51</span><span class="tspk">相手</span><span class="ttxt">なので全自動というところまでも全部できるようになってます</span></div>
+<div class="trow spk-daihyo"><span class="tts">10:51–10:55</span><span class="tspk">代表</span><span class="ttxt">うんけど全自動で聞くと結構難易度上がりそうとなっておりませんか</span></div>
+<div class="trow spk-aite"><span class="tts">10:55–11:04</span><span class="tspk">相手</span><span class="ttxt">はい安心してくださいあのですね私のちょっとGPTみたらかかると思うんですけどなんか全自動にするってなったらプログラミング要素とかも必要なんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">11:04–11:06</span><span class="tspk">代表</span><span class="ttxt">はいはいはい</span></div>
+<div class="trow spk-aite"><span class="tts">11:06–11:10</span><span class="tspk">相手</span><span class="ttxt">ただ私あの普通に高卒です</span></div>
+<div class="trow spk-daihyo"><span class="tts">11:10–11:12</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">11:12–11:18</span><span class="tspk">相手</span><span class="ttxt">高卒なのであの特段ですねこれといったスキルって持ってない人なんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">11:18–11:19</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">11:19–11:26</span><span class="tspk">相手</span><span class="ttxt">ほんとAIだけできるよみたいな感じなんですけどプログラミングじゃあできるかというとできないですと</span></div>
+<div class="trow spk-daihyo"><span class="tts">11:26–11:29</span><span class="tspk">代表</span><span class="ttxt">あーじゃあどうやってるかというと</span></div>
+<div class="trow spk-aite"><span class="tts">11:29–11:32</span><span class="tspk">相手</span><span class="ttxt">これもちょっとGPT使ってるんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">11:32–11:34</span><span class="tspk">代表</span><span class="ttxt">うんはい</span></div>
+<div class="trow spk-aite"><span class="tts">11:34–11:39</span><span class="tspk">相手</span><span class="ttxt">これ全部あのボイスですあの私タイピングスラッシュませんこれ</span></div>
+<div class="trow spk-daihyo"><span class="tts">11:39–11:41</span><span class="tspk">代表</span><span class="ttxt">うぇー</span></div>
+<div class="trow spk-aite"><span class="tts">11:41–11:44</span><span class="tspk">相手</span><span class="ttxt">ほんとであの人と話すような感じで</span></div>
+<div class="trow spk-daihyo"><span class="tts">11:44–11:49</span><span class="tspk">代表</span><span class="ttxt">例えば楽天アフィリエートとかをある程度できるようになった仕組み自体は頭に入ってるじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">11:49–11:54</span><span class="tspk">相手</span><span class="ttxt">はいなのでその仕組みっていうのを全部教えるんですよAIと話しながら</span></div>
+<div class="trow spk-daihyo"><span class="tts">11:54–11:55</span><span class="tspk">代表</span><span class="ttxt">あー</span></div>
+<div class="trow spk-aite"><span class="tts">11:55–12:05</span><span class="tspk">相手</span><span class="ttxt">でそれを全自動にできるかできないかっていうのを聞いた時にできるよって言われたんでそこのプログラミングとかをあなたにも全員するんでお願いしますっていう感じでやってます</span></div>
+<div class="trow spk-daihyo"><span class="tts">12:05–12:07</span><span class="tspk">代表</span><span class="ttxt">なるほどはい</span></div>
+<div class="trow spk-aite"><span class="tts">12:07–12:10</span><span class="tspk">相手</span><span class="ttxt">そしたらもうシャットGPT勝手にそのプログラミングコード組んで</span></div>
+<div class="trow spk-daihyo"><span class="tts">12:10–12:15</span><span class="tspk">代表</span><span class="ttxt">何やってくれてるかというと今私のファイル勝手に動かしてるんですよパソコンの</span></div>
+<div class="trow spk-aite"><span class="tts">12:15–12:22</span><span class="tspk">相手</span><span class="ttxt">うぇーうんなので勝手にデスクトップにファイルが増えてましたこういう</span></div>
+<div class="trow spk-daihyo"><span class="tts">12:22–12:28</span><span class="tspk">代表</span><span class="ttxt">もう私が名前もつけてないですからね楽天AIカンパニーって勝手に自分で会社作ってやってるんですよ</span></div>
+<div class="trow spk-aite"><span class="tts">12:28–12:30</span><span class="tspk">相手</span><span class="ttxt">AIがうん</span></div>
+<div class="trow spk-daihyo"><span class="tts">12:30–12:34</span><span class="tspk">代表</span><span class="ttxt">この会社の運営方針とかその売上の修士とか</span></div>
+<div class="trow spk-aite"><span class="tts">12:34–12:48</span><span class="tspk">相手</span><span class="ttxt">あとは商品資料とかも全部自分でファイル分けして会社みたいにやってくれるなのでこれを1からじゃあプログラミングコードを終えましょう難しいと思うんですけど実際お話ししながらでもできる領域までは持っていけるんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">12:48–12:49</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">12:49–12:52</span><span class="tspk">相手</span><span class="ttxt">そんなに難しいみたいなイメージは持たなくて大丈夫ですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">12:52–12:53</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">12:53–12:58</span><span class="tspk">相手</span><span class="ttxt">で実績なんですけどこれちょっとも実際サポートしている公式ラインをお見せします</span></div>
+<div class="trow spk-aite"><span class="tts">12:59–13:02</span><span class="tspk">相手</span><span class="ttxt">ほんとに3日目から収益している人がいるんで</span></div>
+<div class="trow spk-aite"><span class="tts">13:04–13:07</span><span class="tspk">相手</span><span class="ttxt">初めて3日目とかで全然出している方いるんですよ</span></div>
+<div class="trow spk-aite"><span class="tts">13:09–13:15</span><span class="tspk">相手</span><span class="ttxt">例えばこのユーリーさんって方この方まだ今月入ったばっかりなんですよね</span></div>
+<div class="trow spk-aite"><span class="tts">13:17–13:24</span><span class="tspk">相手</span><span class="ttxt">ちょっと待ってくださいね今私の携帯画面見えてないですよね見えてないですねお待ちくださいね</span></div>
+<div class="trow spk-daihyo"><span class="tts">13:25–13:27</span><span class="tspk">代表</span><span class="ttxt">見えるかな</span></div>
+<div class="trow spk-aite"><span class="tts">13:30–13:34</span><span class="tspk">相手</span><span class="ttxt">なるほどコードが繋がってなかった</span></div>
+<div class="trow spk-aite"><span class="tts">13:36–13:40</span><span class="tspk">相手</span><span class="ttxt">充電器の放射性があったしこれでいいかもしれません</span></div>
+<div class="trow spk-aite"><span class="tts">13:44–13:57</span><span class="tspk">相手</span><span class="ttxt">来ました?来ましたこの方ですね9月6日に入ったんですよ今月頭ですね2日にされた方で9月7日から本格的にサービスが見れるようになった方なんですけどもうその日以内で</span></div>
+<div class="trow spk-aite"><span class="tts">13:59–14:03</span><span class="tspk">相手</span><span class="ttxt">アカウント作りから初めているんです9月明日が開いたのは</span></div>
+<div class="trow spk-aite"><span class="tts">14:09–14:10</span><span class="tspk">相手</span><span class="ttxt">この後だ</span></div>
+<div class="trow spk-aite"><span class="tts">14:11–14:18</span><span class="tspk">相手</span><span class="ttxt">早速自分で私たちのコンテンツ見ながらこれ試してみようってやっていきなかったですねアカウント作りとか終わってるタイプの方なんですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">14:19–14:22</span><span class="tspk">代表</span><span class="ttxt">実際どういった商品をAIと一緒に作ったかというと</span></div>
+<div class="trow spk-aite"><span class="tts">14:22–14:27</span><span class="tspk">相手</span><span class="ttxt">赤ちゃん向け多分幼稚園の先生なんで詳しいと思うんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">14:27–14:29</span><span class="tspk">代表</span><span class="ttxt">ピジョンとかまんま高いじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">14:30–14:36</span><span class="tspk">相手</span><span class="ttxt">なのでピジョンとかとあまり機能は変わらないんだけど安いやつとかって結構重要あると思うんですよ</span></div>
+<div class="trow spk-aite"><span class="tts">14:37–14:41</span><span class="tspk">相手</span><span class="ttxt">でも子供のやつじゃない清潔にしたいんで上のゴムキャップ買いたりとかもピジョン高いんで</span></div>
+<div class="trow spk-aite"><span class="tts">14:42–14:46</span><span class="tspk">相手</span><span class="ttxt">そういったところとかを結構発信するアカウントを作られたんですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">14:47–14:49</span><span class="tspk">代表</span><span class="ttxt">何とも2日目で</span></div>
+<div class="trow spk-aite"><span class="tts">14:50–14:52</span><span class="tspk">相手</span><span class="ttxt">フォロワーが120人超えてる</span></div>
+<div class="trow spk-daihyo"><span class="tts">14:52–14:53</span><span class="tspk">代表</span><span class="ttxt">すごい</span></div>
+<div class="trow spk-aite"><span class="tts">14:54–14:57</span><span class="tspk">相手</span><span class="ttxt">通販するときってフォローとかしないと思うんですよ発信者を</span></div>
+<div class="trow spk-aite"><span class="tts">14:59–15:06</span><span class="tspk">相手</span><span class="ttxt">けどやっぱり世の中の楽天ユーザーとかのもう本当にすごい人たちにもなればこの人ってこういった発信すると思うから</span></div>
+<div class="trow spk-daihyo"><span class="tts">15:06–15:08</span><span class="tspk">代表</span><span class="ttxt">いつでも出てくるようにちょっとフォローしとこうとかなるんですよね</span></div>
+<div class="trow spk-aite"><span class="tts">15:10–15:17</span><span class="tspk">相手</span><span class="ttxt">なので逆に言うと本当にそこまでフォローする人って多分世の中の2割3割ぐらいしかいないと思うんで120人で120人すごいんですよ</span></div>
+<div class="trow spk-aite"><span class="tts">15:18–15:20</span><span class="tspk">相手</span><span class="ttxt">正直私いないんでほんなに</span></div>
+<div class="trow spk-aite"><span class="tts">15:22–15:26</span><span class="tspk">相手</span><span class="ttxt">そうですよっていうのももう2日目要するに需要があるものをしっかり獲得できたって方なんですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">15:27–15:29</span><span class="tspk">代表</span><span class="ttxt">で、じゃあその先見ていくとどうか</span></div>
+<div class="trow spk-aite"><span class="tts">15:29–15:31</span><span class="tspk">相手</span><span class="ttxt">3日目でも初めてものが売れてます</span></div>
+<div class="trow spk-aite"><span class="tts">15:34–15:40</span><span class="tspk">相手</span><span class="ttxt">そうですで、まあ進めていってずっとこう見ていくと実際講座にお金が入るようになってこの方も今月4万稼いでますよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">15:42–15:43</span><span class="tspk">代表</span><span class="ttxt">すごい</span></div>
+<div class="trow spk-aite"><span class="tts">15:44–15:58</span><span class="tspk">相手</span><span class="ttxt">すごいでしょなのでそういうことなんですよなのでしっかりAIを使っていけば自分より優秀な部下っていうのがいるので本当は私先月数万円固くいけるようと話したと思うんですけど嘘だろうと思うんですけど本当に実現してるんで、初月から</span></div>
+<div class="trow spk-aite"><span class="tts">16:00–16:03</span><span class="tspk">相手</span><span class="ttxt">これがしっかり時間帯取ってこっちこっちやっていけば問題ないですね</span></div>
+<div class="trow spk-aite"><span class="tts">16:04–16:10</span><span class="tspk">相手</span><span class="ttxt">そういうのが分かったと思いますあとは私が一番やってるのはSNSなんですよ</span></div>
+<div class="trow spk-aite"><span class="tts">16:11–16:20</span><span class="tspk">相手</span><span class="ttxt">ただSNSは正直1日1時間ぐらい作業量を欲しいんで本当にさっきの楽天アフィリエイトが慣れてきてからのスタートで全然問題ないです</span></div>
+<div class="trow spk-aite"><span class="tts">16:22–16:27</span><span class="tspk">相手</span><span class="ttxt">で、私のくさんどしかというともう楽天アフィリエイトさせなくて最初からSNSをさせてるんですよ</span></div>
+<div class="trow spk-aite"><span class="tts">16:28–16:30</span><span class="tspk">相手</span><span class="ttxt">ちょっと4目のファイル見せますね</span></div>
+<div class="trow spk-aite"><span class="tts">16:32–16:35</span><span class="tspk">相手</span><span class="ttxt">今ちょうどですね、2本ぐらい動画できあがってるんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">16:36–16:38</span><span class="tspk">代表</span><span class="ttxt">1トーコメの方がいいかな</span></div>
+<div class="trow spk-aite"><span class="tts">16:39–16:44</span><span class="tspk">相手</span><span class="ttxt">お金に関する勉強みたいなやつなんですよね</span></div>
+<div class="trow spk-aite"><span class="tts">16:47–16:51</span><span class="tspk">相手</span><span class="ttxt">お金に関することを発信したいってなったら全然力をかかせるんで、知見とかは</span></div>
+<div class="trow spk-aite"><span class="tts">16:53–17:01</span><span class="tspk">相手</span><span class="ttxt">特にこれから婚約して結婚したら毎フォームが勝てられると思うんで勉強がたたちと見てみてくださいこの動画</span></div>
+<div class="trow spk-aite"><span class="tts">17:02–17:05</span><span class="tspk">相手</span><span class="ttxt">入会っていうか勉強をし始めて</span></div>
+<div class="trow spk-aite"><span class="tts">17:06–17:08</span><span class="tspk">相手</span><span class="ttxt">1週間以内でできた動画ですこれ</span></div>
+<div class="trow spk-aite"><span class="tts">17:09–17:11</span><span class="tspk">相手</span><span class="ttxt">先生、日銀が利上げしたら</span></div>
+<div class="trow spk-daihyo"><span class="tts">17:11–17:14</span><span class="tspk">代表</span><span class="ttxt">住宅ローンって本当に何百万円も増えるの?</span></div>
+<div class="trow spk-aite"><span class="tts">17:14–18:31</span><span class="tspk">相手</span><span class="ttxt">増える可能性があるよ特に注意したいのが変動金利で住宅ローンを組んでいる人でも日銀が0.25%利上げしたら住宅ローンも翌月から0.25%上がるの?そこは違うんだ銀行によって金利を見直す時期も違うし返済額がすぐ変わらない住宅ローンもあるんだじゃあ実際どれくらい増えるの?例えば5千万円を35年ローン金利0.5%で借りたとして毎月の返済は約12万9800円これが金利1%になると毎月約14万1100円月に約1万1000円増えて35年間では約477万円も負担が増える計算だ月1万円くらいでも35年で見るとそんなに変わるの?そうなんだよさらに金利1.5%になると毎月約123100円元の0.5%と比べると35年間で約979万円多く払うことになるんだ家の値段は5千万円のままなのに金利だけで1千万円以上変わることもあるんだ</span></div>
+<div class="trow spk-daihyo"><span class="tts">18:31–18:37</span><span class="tspk">代表</span><span class="ttxt">これからは家がいくらかだけじゃなく金利を含めて最後にいくら払うのか</span></div>
+<div class="trow spk-aite"><span class="tts">18:37–18:45</span><span class="tspk">相手</span><span class="ttxt">まで見ることが大切だよ家の価格だけで判断しないこれが金利のある時代の住宅選びだね</span></div>
+<div class="trow spk-aite"><span class="tts">18:46–18:54</span><span class="tspk">相手</span><span class="ttxt">はいこれ入会して1週間ですごいですよねすごいですよね</span></div>
+<div class="trow spk-daihyo"><span class="tts">18:54–18:57</span><span class="tspk">代表</span><span class="ttxt">これもどうやってやったかって意外と簡単で</span></div>
+<div class="trow spk-aite"><span class="tts">18:57–19:10</span><span class="tspk">相手</span><span class="ttxt">SNSとかで自分が目指すべきゾーンみたいなところを探すんですよ最初にその人のアカウントをAIにかけてAIが分析してくれてそのやり方を落とし込んだだけって感じなんですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">19:10–19:12</span><span class="tspk">代表</span><span class="ttxt">なので伸びるアカウントか伸びないアカウントか</span></div>
+<div class="trow spk-aite"><span class="tts">19:12–19:14</span><span class="tspk">相手</span><span class="ttxt">結構皆さん悩むんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">19:14–19:16</span><span class="tspk">代表</span><span class="ttxt">最初の時点で伸びるアカウントか伸びないアカウントか</span></div>
+<div class="trow spk-aite"><span class="tts">19:16–19:29</span><span class="tspk">相手</span><span class="ttxt">決まりますこれしっかり伸びる理由っていうのもしっかりAIと一緒に分析をしてAI使って動画を作っていくって感じなのでこれは正直前児童にはしないほうがいい</span></div>
+<div class="trow spk-aite"><span class="tts">19:31–19:45</span><span class="tspk">相手</span><span class="ttxt">ちょっと筆が落ちちゃいますね動画編集力のそうですこれはちょっと半児童でやるんでお時間をいただくけどフォロワーが増えた活気には結構稼げるっていうようになって</span></div>
+<div class="trow spk-daihyo"><span class="tts">19:45–19:47</span><span class="tspk">代表</span><span class="ttxt">時間がかかるからまずは楽天アフィリエットとか</span></div>
+<div class="trow spk-aite"><span class="tts">19:47–19:51</span><span class="tspk">相手</span><span class="ttxt">スタンプ作りとかいろいろパーってやっていきながら自動化させた後に</span></div>
+<div class="trow spk-daihyo"><span class="tts">19:51–19:53</span><span class="tspk">代表</span><span class="ttxt">バッと走り出していくとか</span></div>
+<div class="trow spk-aite"><span class="tts">19:53–19:55</span><span class="tspk">相手</span><span class="ttxt">とかやると</span></div>
+<div class="trow spk-daihyo"><span class="tts">19:55–19:57</span><span class="tspk">代表</span><span class="ttxt">結婚した後に贅沢ワークとか</span></div>
+<div class="trow spk-aite"><span class="tts">19:57–20:13</span><span class="tspk">相手</span><span class="ttxt">全然目指していけるかなっていうふうに思いますねサポートも先ほどの公式内でいくくん手取り足とり一緒にやっていくんですけどそれとは別にAIって今日本ってまだ20%ぐらいしか使ってないんですよ人工的にいくと</span></div>
+<div class="trow spk-daihyo"><span class="tts">20:13–20:15</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">20:15–20:19</span><span class="tspk">相手</span><span class="ttxt">やっぱ1000人工で20%なんでほぼ若者と思うんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">20:19–20:21</span><span class="tspk">代表</span><span class="ttxt">でも</span></div>
+<div class="trow spk-aite"><span class="tts">20:21–20:25</span><span class="tspk">相手</span><span class="ttxt">実際お金に帰れてる方ってまだ10%もいないです</span></div>
+<div class="trow spk-daihyo"><span class="tts">20:25–20:27</span><span class="tspk">代表</span><span class="ttxt">絶対</span></div>
+<div class="trow spk-aite"><span class="tts">20:27–20:43</span><span class="tspk">相手</span><span class="ttxt">アメリカが今40%をようやく超えたぐらいなんですよするとまだAIを使うことによってまだまだ先がある要するにこれからAIだよっていう時代が来てますとってなったときに雇用が少なくなっていくんですよね</span></div>
+<div class="trow spk-daihyo"><span class="tts">20:43–20:45</span><span class="tspk">代表</span><span class="ttxt">うんうん</span></div>
+<div class="trow spk-aite"><span class="tts">20:45–20:47</span><span class="tspk">相手</span><span class="ttxt">今年間で6000万人くらい取得しなっているんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">20:47–20:55</span><span class="tspk">代表</span><span class="ttxt">世界でこれが翌年どうなるか翌翌年どうなるかって話したのでこれを扱える側にまだどうなるかで</span></div>
+<div class="trow spk-aite"><span class="tts">20:55–21:03</span><span class="tspk">相手</span><span class="ttxt">年収上がるんですよ私高速でAI扱えるだけで上昇企業の給食来ましたからねイエーイ</span></div>
+<div class="trow spk-daihyo"><span class="tts">21:03–21:05</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">21:05–21:15</span><span class="tspk">相手</span><span class="ttxt">転職するときに自分自身のキャリアにもつながりますしこれを扱えるときに継続すれば力になるってものになってます</span></div>
+<div class="trow spk-daihyo"><span class="tts">21:15–21:17</span><span class="tspk">代表</span><span class="ttxt">人ってモチベーションで動きじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">21:17–21:19</span><span class="tspk">相手</span><span class="ttxt">なんで今ちょっと資料出してるんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">21:19–21:21</span><span class="tspk">代表</span><span class="ttxt">1か月1回ぐらいの電話とか</span></div>
+<div class="trow spk-aite"><span class="tts">21:21–21:33</span><span class="tspk">相手</span><span class="ttxt">ズームとかでサポートをしていけたらなっていうところで準備をさせていただいてます日々の対応だけではなく日々の対応をやっていく理由にもなると思うんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">21:33–21:37</span><span class="tspk">代表</span><span class="ttxt">翌月までではどうやって頑張っていくみたいなどういう内容を進めていくとか</span></div>
+<div class="trow spk-aite"><span class="tts">21:37–21:39</span><span class="tspk">相手</span><span class="ttxt">売り合わせとかも一緒にやっていくんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">21:39–21:41</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">21:41–21:47</span><span class="tspk">相手</span><span class="ttxt">だからこそ皆さん継続して頑張って先ほどの方も1か月で4万くらい稼いでますしそれ以外にも数十万の方とかもいるんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">21:47–21:49</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">21:49–21:59</span><span class="tspk">相手</span><span class="ttxt">なので本当に力努力は力になるっていうのが証明できるサポートにもなってるかなっていうふうに思いますねここまでお話聞いてみて</span></div>
+<div class="trow spk-daihyo"><span class="tts">21:59–22:01</span><span class="tspk">代表</span><span class="ttxt">まずご質問とかありませんか</span></div>
+<div class="trow spk-aite"><span class="tts">22:01–22:03</span><span class="tspk">相手</span><span class="ttxt">楽天で</span></div>
+<div class="trow spk-daihyo"><span class="tts">22:03–22:05</span><span class="tspk">代表</span><span class="ttxt">売り上げとか</span></div>
+<div class="trow spk-aite"><span class="tts">22:05–22:09</span><span class="tspk">相手</span><span class="ttxt">発生したらそれは即振り込み</span></div>
+<div class="trow spk-daihyo"><span class="tts">22:09–22:11</span><span class="tspk">代表</span><span class="ttxt">みたいな感じなんですか</span></div>
+<div class="trow spk-aite"><span class="tts">22:11–22:17</span><span class="tspk">相手</span><span class="ttxt">即振り込みっていうわけではなくそのやっぱり結局物を買って消費者側がお金を払う</span></div>
+<div class="trow spk-daihyo"><span class="tts">22:17–22:19</span><span class="tspk">代表</span><span class="ttxt">ってわけじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">22:19–22:23</span><span class="tspk">相手</span><span class="ttxt">そこの会社にはお金が入ってからの翌月払いとかになってきますね</span></div>
+<div class="trow spk-daihyo"><span class="tts">22:23–22:27</span><span class="tspk">代表</span><span class="ttxt">なるほどはい</span></div>
+<div class="trow spk-aite"><span class="tts">22:27–22:43</span><span class="tspk">相手</span><span class="ttxt">休業みたいな休業を自分で稼いでその分翌月に来るよみたいな感じただそこにイニシャル都市の固定費とかっていうのは基本かからないたぶん例えばチャットGPTとかも無料で使ったら言葉の解説にちょっと制限があるんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">22:43–22:45</span><span class="tspk">代表</span><span class="ttxt">うん</span></div>
+<div class="trow spk-aite"><span class="tts">22:45–23:01</span><span class="tspk">相手</span><span class="ttxt">課金しても1500円のやつでいいかなって思ってるんで本当にかかってくるお金っていうのはチャットGPTのサブスク代と私たちのスクール代金が最初だけかかるかなっていう感じですね私もそれこそチャットGPT課金してて</span></div>
+<div class="trow spk-daihyo"><span class="tts">23:01–23:05</span><span class="tspk">代表</span><span class="ttxt">いくらの方に加減してます?いくらのだろうな</span></div>
+<div class="trow spk-aite"><span class="tts">23:05–23:07</span><span class="tspk">相手</span><span class="ttxt">私は3000円のやつなんですよ</span></div>
+<div class="trow spk-aite"><span class="tts">23:09–23:15</span><span class="tspk">相手</span><span class="ttxt">3000円のです3000円だったらさっきの私が全自動するって</span></div>
+<div class="trow spk-daihyo"><span class="tts">23:15–23:17</span><span class="tspk">代表</span><span class="ttxt">って言ったやつあるじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">23:17–23:23</span><span class="tspk">相手</span><span class="ttxt">あれ使いますよもともと4チェーンで使ってて</span></div>
+<div class="trow spk-daihyo"><span class="tts">23:23–23:25</span><span class="tspk">代表</span><span class="ttxt">なるほど</span></div>
+<div class="trow spk-aite"><span class="tts">23:25–23:27</span><span class="tspk">相手</span><span class="ttxt">ファイオリとか作るのに</span></div>
+<div class="trow spk-daihyo"><span class="tts">23:27–23:29</span><span class="tspk">代表</span><span class="ttxt">ユーシアとか全部任せたいとか</span></div>
+<div class="trow spk-aite"><span class="tts">23:29–23:35</span><span class="tspk">相手</span><span class="ttxt">一人一人の個人の成長の記録とかもまとめてもらうのに使ったりとかしてて</span></div>
+<div class="trow spk-aite"><span class="tts">23:37–23:43</span><span class="tspk">相手</span><span class="ttxt">確かに業務効率めっちゃ上がれてますねじゃあそれでいくとまだユーシアンとかって</span></div>
+<div class="trow spk-daihyo"><span class="tts">23:43–23:47</span><span class="tspk">代表</span><span class="ttxt">色々作品作ったりとか準備物とかもあるじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">23:47–23:57</span><span class="tspk">相手</span><span class="ttxt">デザイン考えるのめんなりチャットGPTに全部やったりする投げたことがありますけどそれ印刷して貼り付けるだけでいいですよね</span></div>
+<div class="trow spk-daihyo"><span class="tts">23:57–23:59</span><span class="tspk">代表</span><span class="ttxt">確かに</span></div>
+<div class="trow spk-aite"><span class="tts">23:59–24:35</span><span class="tspk">相手</span><span class="ttxt">幼稚園側からしても使える方が増えたらめっちゃ嬉しいですもんねそうなると使ってきて使ってきてって感じでじゃんぎょう減るぞって言ってねそうなんだ3000円とかのやつだったらさっき言った自動お金のやつもコーデックスって言うんですけど使えるんでいいと思いますよそのままであたかかるのは私たちのスクール代金かなってことなんですけど1日間の10代くらいと思ったらいいですサービスはずっと使えるんで金額としましてAIプラントラボプランっていうふうに2つに分けていますよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">24:35–24:37</span><span class="tspk">代表</span><span class="ttxt">じゃあこれどう違うの?って言うと</span></div>
+<div class="trow spk-aite"><span class="tts">24:37–24:41</span><span class="tspk">相手</span><span class="ttxt">先ほど楽天アフィリエートSNSとかも全部できます</span></div>
+<div class="trow spk-daihyo"><span class="tts">24:41–24:43</span><span class="tspk">代表</span><span class="ttxt">両方</span></div>
+<div class="trow spk-aite"><span class="tts">24:43–25:07</span><span class="tspk">相手</span><span class="ttxt">でなるとなりが違うかと言うと不可価値の部分ですね例えばサポートの面でいくと公式ラインのサポートがついてますで半年だけです別に期間が終わったからと言って全く連絡とらないとこはないですただサポート期間が残ってる人から対応をしてそこを終わったら対応するって感じの扱いですねでこのラボプランはサポート公式ラインだけではなく</span></div>
+<div class="trow spk-daihyo"><span class="tts">25:07–25:09</span><span class="tspk">代表</span><span class="ttxt">避けた月1回の電話があったりだとか</span></div>
+<div class="trow spk-aite"><span class="tts">25:09–25:21</span><span class="tspk">相手</span><span class="ttxt">あとはサポート期間のそもそも2年間あるよという感じになってますであとはですね効率アフィリってあるかと思うんですけどこれは要するに私たちが独占契約取ってるお仕事</span></div>
+<div class="trow spk-daihyo"><span class="tts">25:21–25:23</span><span class="tspk">代表</span><span class="ttxt">触れるって言ったじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">25:23–25:53</span><span class="tspk">相手</span><span class="ttxt">そこに関しては報酬率をちょっといじくれることができるんでAIプランの方よりダボプランの方を少し優異性高く少しでもお金が多く入るようにさせていただいておりますあと自動運用システム正直使わないと思うんでこれはもし知り分かりやすく言うなら済み立てにいさよりいいよみたいなもんだと思ってください稼いだやつを私たちの方でしますよ要するに私たちって</span></div>
+<div class="trow spk-daihyo"><span class="tts">25:53–25:55</span><span class="tspk">代表</span><span class="ttxt">AIが使えるんで自動運用システムとか</span></div>
+<div class="trow spk-aite"><span class="tts">25:55–26:23</span><span class="tspk">相手</span><span class="ttxt">結構強くて今14年間くらい回してるんですけどこの14年間で一度もガンポン割りしてない100万円が14年間で1700万到達で負けたのは今までで大きく負けても3%くらいなのでガンポン割りがなく出てるよみたいな自動運用システムですねこれは気になったら使ったらいいと思いますまずは稼ぐところが必要なんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">26:23–26:25</span><span class="tspk">代表</span><span class="ttxt">お金で</span></div>
+<div class="trow spk-aite"><span class="tts">26:25–26:27</span><span class="tspk">相手</span><span class="ttxt">稼ぐ増やす守るとあるんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">26:27–26:31</span><span class="tspk">代表</span><span class="ttxt">うん皆さん通しってのをやるじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">26:31–26:35</span><span class="tspk">相手</span><span class="ttxt">先に通しってお金ができてやるべきなんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">26:35–26:37</span><span class="tspk">代表</span><span class="ttxt">はいはいはい</span></div>
+<div class="trow spk-aite"><span class="tts">26:37–26:53</span><span class="tspk">相手</span><span class="ttxt">まず生活防衛資金があって私通しだって言うんですけど生活防衛資金を絶対に繰りかたってのが必要なんですよね例えば毎月30万円過程でお金が買ってるんだったら32万の時は2万しか通しに回せないんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">26:53–26:55</span><span class="tspk">代表</span><span class="ttxt">しかもプラセル貯金をしないといけないじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">26:55–26:57</span><span class="tspk">相手</span><span class="ttxt">はい</span></div>
+<div class="trow spk-daihyo"><span class="tts">26:57–26:59</span><span class="tspk">代表</span><span class="ttxt">1万くらいしか回せないとか</span></div>
+<div class="trow spk-aite"><span class="tts">26:59–27:07</span><span class="tspk">相手</span><span class="ttxt">こんなに通しだと意味がないのでまず稼ぐところを分厚くしてから通しっていくべきなんですよねそこの守る通し</span></div>
+<div class="trow spk-daihyo"><span class="tts">27:07–27:09</span><span class="tspk">代表</span><span class="ttxt">守るより責めかな</span></div>
+<div class="trow spk-aite"><span class="tts">27:09–27:23</span><span class="tspk">相手</span><span class="ttxt">株式通しまではいかないかなくらい通し責はあるんでそういったふうに使っていただけるようなものにはなってくるんですまず先の内容にはなりますね今お話聞いてみて</span></div>
+<div class="trow spk-daihyo"><span class="tts">27:23–27:27</span><span class="tspk">代表</span><span class="ttxt">どういったサービスが一番刺さったかというところで決めていったらいいのかな</span></div>
+<div class="trow spk-aite"><span class="tts">27:27–27:47</span><span class="tspk">相手</span><span class="ttxt">なんでかというと好き好きかかるお金っていうのが支払い的にもし1かつがいいなら1かつで払ってもらっていいんですよ33と55ですねただ僕は分割破なんですよ1000アフリュレートで固く数万円取れるんだったらスクール代金ページながらやっていったほうが良くないっていうもちろんちょっと手数量がつくんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">27:47–27:49</span><span class="tspk">代表</span><span class="ttxt">例えば</span></div>
+<div class="trow spk-aite"><span class="tts">27:49–28:05</span><span class="tspk">相手</span><span class="ttxt">今月4万かせきましたここでいくと月1万ですよねじゃあ1万だけど3万別に使うことなかったら貯金すればいいと思うんですよ貯金していってこれが1年間とかでいくなら多分月付1万バラエリックと12万ぐらい減ってるんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">28:05–28:07</span><span class="tspk">代表</span><span class="ttxt">20万ぐらいなるじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">28:07–28:15</span><span class="tspk">相手</span><span class="ttxt">じゃあ20万ぐらいになったときにその貯金が20万切ってたらもう1かつで払えばいいんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">28:15–28:17</span><span class="tspk">代表</span><span class="ttxt">そこで</span></div>
+<div class="trow spk-aite"><span class="tts">28:17–28:29</span><span class="tspk">相手</span><span class="ttxt">手数量も3年間かかるところが例えば1年間だけって減らせていけるというふうに持っていけるんで今から婚約して先だけのことを考えるときにとかってお金が消えるのは僕はいたいかなと思うんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">28:29–28:31</span><span class="tspk">代表</span><span class="ttxt">カードで分割のほうがいいのかな</span></div>
+<div class="trow spk-aite"><span class="tts">28:31–28:33</span><span class="tspk">相手</span><span class="ttxt">ってふうには個人的に思います</span></div>
+<div class="trow spk-daihyo"><span class="tts">28:33–28:35</span><span class="tspk">代表</span><span class="ttxt">あとはサービス的にどこが刺さったかな</span></div>
+<div class="trow spk-aite"><span class="tts">28:35–28:43</span><span class="tspk">相手</span><span class="ttxt">でラボプランかAIプランっていう感じでなってくるかなと思うんですけどほのかさん的にはどのサービスが一番いいな</span></div>
+<div class="trow spk-daihyo"><span class="tts">28:43–28:45</span><span class="tspk">代表</span><span class="ttxt">っていうふうには持っていただけましたか</span></div>
+<div class="trow spk-aite"><span class="tts">28:47–28:49</span><span class="tspk">相手</span><span class="ttxt">まあラインサポート</span></div>
+<div class="trow spk-aite"><span class="tts">28:55–28:57</span><span class="tspk">相手</span><span class="ttxt">効率アフィリー</span></div>
+<div class="trow spk-aite"><span class="tts">28:59–29:19</span><span class="tspk">相手</span><span class="ttxt">かなーとは思ったんですけど効率アフィリーだったらもうこっちですねラクテンアフィリーとはタンカーがないです私は操作できませんそうなんですSNSを使ってタンカーを上げるってことは私たちできますけどラクテンアフィリーに関しては正直AIプランもラボプランも変わらないですね</span></div>
+<div class="trow spk-aite"><span class="tts">29:23–29:29</span><span class="tspk">相手</span><span class="ttxt">そうですなので今聞いた感じ公式ラインでのサポートだけでいい</span></div>
+<div class="trow spk-daihyo"><span class="tts">29:29–29:31</span><span class="tspk">代表</span><span class="ttxt">で何かつラクテンアフィリーとかいいって感じだったら</span></div>
+<div class="trow spk-aite"><span class="tts">29:31–29:39</span><span class="tspk">相手</span><span class="ttxt">いいかなって感じですけど電話のほうも欲しいし私たちが振るSNSのほうをやりたいっていうのではあれば絶対こっちです</span></div>
+<div class="trow spk-daihyo"><span class="tts">29:41–29:45</span><span class="tspk">代表</span><span class="ttxt">なるほどでどういった発信をせっかに関しては</span></div>
+<div class="trow spk-aite"><span class="tts">29:45–29:49</span><span class="tspk">相手</span><span class="ttxt">全部公式ラインで壁打ちして一緒に決めて行けばいいと思ってるんで</span></div>
+<div class="trow spk-aite"><span class="tts">29:51–29:59</span><span class="tspk">相手</span><span class="ttxt">そのどっちかかなって感じなんですけどほのかさん的にはどっちをまずやっていきたいです一応こっちAIプランのやつも全部入ってはいるんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">30:01–30:03</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">30:03–30:07</span><span class="tspk">相手</span><span class="ttxt">とりあえずラインサポートで</span></div>
+<div class="trow spk-daihyo"><span class="tts">30:07–30:09</span><span class="tspk">代表</span><span class="ttxt">やっていけたらいいのかな</span></div>
+<div class="trow spk-aite"><span class="tts">30:09–30:17</span><span class="tspk">相手</span><span class="ttxt">と思ったりするんですけどラインサポートだけでいいなら絶対こっちでいいですよ最初で進めていって</span></div>
+<div class="trow spk-daihyo"><span class="tts">30:17–30:19</span><span class="tspk">代表</span><span class="ttxt">公式ラクテンアフィリーとか</span></div>
+<div class="trow spk-aite"><span class="tts">30:19–30:23</span><span class="tspk">相手</span><span class="ttxt">もっとSNSもやっていきたいっていうフェーズになって必要性を感じたら</span></div>
+<div class="trow spk-daihyo"><span class="tts">30:23–30:25</span><span class="tspk">代表</span><span class="ttxt">コースアップでいいじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">30:25–30:33</span><span class="tspk">相手</span><span class="ttxt">コースアップ差がくれ全部やっていくんで最初に55万に入ろうと後から55万の頃に来ようと支払い金額って変わんないんですよね</span></div>
+<div class="trow spk-daihyo"><span class="tts">30:33–30:35</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">30:35–30:45</span><span class="tspk">相手</span><span class="ttxt">であれば僕は全然今回のほのかさんのケースでいくとAIプランで固定案してていいのかなっていう風に持ってますちなみにもしお支払いするとしたら</span></div>
+<div class="trow spk-daihyo"><span class="tts">30:45–30:49</span><span class="tspk">代表</span><span class="ttxt">私が説明したようにカードの方がいいかなっていうふうな考えですか</span></div>
+<div class="trow spk-aite"><span class="tts">30:51–30:55</span><span class="tspk">相手</span><span class="ttxt">そうですねでもカードの私予見低くて</span></div>
+<div class="trow spk-daihyo"><span class="tts">30:55–30:57</span><span class="tspk">代表</span><span class="ttxt">いくらです</span></div>
+<div class="trow spk-aite"><span class="tts">30:57–31:01</span><span class="tspk">相手</span><span class="ttxt">えっと20とかなんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">31:01–31:03</span><span class="tspk">代表</span><span class="ttxt">それに</span></div>
+<div class="trow spk-aite"><span class="tts">31:03–31:05</span><span class="tspk">相手</span><span class="ttxt">あれ上げてなくて</span></div>
+<div class="trow spk-daihyo"><span class="tts">31:05–31:07</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">31:07–31:15</span><span class="tspk">相手</span><span class="ttxt">そうするとでもできないですよねえっとそうなってくるとカードの利用可能額を上げる</span></div>
+<div class="trow spk-daihyo"><span class="tts">31:15–31:17</span><span class="tspk">代表</span><span class="ttxt">っていう選択肢か</span></div>
+<div class="trow spk-aite"><span class="tts">31:17–31:37</span><span class="tspk">相手</span><span class="ttxt">あとは一部振り込みしてカード枠だけカードできるってことはできますあーなるほど例えば今30万枠ですよやったら税金分の3万枠振り込みをして30万カードで分割かけるとかはできますねあーなるほどじゃあ10万は入れますよって方だったら10万円入れて</span></div>
+<div class="trow spk-daihyo"><span class="tts">31:37–31:41</span><span class="tspk">代表</span><span class="ttxt">残り23万カードできるとかそこは全然中難に対応できるかな</span></div>
+<div class="trow spk-aite"><span class="tts">31:41–31:43</span><span class="tspk">相手</span><span class="ttxt">ってふうに思います</span></div>
+<div class="trow spk-daihyo"><span class="tts">31:43–31:45</span><span class="tspk">代表</span><span class="ttxt">なるほど</span></div>
+<div class="trow spk-aite"><span class="tts">31:45–31:47</span><span class="tspk">相手</span><span class="ttxt">とりあえず</span></div>
+<div class="trow spk-daihyo"><span class="tts">31:47–31:49</span><span class="tspk">代表</span><span class="ttxt">カード枠いくらですちなみに</span></div>
+<div class="trow spk-aite"><span class="tts">31:49–31:51</span><span class="tspk">相手</span><span class="ttxt">カード枠も</span></div>
+<div class="trow spk-daihyo"><span class="tts">31:51–31:53</span><span class="tspk">代表</span><span class="ttxt">それこそでも30とか</span></div>
+<div class="trow spk-aite"><span class="tts">31:53–31:55</span><span class="tspk">相手</span><span class="ttxt">学生の頃つくってずっとそのままで</span></div>
+<div class="trow spk-daihyo"><span class="tts">31:57–32:01</span><span class="tspk">代表</span><span class="ttxt">カード会社はどちらになります楽天カードとか</span></div>
+<div class="trow spk-aite"><span class="tts">32:05–32:15</span><span class="tspk">相手</span><span class="ttxt">ミレミアムカードプレミアムカードミレミアムカードミレミアムカードミレミアムカード</span></div>
+<div class="trow spk-daihyo"><span class="tts">32:15–32:17</span><span class="tspk">代表</span><span class="ttxt">どこのボタンだろう</span></div>
+<div class="trow spk-aite"><span class="tts">32:17–32:21</span><span class="tspk">相手</span><span class="ttxt">グラブ音セゾンですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">32:21–32:25</span><span class="tspk">代表</span><span class="ttxt">なるほどセゾンか</span></div>
+<div class="trow spk-aite"><span class="tts">32:25–32:31</span><span class="tspk">相手</span><span class="ttxt">ゴールドじゃないですよね違いますもんえっと待ってくださいね</span></div>
+<div class="trow spk-daihyo"><span class="tts">32:31–32:33</span><span class="tspk">代表</span><span class="ttxt">まず分割回数どれで何回までできるパターンを</span></div>
+<div class="trow spk-aite"><span class="tts">32:33–32:35</span><span class="tspk">相手</span><span class="ttxt">調べます</span></div>
+<div class="trow spk-daihyo"><span class="tts">32:39–32:41</span><span class="tspk">代表</span><span class="ttxt">24か</span></div>
+<div class="trow spk-aite"><span class="tts">32:41–32:43</span><span class="tspk">相手</span><span class="ttxt">ケースで分割</span></div>
+<div class="trow spk-aite"><span class="tts">32:47–32:49</span><span class="tspk">相手</span><span class="ttxt">実際どれくらいの</span></div>
+<div class="trow spk-daihyo"><span class="tts">32:49–32:51</span><span class="tspk">代表</span><span class="ttxt">編載額になるか見てみますか</span></div>
+<div class="trow spk-aite"><span class="tts">32:51–32:53</span><span class="tspk">相手</span><span class="ttxt">前月</span></div>
+<div class="trow spk-daihyo"><span class="tts">32:53–32:55</span><span class="tspk">代表</span><span class="ttxt">せっかく何手数量どれくらいつくのかとか</span></div>
+<div class="trow spk-aite"><span class="tts">33:01–33:03</span><span class="tspk">相手</span><span class="ttxt">今ちょっとお出しさせていただきました</span></div>
+<div class="trow spk-daihyo"><span class="tts">33:03–33:05</span><span class="tspk">代表</span><span class="ttxt">で一応</span></div>
+<div class="trow spk-aite"><span class="tts">33:05–33:13</span><span class="tspk">相手</span><span class="ttxt">カード枠を調べる必要があるんですけどマックスでたぶんさっきミレミアムカードは24って書いてあったんで</span></div>
+<div class="trow spk-daihyo"><span class="tts">33:13–33:15</span><span class="tspk">代表</span><span class="ttxt">で</span></div>
+<div class="trow spk-aite"><span class="tts">33:17–33:23</span><span class="tspk">相手</span><span class="ttxt">マックスつき16000ですねなのであとは利用可能額のことを</span></div>
+<div class="trow spk-daihyo"><span class="tts">33:23–33:25</span><span class="tspk">代表</span><span class="ttxt">考慮していくら振り込みにするか</span></div>
+<div class="trow spk-aite"><span class="tts">33:25–33:33</span><span class="tspk">相手</span><span class="ttxt">みたいな感じでも変わるかなっていう利用可能額って今調べれますセゾンのアプリから</span></div>
+<div class="trow spk-aite"><span class="tts">33:35–33:41</span><span class="tspk">相手</span><span class="ttxt">今外までなくてもうそのカード一本でやってるので</span></div>
+<div class="trow spk-daihyo"><span class="tts">33:41–33:43</span><span class="tspk">代表</span><span class="ttxt">うんうん</span></div>
+<div class="trow spk-aite"><span class="tts">33:43–33:45</span><span class="tspk">相手</span><span class="ttxt">あんまりないんですよね</span></div>
+<div class="trow spk-daihyo"><span class="tts">33:45–33:47</span><span class="tspk">代表</span><span class="ttxt">30</span></div>
+<div class="trow spk-aite"><span class="tts">33:47–33:49</span><span class="tspk">相手</span><span class="ttxt">はあるかなって感じです</span></div>
+<div class="trow spk-daihyo"><span class="tts">34:01–34:03</span><span class="tspk">代表</span><span class="ttxt">そうですね</span></div>
+<div class="trow spk-aite"><span class="tts">34:03–34:09</span><span class="tspk">相手</span><span class="ttxt">30もない30でやってるので生活でも使うから</span></div>
+<div class="trow spk-daihyo"><span class="tts">34:09–34:11</span><span class="tspk">代表</span><span class="ttxt">25くらいですかね</span></div>
+<div class="trow spk-aite"><span class="tts">34:11–34:17</span><span class="tspk">相手</span><span class="ttxt">そうですね現実的なのは毎月カードの利用金額を</span></div>
+<div class="trow spk-daihyo"><span class="tts">34:17–34:19</span><span class="tspk">代表</span><span class="ttxt">5万円くらいで大丈夫かな</span></div>
+<div class="trow spk-aite"><span class="tts">34:19–34:29</span><span class="tspk">相手</span><span class="ttxt">あれば25カードを使って8万振り込みみたいなパターンでもいいですしせっかくなので生活用でやりたいのであれば1個カードを作ってみるのもありですけどね</span></div>
+<div class="trow spk-daihyo"><span class="tts">34:29–34:33</span><span class="tspk">代表</span><span class="ttxt">なるほど例えば</span></div>
+<div class="trow spk-aite"><span class="tts">34:33–34:45</span><span class="tspk">相手</span><span class="ttxt">カードの併用とかもできるんでペーペーカードを使いますペーペー使えますねとかであればせっかくポイントとかたまるんで例えばペーペーとかだったら</span></div>
+<div class="trow spk-daihyo"><span class="tts">34:45–34:47</span><span class="tspk">代表</span><span class="ttxt">日常生活でも使えるじゃないですかコンビニとかでも</span></div>
+<div class="trow spk-aite"><span class="tts">34:47–35:01</span><span class="tspk">相手</span><span class="ttxt">そういったことを考えてペーペーカードを作る例えば10万枠だったとしても2つ併用したら全部分割いけると思いますししかもペーペーのほうは24じゃなくて36いけるんでもっと付けの支払いを落ちますよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">35:01–35:03</span><span class="tspk">代表</span><span class="ttxt">なるほど</span></div>
+<div class="trow spk-aite"><span class="tts">35:03–35:05</span><span class="tspk">相手</span><span class="ttxt">2つ合わせてたぶん13000くらい</span></div>
+<div class="trow spk-daihyo"><span class="tts">35:05–35:07</span><span class="tspk">代表</span><span class="ttxt">まで落とせるんじゃないかな</span></div>
+<div class="trow spk-aite"><span class="tts">35:07–35:09</span><span class="tspk">相手</span><span class="ttxt">ってふうに思いますね</span></div>
+<div class="trow spk-daihyo"><span class="tts">35:09–35:11</span><span class="tspk">代表</span><span class="ttxt">みたいなやり方も1つあるかな</span></div>
+<div class="trow spk-aite"><span class="tts">35:11–35:21</span><span class="tspk">相手</span><span class="ttxt">っていう例えば25のうち20だけ生存使って残りをペーペーで切るみたいなやり方いいと思いますね</span></div>
+<div class="trow spk-daihyo"><span class="tts">35:21–35:23</span><span class="tspk">代表</span><span class="ttxt">って感じかな</span></div>
+<div class="trow spk-aite"><span class="tts">35:23–35:27</span><span class="tspk">相手</span><span class="ttxt">なるほどちなみにお話聞いてみていかがでした?</span></div>
+<div class="trow spk-aite"><span class="tts">35:29–35:35</span><span class="tspk">相手</span><span class="ttxt">なんかすごい興味はあるなーっていう感じはあるんですけど</span></div>
+<div class="trow spk-daihyo"><span class="tts">35:37–35:39</span><span class="tspk">代表</span><span class="ttxt">支払い面で大丈夫かな</span></div>
+<div class="trow spk-aite"><span class="tts">35:39–35:41</span><span class="tspk">相手</span><span class="ttxt">と思うところもあったり</span></div>
+<div class="trow spk-aite"><span class="tts">35:43–35:47</span><span class="tspk">相手</span><span class="ttxt">これ最後に最悪な事態を考えていきたいんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">35:47–35:49</span><span class="tspk">代表</span><span class="ttxt">例えば</span></div>
+<div class="trow spk-aite"><span class="tts">35:49–35:51</span><span class="tspk">相手</span><span class="ttxt">稼ぎませんでしたって</span></div>
+<div class="trow spk-daihyo"><span class="tts">35:51–35:53</span><span class="tspk">代表</span><span class="ttxt">変にしましょうか</span></div>
+<div class="trow spk-aite"><span class="tts">35:53–35:57</span><span class="tspk">相手</span><span class="ttxt">稼ぎませんってなった時に例えば13000円</span></div>
+<div class="trow spk-daihyo"><span class="tts">35:57–35:59</span><span class="tspk">代表</span><span class="ttxt">ペーペーカード作ったら13000くらいじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">35:59–36:07</span><span class="tspk">相手</span><span class="ttxt">でも13000の負担って付け付き大体どれくらい貯金とかできてます?余裕資金っていうのは</span></div>
+<div class="trow spk-aite"><span class="tts">36:09–36:11</span><span class="tspk">相手</span><span class="ttxt">今5万くらいずつ</span></div>
+<div class="trow spk-daihyo"><span class="tts">36:15–36:17</span><span class="tspk">代表</span><span class="ttxt">ですから</span></div>
+<div class="trow spk-aite"><span class="tts">36:17–36:25</span><span class="tspk">相手</span><span class="ttxt">なので最悪の事を考えた時にそこから13000円消えるってだけの話ですそうです</span></div>
+<div class="trow spk-daihyo"><span class="tts">36:25–36:27</span><span class="tspk">代表</span><span class="ttxt">なのでそう考えた時に何もしないより</span></div>
+<div class="trow spk-aite"><span class="tts">36:27–36:29</span><span class="tspk">相手</span><span class="ttxt">僕はやった方がいいかなって思うんですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">36:29–36:33</span><span class="tspk">代表</span><span class="ttxt">例えば何かお金を稼いごうと思って</span></div>
+<div class="trow spk-aite"><span class="tts">36:33–36:35</span><span class="tspk">相手</span><span class="ttxt">企業とかする人ってそれが</span></div>
+<div class="trow spk-daihyo"><span class="tts">36:35–36:37</span><span class="tspk">代表</span><span class="ttxt">運善万単位って話じゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">36:37–36:49</span><span class="tspk">相手</span><span class="ttxt">銀行からお金買えてそこで企業みたいに運善万借金しちゃう年間で運善万稼ぐってのはちょっと難しいと思うんですけど月月1万5000円くらいの支払いで</span></div>
+<div class="trow spk-daihyo"><span class="tts">36:49–36:51</span><span class="tspk">代表</span><span class="ttxt">月10万くらい稼げたりとか</span></div>
+<div class="trow spk-aite"><span class="tts">36:51–37:04</span><span class="tspk">相手</span><span class="ttxt">月数万円稼げるのが結構硬いのであれば僕はこれってチャレンジすべき内容だと思いますそこにこれかん時代もさっき話したようにAIに時代が乗っかっていきますのでそこで多分育休終わった後とかに</span></div>
+<div class="trow spk-daihyo"><span class="tts">37:04–37:06</span><span class="tspk">代表</span><span class="ttxt">例えばまた違う仕事しようかな</span></div>
+<div class="trow spk-aite"><span class="tts">37:06–37:14</span><span class="tspk">相手</span><span class="ttxt">って理解書にかけると思うんですよでれたら1つの仕事で今の2つ分の仕事分くらいのお金は全然入ってくると思います</span></div>
+<div class="trow spk-daihyo"><span class="tts">37:16–37:17</span><span class="tspk">代表</span><span class="ttxt">なるほど</span></div>
+<div class="trow spk-aite"><span class="tts">37:17–37:18</span><span class="tspk">相手</span><span class="ttxt">全然固く</span></div>
+<div class="trow spk-daihyo"><span class="tts">37:18–37:19</span><span class="tspk">代表</span><span class="ttxt">好き30とか</span></div>
+<div class="trow spk-aite"><span class="tts">37:19–37:44</span><span class="tspk">相手</span><span class="ttxt">女性でも取っていける時代が来ると思うんですよAIとか使えたら340とか全然目指せる私とかだって月80だされたんですよ営業という経験とAIが使えるってなっただけで上場企業の営業会社のほうに来てほしいとってことは今後将来通しすべき内容でもあるわけです自己通しですねそう考えた時に女性って結構脱毛とか美容とかに</span></div>
+<div class="trow spk-daihyo"><span class="tts">37:44–37:46</span><span class="tspk">代表</span><span class="ttxt">結構通しするじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">37:46–37:51</span><span class="tspk">相手</span><span class="ttxt">それが直接自分のお金に変わるってのは目に見えないと思うんです</span></div>
+<div class="trow spk-aite"><span class="tts">37:52–38:05</span><span class="tspk">相手</span><span class="ttxt">でも今回の私たちのAIというのは直接目に見えとお金に変わっていくようになるようになるので本当時代のことも考えない一番通すべきかなというだからそこのリスクっていうのがつきつき13000円くらいと考えていただけたらほむかさんの生活を帯びやかすことは</span></div>
+<div class="trow spk-daihyo"><span class="tts">38:05–38:06</span><span class="tspk">代表</span><span class="ttxt">ないっていうのがわかっていただけるかな</span></div>
+<div class="trow spk-aite"><span class="tts">38:06–38:07</span><span class="tspk">相手</span><span class="ttxt">って思うんですよね</span></div>
+<div class="trow spk-aite"><span class="tts">38:08–38:18</span><span class="tspk">相手</span><span class="ttxt">これは僕的には金額だけの支払いが不安なのであればこれは全然もう弊社でも全力でサポートすることができるんでさっきの方も1ヶ月目で</span></div>
+<div class="trow spk-daihyo"><span class="tts">38:18–38:21</span><span class="tspk">代表</span><span class="ttxt">4万だとしてるじゃないですか半分でもいいじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">38:21–38:22</span><span class="tspk">相手</span><span class="ttxt">1ヶ月目なんて</span></div>
+<div class="trow spk-aite"><span class="tts">38:23–38:30</span><span class="tspk">相手</span><span class="ttxt">そこを目指すぐらいの気持ちでしっかり来ていただけたらそれにお答えするぐらいの力量があるんでぜひそこは信用していただいて</span></div>
+<div class="trow spk-daihyo"><span class="tts">38:30–38:31</span><span class="tspk">代表</span><span class="ttxt">一緒に頑張ってみませんか</span></div>
+<div class="trow spk-aite"><span class="tts">38:32–38:33</span><span class="tspk">相手</span><span class="ttxt">なるほど</span></div>
+<div class="trow spk-aite"><span class="tts">38:34–38:38</span><span class="tspk">相手</span><span class="ttxt">まあカード作成なのかなって思ったんですけどはいそうですよね</span></div>
+<div class="trow spk-aite"><span class="tts">38:39–38:43</span><span class="tspk">相手</span><span class="ttxt">まずはそこかなって思いましたんですけどねカードもそんなにすぐ</span></div>
+<div class="trow spk-daihyo"><span class="tts">38:43–38:45</span><span class="tspk">代表</span><span class="ttxt">何時間くらいできるとかのわけではないんで</span></div>
+<div class="trow spk-aite"><span class="tts">38:45–38:46</span><span class="tspk">相手</span><span class="ttxt">数日間</span></div>
+<div class="trow spk-daihyo"><span class="tts">38:46–38:48</span><span class="tspk">代表</span><span class="ttxt">私が話して内容とか</span></div>
+<div class="trow spk-aite"><span class="tts">38:48–38:55</span><span class="tspk">相手</span><span class="ttxt">カードを作りながらつといろいろ検討してみて僕はセゾンカードより絶対ペイペイカードのほうがポイント的にもお得だと思います</span></div>
+<div class="trow spk-aite"><span class="tts">38:56–38:57</span><span class="tspk">相手</span><span class="ttxt">あーなるほど確かに</span></div>
+<div class="trow spk-aite"><span class="tts">38:58–38:59</span><span class="tspk">相手</span><span class="ttxt">セゾンカードポイント結構</span></div>
+<div class="trow spk-daihyo"><span class="tts">38:59–39:00</span><span class="tspk">代表</span><span class="ttxt">何にも使えないじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">39:00–39:02</span><span class="tspk">相手</span><span class="ttxt">フライパンに交換したりとかしかできないんで</span></div>
+<div class="trow spk-aite"><span class="tts">39:03–39:05</span><span class="tspk">相手</span><span class="ttxt">でもデパートで</span></div>
+<div class="trow spk-aite"><span class="tts">39:06–39:08</span><span class="tspk">相手</span><span class="ttxt">それが全部支払いで使えるので</span></div>
+<div class="trow spk-aite"><span class="tts">39:09–39:11</span><span class="tspk">相手</span><span class="ttxt">デパートで使えるんですね</span></div>
+<div class="trow spk-daihyo"><span class="tts">39:11–39:12</span><span class="tspk">代表</span><span class="ttxt">そこを</span></div>
+<div class="trow spk-aite"><span class="tts">39:13–39:21</span><span class="tspk">相手</span><span class="ttxt">デパートでポイントを使えるからデパコス艦隊ルーとかしてるんですけどあーなるほど</span></div>
+<div class="trow spk-daihyo"><span class="tts">39:21–39:22</span><span class="tspk">代表</span><span class="ttxt">そっちでは使えるのかな</span></div>
+<div class="trow spk-aite"><span class="tts">39:22–39:29</span><span class="tspk">相手</span><span class="ttxt">なるほどこっち目線なんですねとかであればまあどっちでもいいんですけどまあもしやるってなったら</span></div>
+<div class="trow spk-daihyo"><span class="tts">39:29–39:33</span><span class="tspk">代表</span><span class="ttxt">絶対カードは多分必要になるかそれがもうその製造のほうを増握申請かけるか</span></div>
+<div class="trow spk-aite"><span class="tts">39:33–39:39</span><span class="tspk">相手</span><span class="ttxt">はいはいでも大学からずっと使ってて利用可能がずっと変わってないのとあげれるはずですよ</span></div>
+<div class="trow spk-daihyo"><span class="tts">39:40–39:41</span><span class="tspk">代表</span><span class="ttxt">そうですね</span></div>
+<div class="trow spk-aite"><span class="tts">39:41–39:43</span><span class="tspk">相手</span><span class="ttxt">うん信用があるはずなので</span></div>
+<div class="trow spk-daihyo"><span class="tts">39:43–39:46</span><span class="tspk">代表</span><span class="ttxt">はいはいなのでまあ</span></div>
+<div class="trow spk-aite"><span class="tts">39:46–39:49</span><span class="tspk">相手</span><span class="ttxt">それでいくとデパコス使うならそっちのカードで全部買った方がいいです</span></div>
+<div class="trow spk-daihyo"><span class="tts">39:50–39:53</span><span class="tspk">代表</span><span class="ttxt">はいのほうが突然的に嬉しいじゃないですか</span></div>
+<div class="trow spk-aite"><span class="tts">39:53–39:54</span><span class="tspk">相手</span><span class="ttxt">デパコス艦隊ルー</span></div>
+<div class="trow spk-daihyo"><span class="tts">39:54–39:55</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">39:55–40:06</span><span class="tspk">相手</span><span class="ttxt">なので僕の中ではもし数日間かかりますけど検討も踏まえてやっていくのであればまず増握申請のほうに時間かかってくるんでそれをもうまず一瞬に進めていけたらなと思うんですけどいかがです</span></div>
+<div class="trow spk-daihyo"><span class="tts">40:08–40:11</span><span class="tspk">代表</span><span class="ttxt">ちょっと考えてみてもいいですか</span></div>
+<div class="trow spk-aite"><span class="tts">40:12–40:14</span><span class="tspk">相手</span><span class="ttxt">大丈夫です私のほうで</span></div>
+<div class="trow spk-aite"><span class="tts">40:15–40:17</span><span class="tspk">相手</span><span class="ttxt">そしたらまたいろいろ検討してみて</span></div>
+<div class="trow spk-daihyo"><span class="tts">40:17–40:18</span><span class="tspk">代表</span><span class="ttxt">質問とか</span></div>
+<div class="trow spk-aite"><span class="tts">40:18–40:23</span><span class="tspk">相手</span><span class="ttxt">相談者に内容とかあれば適切ですね私とかサヤさんとかでもいいかなと思うんででもサヤさんのほうが</span></div>
+<div class="trow spk-daihyo"><span class="tts">40:23–40:24</span><span class="tspk">代表</span><span class="ttxt">相談しやすいかな</span></div>
+<div class="trow spk-aite"><span class="tts">40:24–40:25</span><span class="tspk">相手</span><span class="ttxt">女性なんで</span></div>
+<div class="trow spk-aite"><span class="tts">40:26–40:32</span><span class="tspk">相手</span><span class="ttxt">ちょっといろいろ聞いてみてくださいはいわかりましたそしたらじゃあ今日はこれで以上になりますので</span></div>
+<div class="trow spk-daihyo"><span class="tts">40:32–40:33</span><span class="tspk">代表</span><span class="ttxt">はい</span></div>
+<div class="trow spk-aite"><span class="tts">40:33–40:39</span><span class="tspk">相手</span><span class="ttxt">これから引き続きよろしくお願い致しますお願い致しますはいでは知り出しますはい知り出します</span></div>
+<p class="tnote">---</p>
+<p class="tnote">（文字起こし末尾タイムスタンプ: 40:39 / 動画総尺: 40:40）</p>
+  </details>
+
+  <footer class="page">
+    営業商談 失注要因分析レポート／分析日 2026-09-24／社内限定・検索避け（noindex）
+  </footer>
+</div>
+</body>
+</html>
